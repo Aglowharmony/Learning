@@ -1,66 +1,135 @@
-# ansi-regex
+# Remix Router
 
-> Regular expression for matching [ANSI escape codes](https://en.wikipedia.org/wiki/ANSI_escape_code)
+The `@remix-run/router` package is a framework-agnostic routing package (sometimes referred to as a browser-emulator) that serves as the heart of [React Router][react-router] and [Remix][remix] and provides all the core functionality for routing coupled with data loading and data mutations. It comes with built-in handling of errors, race-conditions, interruptions, cancellations, lazy-loading data, and much, much more.
 
-## Install
+If you're using React Router, you should never `import` anything directly from the `@remix-run/router` - you should have everything you need in `react-router-dom` (or `react-router`/`react-router-native` if you're not rendering in the browser). All of those packages should re-export everything you would otherwise need from `@remix-run/router`.
 
-```sh
-npm install ansi-regex
-```
-
-## Usage
-
-```js
-import ansiRegex from 'ansi-regex';
-
-ansiRegex().test('\u001B[4mcake\u001B[0m');
-//=> true
-
-ansiRegex().test('cake');
-//=> false
-
-'\u001B[4mcake\u001B[0m'.match(ansiRegex());
-//=> ['\u001B[4m', '\u001B[0m']
-
-'\u001B[4mcake\u001B[0m'.match(ansiRegex({onlyFirst: true}));
-//=> ['\u001B[4m']
-
-'\u001B]8;;https://github.com\u0007click\u001B]8;;\u0007'.match(ansiRegex());
-//=> ['\u001B]8;;https://github.com\u0007', '\u001B]8;;\u0007']
-```
+> [!WARNING]
+>
+> This router is a low-level package intended to be consumed by UI layer routing libraries. You should very likely not be using this package directly unless you are authoring a routing library such as [`react-router-dom`][react-router-repo] or one of it's other [UI ports][remix-routers-repo].
 
 ## API
 
-### ansiRegex(options?)
+A Router instance can be created using `createRouter`:
 
-Returns a regex for matching ANSI escape codes.
+```js
+// Create and initialize a router.  "initialize" contains all side effects
+// including history listeners and kicking off the initial data fetch
+let router = createRouter({
+  // Required properties
+  routes: [{
+    path: '/',
+    loader: ({ request, params }) => { /* ... */ },
+    children: [{
+      path: 'home',
+      loader: ({ request, params }) => { /* ... */ },
+    }]
+  },
+  history: createBrowserHistory(),
 
-#### options
+  // Optional properties
+  basename, // Base path
+  mapRouteProperties, // Map framework-agnostic routes to framework-aware routes
+  future, // Future flags
+  hydrationData, // Hydration data if using server-side-rendering
+}).initialize();
+```
 
-Type: `object`
+Internally, the Router represents the state in an object of the following format, which is available through `router.state`. You can also register a subscriber of the signature `(state: RouterState) => void` to execute when the state updates via `router.subscribe()`;
 
-##### onlyFirst
+```ts
+interface RouterState {
+  // False during the initial data load, true once we have our initial data
+  initialized: boolean;
+  // The `history` action of the most recently completed navigation
+  historyAction: Action;
+  // The current location of the router.  During a navigation this reflects
+  // the "old" location and is updated upon completion of the navigation
+  location: Location;
+  // The current set of route matches
+  matches: DataRouteMatch[];
+  // The state of the current navigation
+  navigation: Navigation;
+  // The state of any in-progress router.revalidate() calls
+  revalidation: RevalidationState;
+  // Data from the loaders for the current matches
+  loaderData: RouteData;
+  // Data from the action for the current matches
+  actionData: RouteData | null;
+  // Errors thrown from loaders/actions for the current matches
+  errors: RouteData | null;
+  // Map of all active fetchers
+  fetchers: Map<string, Fetcher>;
+  // Scroll position to restore to for the active Location, false if we
+  // should not restore, or null if we don't have a saved position
+  // Note: must be enabled via router.enableScrollRestoration()
+  restoreScrollPosition: number | false | null;
+  // Proxied `preventScrollReset` value passed to router.navigate()
+  preventScrollReset: boolean;
+}
+```
 
-Type: `boolean`\
-Default: `false` *(Matches any ANSI escape codes in a string)*
+### Navigations
 
-Match only the first ANSI escape.
+All navigations are done through the `router.navigate` API which is overloaded to support different types of navigations:
 
-## Important
+```js
+// Link navigation (pushes onto the history stack by default)
+router.navigate("/page");
 
-If you run the regex against untrusted user input in a server context, you should [give it a timeout](https://github.com/sindresorhus/super-regex).
+// Link navigation (replacing the history stack)
+router.navigate("/page", { replace: true });
 
-**I do not consider [ReDoS](https://blog.yossarian.net/2022/12/28/ReDoS-vulnerabilities-and-misaligned-incentives) a valid vulnerability for this package.**
+// Pop navigation (moving backward/forward in the history stack)
+router.navigate(-1);
 
-## FAQ
+// Form submission navigation
+let formData = new FormData();
+formData.append(key, value);
+router.navigate("/page", {
+  formMethod: "post",
+  formData,
+});
 
-### Why do you test for codes not in the ECMA 48 standard?
+// Relative routing from a source routeId
+router.navigate("../../somewhere", {
+  fromRouteId: "active-route-id",
+});
+```
 
-Some of the codes we run as a test are codes that we acquired finding various lists of non-standard or manufacturer specific codes. We test for both standard and non-standard codes, as most of them follow the same or similar format and can be safely matched in strings without the risk of removing actual string content. There are a few non-standard control codes that do not follow the traditional format (i.e. they end in numbers) thus forcing us to exclude them from the test because we cannot reliably match them.
+### Fetchers
 
-On the historical side, those ECMA standards were established in the early 90's whereas the VT100, for example, was designed in the mid/late 70's. At that point in time, control codes were still pretty ungoverned and engineers used them for a multitude of things, namely to activate hardware ports that may have been proprietary. Somewhere else you see a similar 'anarchy' of codes is in the x86 architecture for processors; there are a ton of "interrupts" that can mean different things on certain brands of processors, most of which have been phased out.
+Fetchers are a mechanism to call loaders/actions without triggering a navigation, and are done through the `router.fetch()` API. All fetch calls require a unique key to identify the fetcher.
 
-## Maintainers
+```js
+// Execute the loader for /page
+router.fetch("key", "/page");
 
-- [Sindre Sorhus](https://github.com/sindresorhus)
-- [Josh Junon](https://github.com/qix-)
+// Submit to the action for /page
+let formData = new FormData();
+formData.append(key, value);
+router.fetch("key", "/page", {
+  formMethod: "post",
+  formData,
+});
+```
+
+### Revalidation
+
+By default, active loaders will revalidate after any navigation or fetcher mutation. If you need to kick off a revalidation for other use-cases, you can use `router.revalidate()` to re-execute all active loaders.
+
+### Future Flags
+
+We use _Future Flags_ in the router to help us introduce breaking changes in an opt-in fashion ahead of major releases. Please check out the [blog post][future-flags-post] and [React Router Docs][api-development-strategy] for more information on this process. The currently available future flags in `@remix-run/router` are:
+
+| Flag                     | Description                                                               |
+| ------------------------ | ------------------------------------------------------------------------- |
+| `v7_normalizeFormMethod` | Normalize `useNavigation().formMethod` to be an uppercase HTTP Method     |
+| `v7_prependBasename`     | Prepend the `basename` to incoming `router.navigate`/`router.fetch` paths |
+
+[react-router]: https://reactrouter.com
+[remix]: https://remix.run
+[react-router-repo]: https://github.com/remix-run/react-router
+[remix-routers-repo]: https://github.com/brophdawg11/remix-routers
+[api-development-strategy]: https://reactrouter.com/v6/guides/api-development-strategy
+[future-flags-post]: https://remix.run/blog/future-flags
