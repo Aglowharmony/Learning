@@ -1,143 +1,66 @@
-# @isaacs/cliui
+# ansi-regex
 
-Temporary fork of [cliui](http://npm.im/cliui).
+> Regular expression for matching [ANSI escape codes](https://en.wikipedia.org/wiki/ANSI_escape_code)
 
-![ci](https://github.com/yargs/cliui/workflows/ci/badge.svg)
-[![NPM version](https://img.shields.io/npm/v/cliui.svg)](https://www.npmjs.com/package/cliui)
-[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
-![nycrc config on GitHub](https://img.shields.io/nycrc/yargs/cliui)
+## Install
 
-easily create complex multi-column command-line-interfaces.
+```sh
+npm install ansi-regex
+```
 
-## Example
+## Usage
 
 ```js
-const ui = require('cliui')()
+import ansiRegex from 'ansi-regex';
 
-ui.div('Usage: $0 [command] [options]')
+ansiRegex().test('\u001B[4mcake\u001B[0m');
+//=> true
 
-ui.div({
-  text: 'Options:',
-  padding: [2, 0, 1, 0]
-})
+ansiRegex().test('cake');
+//=> false
 
-ui.div(
-  {
-    text: "-f, --file",
-    width: 20,
-    padding: [0, 4, 0, 4]
-  },
-  {
-    text: "the file to load." +
-      chalk.green("(if this description is long it wraps).")
-    ,
-    width: 20
-  },
-  {
-    text: chalk.red("[required]"),
-    align: 'right'
-  }
-)
+'\u001B[4mcake\u001B[0m'.match(ansiRegex());
+//=> ['\u001B[4m', '\u001B[0m']
 
-console.log(ui.toString())
+'\u001B[4mcake\u001B[0m'.match(ansiRegex({onlyFirst: true}));
+//=> ['\u001B[4m']
+
+'\u001B]8;;https://github.com\u0007click\u001B]8;;\u0007'.match(ansiRegex());
+//=> ['\u001B]8;;https://github.com\u0007', '\u001B]8;;\u0007']
 ```
 
-## Deno/ESM Support
+## API
 
-As of `v7` `cliui` supports [Deno](https://github.com/denoland/deno) and
-[ESM](https://nodejs.org/api/esm.html#esm_ecmascript_modules):
+### ansiRegex(options?)
 
-```typescript
-import cliui from "https://deno.land/x/cliui/deno.ts";
+Returns a regex for matching ANSI escape codes.
 
-const ui = cliui({})
+#### options
 
-ui.div('Usage: $0 [command] [options]')
+Type: `object`
 
-ui.div({
-  text: 'Options:',
-  padding: [2, 0, 1, 0]
-})
+##### onlyFirst
 
-ui.div({
-  text: "-f, --file",
-  width: 20,
-  padding: [0, 4, 0, 4]
-})
+Type: `boolean`\
+Default: `false` *(Matches any ANSI escape codes in a string)*
 
-console.log(ui.toString())
-```
+Match only the first ANSI escape.
 
-<img width="500" src="screenshot.png">
+## Important
 
-## Layout DSL
+If you run the regex against untrusted user input in a server context, you should [give it a timeout](https://github.com/sindresorhus/super-regex).
 
-cliui exposes a simple layout DSL:
+**I do not consider [ReDoS](https://blog.yossarian.net/2022/12/28/ReDoS-vulnerabilities-and-misaligned-incentives) a valid vulnerability for this package.**
 
-If you create a single `ui.div`, passing a string rather than an
-object:
+## FAQ
 
-* `\n`: characters will be interpreted as new rows.
-* `\t`: characters will be interpreted as new columns.
-* `\s`: characters will be interpreted as padding.
+### Why do you test for codes not in the ECMA 48 standard?
 
-**as an example...**
+Some of the codes we run as a test are codes that we acquired finding various lists of non-standard or manufacturer specific codes. We test for both standard and non-standard codes, as most of them follow the same or similar format and can be safely matched in strings without the risk of removing actual string content. There are a few non-standard control codes that do not follow the traditional format (i.e. they end in numbers) thus forcing us to exclude them from the test because we cannot reliably match them.
 
-```js
-var ui = require('./')({
-  width: 60
-})
+On the historical side, those ECMA standards were established in the early 90's whereas the VT100, for example, was designed in the mid/late 70's. At that point in time, control codes were still pretty ungoverned and engineers used them for a multitude of things, namely to activate hardware ports that may have been proprietary. Somewhere else you see a similar 'anarchy' of codes is in the x86 architecture for processors; there are a ton of "interrupts" that can mean different things on certain brands of processors, most of which have been phased out.
 
-ui.div(
-  'Usage: node ./bin/foo.js\n' +
-  '  <regex>\t  provide a regex\n' +
-  '  <glob>\t  provide a glob\t [required]'
-)
+## Maintainers
 
-console.log(ui.toString())
-```
-
-**will output:**
-
-```shell
-Usage: node ./bin/foo.js
-  <regex>  provide a regex
-  <glob>   provide a glob          [required]
-```
-
-## Methods
-
-```js
-cliui = require('cliui')
-```
-
-### cliui({width: integer})
-
-Specify the maximum width of the UI being generated.
-If no width is provided, cliui will try to get the current window's width and use it, and if that doesn't work, width will be set to `80`.
-
-### cliui({wrap: boolean})
-
-Enable or disable the wrapping of text in a column.
-
-### cliui.div(column, column, column)
-
-Create a row with any number of columns, a column
-can either be a string, or an object with the following
-options:
-
-* **text:** some text to place in the column.
-* **width:** the width of a column.
-* **align:** alignment, `right` or `center`.
-* **padding:** `[top, right, bottom, left]`.
-* **border:** should a border be placed around the div?
-
-### cliui.span(column, column, column)
-
-Similar to `div`, except the next row will be appended without
-a new line being created.
-
-### cliui.resetOutput()
-
-Resets the UI elements of the current cliui instance, maintaining the values
-set for `width` and `wrap`.
+- [Sindre Sorhus](https://github.com/sindresorhus)
+- [Josh Junon](https://github.com/qix-)
