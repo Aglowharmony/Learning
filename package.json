@@ -1,61 +1,33 @@
 {
-	"name": "ansi-regex",
-	"version": "6.2.2",
-	"description": "Regular expression for matching ANSI escape codes",
-	"license": "MIT",
-	"repository": "chalk/ansi-regex",
-	"funding": "https://github.com/chalk/ansi-regex?sponsor=1",
-	"author": {
-		"name": "Sindre Sorhus",
-		"email": "sindresorhus@gmail.com",
-		"url": "https://sindresorhus.com"
-	},
-	"type": "module",
-	"exports": "./index.js",
-	"types": "./index.d.ts",
-	"sideEffects": false,
-	"engines": {
-		"node": ">=12"
-	},
-	"scripts": {
-		"test": "xo && ava && tsd",
-		"view-supported": "node fixtures/view-codes.js"
-	},
-	"files": [
-		"index.js",
-		"index.d.ts"
-	],
-	"keywords": [
-		"ansi",
-		"styles",
-		"color",
-		"colour",
-		"colors",
-		"terminal",
-		"console",
-		"cli",
-		"string",
-		"tty",
-		"escape",
-		"formatting",
-		"rgb",
-		"256",
-		"shell",
-		"xterm",
-		"command-line",
-		"text",
-		"regex",
-		"regexp",
-		"re",
-		"match",
-		"test",
-		"find",
-		"pattern"
-	],
-	"devDependencies": {
-		"ansi-escapes": "^5.0.0",
-		"ava": "^3.15.0",
-		"tsd": "^0.21.0",
-		"xo": "^0.54.2"
-	}
+  "name": "@remix-run/router",
+  "version": "1.23.0",
+  "description": "Nested/Data-driven/Framework-agnostic Routing",
+  "keywords": [
+    "remix",
+    "router",
+    "location"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/remix-run/react-router",
+    "directory": "packages/router"
+  },
+  "license": "MIT",
+  "author": "Remix Software <hello@remix.run>",
+  "sideEffects": false,
+  "main": "./dist/router.cjs.js",
+  "unpkg": "./dist/router.umd.min.js",
+  "module": "./dist/router.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/",
+    "*.ts",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
 }
