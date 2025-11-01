@@ -1,43 +1,30 @@
-# Prototypes
+# Support for `import defer` and `import souce` in acorn
 
-The functions in this folder are to be use for keeping cached references to the built-in prototypes, so that people can't inadvertently break the library by making mistakes in userland.
+## Install
 
-See https://github.com/sinonjs/sinon/pull/1523
-
-## Without cached references
-
-```js
-// in userland, the library user needs to replace the filter method on
-// Array.prototype
-var array = [1, 2, 3];
-sinon.replace(array, "filter", sinon.fake.returns(2));
-
-// in a sinon module, the library author needs to use the filter method
-var someArray = ["a", "b", 42, "c"];
-var answer = filter(someArray, function (v) {
-    return v === 42;
-});
-
-console.log(answer);
-// => 2
+```
+npm install acorn-import-phases
 ```
 
-## With cached references
+## Usage
+
+This module provides a plugin that can be used to extend the Acorn Parser class:
 
 ```js
-// in userland, the library user needs to replace the filter method on
-// Array.prototype
-var array = [1, 2, 3];
-sinon.replace(array, "filter", sinon.fake.returns(2));
-
-// in a sinon module, the library author needs to use the filter method
-// get a reference to the original Array.prototype.filter
-var filter = require("@sinonjs/commons").prototypes.array.filter;
-var someArray = ["a", "b", 42, "c"];
-var answer = filter(someArray, function (v) {
-    return v === 42;
-});
-
-console.log(answer);
-// => 42
+const {Parser} = require('acorn');
+const importPhases = require('acorn-import-phases');
+Parser.extend(importPhases()).parse('...');
 ```
+
+By default, the plugin supports both `import defer` and `import source` syntax. You can disable one of them by passing an options object:
+
+```js
+const {Parser} = require('acorn');
+const importPhases = require('acorn-import-phases');
+Parser.extend(importPhases({ defer: false })).parse('...');
+Parser.extend(importPhases({ source: false })).parse('...');
+```
+
+## License
+
+This plugin is released under an MIT License.
