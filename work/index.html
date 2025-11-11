@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Smit Shah | Resume</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      --accent: #555;
+      --muted: #888;
+      --border: #e0e0e0;
+    }
+    body {
+      margin: 0;
+      background: #f8f8f8;
+      color: #222;
+    }
+    .page {
+      max-width: 960px;
+      margin: 32px auto;
+      background: #fff;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.08);
+      border-radius: 12px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 320px;
+    }
+    header {
+      grid-column: 1 / -1;
+      padding: 48px 56px 32px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .title h1 {
+      margin: 0;
+      font-size: 44px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+    .title span {
+      color: var(--accent);
+      letter-spacing: 4px;
+    }
+    .contact a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .contact a:hover {
+      text-decoration: underline;
+    }
+    main {
+      padding: 32px 56px 48px;
+    }
+    section {
+      margin-bottom: 32px;
+    }
+    h2 {
+      margin: 0 0 12px;
+      letter-spacing: 6px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+    h3 {
+      margin: 16px 0 8px;
+      font-size: 20px;
+    }
+    .experience-item + .experience-item {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    ul {
+      padding-left: 20px;
+      margin: 8px 0;
+    }
+    ul li {
+      margin: 6px 0;
+      line-height: 1.5;
+    }
+    aside {
+      border-left: 1px solid var(--border);
+      padding: 32px 32px 48px;
+      background: #fcfcfc;
+    }
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 0;
+      list-style: none;
+    }
+    .tag-list li {
+      background: #f0f0f0;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 13px;
+      color: var(--accent);
+    }
+    @media (max-width: 860px) {
+      .page {
+        grid-template-columns: 1fr;
+      }
+      aside {
+        border-left: 0;
+        border-top: 1px solid var(--border);
+      }
+      header, main, aside {
+        padding: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="title">
+        <h1>Smit Shah</h1>
+        <span>TECH ENTHUSIAST</span>
+      </div>
+      <div class="contact">
+        <p><strong>Phone:</strong> <a href="tel:+918424028817">+91 8424 028817</a></p>
+        <p><strong>Email:</strong> <a href="mailto:smits4920@gmail.com">smits4920@gmail.com</a></p>
+        <p><strong>Location:</strong> Mumbai, India</p>
+        <p><strong>GitHub:</strong> <a href="https://github.com/Aglowharmony" target="_blank" rel="noopener">github.com/Aglowharmony</a></p>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>PROFILE</h2>
+        <p>
+          Curious and passionate tech enthusiast who loves exploring, fixing, and improving technology.
+          Skilled in both hardware and software, with interest in tech setups, system builds, and advanced tools.
+          Often works late into the night, learning, experimenting, and refining every project.
+        </p>
+      </section>
+
+      <section>
+        <h2>WORK EXPERIENCE</h2>
+        <article class="experience-item">
+          <h3>Video Editor · Thakur Public School</h3>
+          <p><em>2017 – 2019</em></p>
+          <p>
+            Video Editing for Annual School Event: Edited background visuals and merged event music for the cultural showcase, enhancing the presentation for the audience.
+          </p>
+          <h4>Experience highlights</h4>
+          <ul>
+            <li>Configured multi-monitor setups, handled cables, and ensured smooth event system performance in college and personal setups.</li>
+            <li>Built and managed a basic NAS system for local file sharing and storage access.</li>
+            <li>Assembled custom PCs, installed OS/software, optimized performance, and troubleshot hardware faults.</li>
+            <li>Managed livestream and event tech with OBS, live video mixing, and AV control for small college sessions or mock setups.</li>
+            <li>Explored self-learning projects, leveraging tools like Vim, Obsidian, and automation utilities to improve workflow efficiency.</li>
+          </ul>
+        </article>
+      </section>
+
+      <section>
+        <h2>EDUCATION</h2>
+        <ul>
+          <li><strong>Thakur College of Engineering (B.Tech – AIML)</strong> · 2025 – 2029</li>
+          <li><strong>TVM (12th)</strong> · 2025 · HSC – 60%</li>
+          <li><strong>Thakur Public School (10th)</strong> · 2023 · ICSE – 88%</li>
+        </ul>
+      </section>
+    </main>
+
+    <aside>
+      <section>
+        <h2>SKILLS</h2>
+        <ul>
+          <li>OBS Studio</li>
+          <li>Filmora, Clipchamp</li>
+          <li>Canva</li>
+          <li>Java / C / C++ / Python / HTML</li>
+          <li>Google Workspace</li>
+          <li>Microsoft 365</li>
+          <li>NAS Setup & Troubleshooting</li>
+          <li>Typing speed: 95 WPM</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>SOFT SKILLS</h2>
+        <ul class="tag-list">
+          <li>Adaptability</li>
+          <li>Quick learning</li>
+          <li>Attention to detail</li>
+          <li>Task ownership</li>
+          <li>Highly dedicated</li>
+          <li>Punctual</li>
+          <li>Analytical thinking</li>
+          <li>Humble</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>INTERESTS</h2>
+        <ul class="tag-list">
+          <li>Gaming</li>
+          <li>Badminton</li>
+          <li>New Technology</li>
+        </ul>
+      </section>
+    </aside>
+  </div>
+</body>
+</html>
+
