@@ -1,6 +1,7 @@
 
 import streamlit as st
 from datetime import datetime
+from streamlit_autorefresh import st_autorefresh
 
 # --- Page Config ---
 st.set_page_config(page_title="EdTech Simulation", page_icon="🎓", layout="centered")
@@ -42,13 +43,7 @@ if name:
     # --- Time Table ---
     if menu == "Time Table":
         st.title(f"This is {name}'s Timetable")
-        try:
-            st.image("timetable.jpg")
-        except FileNotFoundError:
-            st.info("📅 Timetable image not found. Displaying default timetable.")
-            st.write("**Default Weekly Schedule:**")
-            st.write("Monday-Friday: 9:00 AM - 5:00 PM")
-            st.write("Break: 12:00 PM - 1:00 PM")
+        st.image("timetable.jpg")
 
     # --- Teacher Dashboard ---
     elif menu == "Teacher":
@@ -69,7 +64,7 @@ if name:
             subjects[cancel_class - 1] = "❌ Cancelled"
             st.session_state.timetable[branch] = subjects
             st.success(f"Class for Period {cancel_class} has been cancelled.")
-            st.rerun()
+            st.experimental_rerun()
 
         # --- Homework / Assignment ---
         st.markdown("### 📝 Assign Homework / Assignment")
