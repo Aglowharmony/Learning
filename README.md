@@ -1,161 +1,145 @@
-## Any Promise
+agent-base
+==========
+### Turn a function into an [`http.Agent`][http.Agent] instance
+[![Build Status](https://github.com/TooTallNate/node-agent-base/workflows/Node%20CI/badge.svg)](https://github.com/TooTallNate/node-agent-base/actions?workflow=Node+CI)
 
-[![Build Status](https://secure.travis-ci.org/kevinbeaty/any-promise.svg)](http://travis-ci.org/kevinbeaty/any-promise)
+This module provides an `http.Agent` generator. That is, you pass it an async
+callback function, and it returns a new `http.Agent` instance that will invoke the
+given callback function when sending outbound HTTP requests.
 
-Let your library support any ES 2015 (ES6) compatible `Promise` and leave the choice to application authors. The application can *optionally* register its preferred `Promise` implementation and it will be exported when requiring `any-promise` from library code.
+#### Some subclasses:
 
-If no preference is registered, defaults to the global `Promise` for newer Node.js versions. The browser version defaults to the window `Promise`, so polyfill or register as necessary.
+Here's some more interesting uses of `agent-base`.
+Send a pull request to list yours!
 
-### Usage with global Promise:
+ * [`http-proxy-agent`][http-proxy-agent]: An HTTP(s) proxy `http.Agent` implementation for HTTP endpoints
+ * [`https-proxy-agent`][https-proxy-agent]: An HTTP(s) proxy `http.Agent` implementation for HTTPS endpoints
+ * [`pac-proxy-agent`][pac-proxy-agent]: A PAC file proxy `http.Agent` implementation for HTTP and HTTPS
+ * [`socks-proxy-agent`][socks-proxy-agent]: A SOCKS proxy `http.Agent` implementation for HTTP and HTTPS
 
-Assuming the global `Promise` is the desired implementation:
 
-```bash
-# Install any libraries depending on any-promise
-$ npm install mz
+Installation
+------------
+
+Install with `npm`:
+
+``` bash
+$ npm install agent-base
 ```
 
-The installed libraries will use global Promise by default.
+
+Example
+-------
+
+Here's a minimal example that creates a new `net.Socket` connection to the server
+for every HTTP request (i.e. the equivalent of `agent: false` option):
 
 ```js
-// in library
-var Promise = require('any-promise')  // the global Promise
+var net = require('net');
+var tls = require('tls');
+var url = require('url');
+var http = require('http');
+var agent = require('agent-base');
 
-function promiseReturningFunction(){
-    return new Promise(function(resolve, reject){...})
-}
-```
+var endpoint = 'http://nodejs.org/api/';
+var parsed = url.parse(endpoint);
 
-### Usage with registration:
-
-Assuming `bluebird` is the desired Promise implementation:
-
-```bash
-# Install preferred promise library
-$ npm install bluebird
-# Install any-promise to allow registration
-$ npm install any-promise
-# Install any libraries you would like to use depending on any-promise
-$ npm install mz
-```
-
-Register your preference in the application entry point before any other `require` of packages that load `any-promise`:
-
-```javascript
-// top of application index.js or other entry point
-require('any-promise/register/bluebird')
-
-// -or- Equivalent to above, but allows customization of Promise library
-require('any-promise/register')('bluebird', {Promise: require('bluebird')})
-```
-
-Now that the implementation is registered, you can use any package depending on `any-promise`:
-
-
-```javascript
-var fsp = require('mz/fs') // mz/fs will use registered bluebird promises
-var Promise = require('any-promise')  // the registered bluebird promise 
-```
-
-It is safe to call `register` multiple times, but it must always be with the same implementation.
-
-Again, registration is *optional*. It should only be called by the application user if overriding the global `Promise` implementation is desired.
-
-### Optional Application Registration
-
-As an application author, you can *optionally* register a preferred `Promise` implementation on application startup (before any call to `require('any-promise')`:
-
-You must register your preference before any call to `require('any-promise')` (by you or required packages), and only one implementation can be registered. Typically, this registration would occur at the top of the application entry point.
-
-
-#### Registration shortcuts
-
-If you are using a known `Promise` implementation, you can register your preference with a shortcut:
-
-
-```js
-require('any-promise/register/bluebird')
-// -or-
-import 'any-promise/register/q';
-```
-
-Shortcut registration is the preferred registration method as it works in the browser and Node.js. It is also convenient for using with `import` and many test runners, that offer a `--require` flag:
-
-```
-$ ava --require=any-promise/register/bluebird test.js
-```
-
-Current known implementations include `bluebird`, `q`, `when`, `rsvp`, `es6-promise`, `promise`, `native-promise-only`, `pinkie`, `vow` and `lie`. If you are not using a known implementation, you can use another registration method described below.
-
-
-#### Basic Registration
-
-As an alternative to registration shortcuts, you can call the `register` function with the preferred `Promise` implementation. The benefit of this approach is that a `Promise` library can be required by name without being a known implementation.  This approach does NOT work in the browser. To use `any-promise` in the browser use either registration shortcuts or specify the `Promise` constructor using advanced registration (see below).
-
-```javascript
-require('any-promise/register')('when')
-// -or- require('any-promise/register')('any other ES6 compatible library (known or otherwise)')
-```
-
-This registration method will try to detect the `Promise` constructor from requiring the specified implementation.  If you would like to specify your own constructor, see advanced registration.
-
-
-#### Advanced Registration
-
-To use the browser version, you should either install a polyfill or explicitly register the `Promise` constructor:
-
-```javascript
-require('any-promise/register')('bluebird', {Promise: require('bluebird')})
-```
-
-This could also be used for registering a custom `Promise` implementation or subclass.
-
-Your preference will be registered globally, allowing a single registration even if multiple versions of `any-promise` are installed in the NPM dependency tree or are using multiple bundled JavaScript files in the browser. You can bypass this global registration in options:
-
-
-```javascript
-require('../register')('es6-promise', {Promise: require('es6-promise').Promise, global: false})
-```
-
-### Library Usage
-
-To use any `Promise` constructor, simply require it:
-
-```javascript
-var Promise = require('any-promise');
-
-return Promise
-  .all([xf, f, init, coll])
-  .then(fn);
-
-
-return new Promise(function(resolve, reject){
-  try {
-    resolve(item);
-  } catch(e){
-    reject(e);
+// This is the important part!
+parsed.agent = agent(function (req, opts) {
+  var socket;
+  // `secureEndpoint` is true when using the https module
+  if (opts.secureEndpoint) {
+    socket = tls.connect(opts);
+  } else {
+    socket = net.connect(opts);
   }
+  return socket;
 });
 
+// Everything else works just like normal...
+http.get(parsed, function (res) {
+  console.log('"response" event!', res.headers);
+  res.pipe(process.stdout);
+});
 ```
 
-Except noted below, libraries using `any-promise` should only use [documented](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) functions as there is no guarantee which implementation will be chosen by the application author.  Libraries should never call `register`, only the application user should call if desired.
+Returning a Promise or using an `async` function is also supported:
+
+```js
+agent(async function (req, opts) {
+  await sleep(1000);
+  // etc…
+});
+```
+
+Return another `http.Agent` instance to "pass through" the responsibility
+for that HTTP request to that agent:
+
+```js
+agent(function (req, opts) {
+  return opts.secureEndpoint ? https.globalAgent : http.globalAgent;
+});
+```
 
 
-#### Advanced Library Usage
+API
+---
 
-If your library needs to branch code based on the registered implementation, you can retrieve it using `var impl = require('any-promise/implementation')`, where `impl` will be the package name (`"bluebird"`, `"when"`, etc.) if registered, `"global.Promise"` if using the global version on Node.js, or `"window.Promise"` if using the browser version. You should always include a default case, as there is no guarantee what package may be registered.
+## Agent(Function callback[, Object options]) → [http.Agent][]
+
+Creates a base `http.Agent` that will execute the callback function `callback`
+for every HTTP request that it is used as the `agent` for. The callback function
+is responsible for creating a `stream.Duplex` instance of some kind that will be
+used as the underlying socket in the HTTP request.
+
+The `options` object accepts the following properties:
+
+  * `timeout` - Number - Timeout for the `callback()` function in milliseconds. Defaults to Infinity (optional).
+
+The callback function should have the following signature:
+
+### callback(http.ClientRequest req, Object options, Function cb) → undefined
+
+The ClientRequest `req` can be accessed to read request headers and
+and the path, etc. The `options` object contains the options passed
+to the `http.request()`/`https.request()` function call, and is formatted
+to be directly passed to `net.connect()`/`tls.connect()`, or however
+else you want a Socket to be created. Pass the created socket to
+the callback function `cb` once created, and the HTTP request will
+continue to proceed.
+
+If the `https` module is used to invoke the HTTP request, then the
+`secureEndpoint` property on `options` _will be set to `true`_.
 
 
-### Support for old Node.js versions
+License
+-------
 
-Node.js versions prior to `v0.12` may have contained buggy versions of the global `Promise`. For this reason, the global `Promise` is not loaded automatically for these old versions.  If using `any-promise` in Node.js versions versions `<= v0.12`, the user should register a desired implementation.
+(The MIT License)
 
-If an implementation is not registered, `any-promise` will attempt to discover an installed `Promise` implementation.  If no implementation can be found, an error will be thrown on `require('any-promise')`.  While the auto-discovery usually avoids errors, it is non-deterministic. It is recommended that the user always register a preferred implementation for older Node.js versions.
+Copyright (c) 2013 Nathan Rajlich &lt;nathan@tootallnate.net&gt;
 
-This auto-discovery is only available for Node.jS versions prior to `v0.12`. Any newer versions will always default to the global `Promise` implementation.
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
 
-### Related
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
 
-- [any-observable](https://github.com/sindresorhus/any-observable) - `any-promise` for Observables.
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+[http-proxy-agent]: https://github.com/TooTallNate/node-http-proxy-agent
+[https-proxy-agent]: https://github.com/TooTallNate/node-https-proxy-agent
+[pac-proxy-agent]: https://github.com/TooTallNate/node-pac-proxy-agent
+[socks-proxy-agent]: https://github.com/TooTallNate/node-socks-proxy-agent
+[http.Agent]: https://nodejs.org/api/http.html#http_class_http_agent
