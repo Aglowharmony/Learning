@@ -1,73 +1,78 @@
-declare class Promise <R> implements Promise.Thenable <R> {
-  /**
-   * If you call resolve in the body of the callback passed to the constructor,
-   * your promise is fulfilled with result object passed to resolve.
-   * If you call reject your promise is rejected with the object passed to resolve.
-   * For consistency and debugging (eg stack traces), obj should be an instanceof Error.
-   * Any errors thrown in the constructor callback will be implicitly passed to reject().
-   */
-  constructor (callback: (resolve : (value?: R | Promise.Thenable<R>) => void, reject: (error?: any) => void) => void);
-
-  /**
-   * onFulfilled is called when/if "promise" resolves. onRejected is called when/if "promise" rejects.
-   * Both are optional, if either/both are omitted the next onFulfilled/onRejected in the chain is called.
-   * Both callbacks have a single parameter , the fulfillment value or rejection reason.
-   * "then" returns a new promise equivalent to the value you return from onFulfilled/onRejected after being passed through Promise.resolve.
-   * If an error is thrown in the callback, the returned promise rejects with that error.
-   *
-   * @param onFulfilled called when/if "promise" resolves
-   * @param onRejected called when/if "promise" rejects
-   */
-  then <U> (onFulfilled?: (value: R) => U | Promise.Thenable<U>, onRejected?: (error: any) => U | Promise.Thenable<U>): Promise<U>;
-  then <U> (onFulfilled?: (value: R) => U | Promise.Thenable<U>, onRejected?: (error: any) => void): Promise<U>;
-
-  /**
-   * Sugar for promise.then(undefined, onRejected)
-   *
-   * @param onRejected called when/if "promise" rejects
-   */
-  catch <U> (onRejected?: (error: any) => U | Promise.Thenable<U>): Promise<U>;
-
-  /**
-   * Make a new promise from the thenable.
-   * A thenable is promise-like in as far as it has a "then" method.
-   */
-  static resolve (): Promise<void>;
-  static resolve <R> (value: R | Promise.Thenable<R>): Promise<R>;
-
-  /**
-   * Make a promise that rejects to obj. For consistency and debugging (eg stack traces), obj should be an instanceof Error
-   */
-  static reject <R> (error: any): Promise<R>;
-
-  /**
-   * Make a promise that fulfills when every item in the array fulfills, and rejects if (and when) any item rejects.
-   * the array passed to all can be a mixture of promise-like objects and other objects.
-   * The fulfillment value is an array (in order) of fulfillment values. The rejection value is the first rejection value.
-   */
-  static all <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> (values: [T1 | Promise.Thenable<T1>, T2 | Promise.Thenable<T2>, T3 | Promise.Thenable<T3>, T4 | Promise.Thenable <T4>, T5 | Promise.Thenable<T5>, T6 | Promise.Thenable<T6>, T7 | Promise.Thenable<T7>, T8 | Promise.Thenable<T8>, T9 | Promise.Thenable<T9>, T10 | Promise.Thenable<T10>]): Promise<[T1, T2, T3, T4, T5, T6, T7, T8, T9, T10]>;
-  static all <T1, T2, T3, T4, T5, T6, T7, T8, T9> (values: [T1 | Promise.Thenable<T1>, T2 | Promise.Thenable<T2>, T3 | Promise.Thenable<T3>, T4 | Promise.Thenable <T4>, T5 | Promise.Thenable<T5>, T6 | Promise.Thenable<T6>, T7 | Promise.Thenable<T7>, T8 | Promise.Thenable<T8>, T9 | Promise.Thenable<T9>]): Promise<[T1, T2, T3, T4, T5, T6, T7, T8, T9]>;
-  static all <T1, T2, T3, T4, T5, T6, T7, T8> (values: [T1 | Promise.Thenable<T1>, T2 | Promise.Thenable<T2>, T3 | Promise.Thenable<T3>, T4 | Promise.Thenable <T4>, T5 | Promise.Thenable<T5>, T6 | Promise.Thenable<T6>, T7 | Promise.Thenable<T7>, T8 | Promise.Thenable<T8>]): Promise<[T1, T2, T3, T4, T5, T6, T7, T8]>;
-  static all <T1, T2, T3, T4, T5, T6, T7> (values: [T1 | Promise.Thenable<T1>, T2 | Promise.Thenable<T2>, T3 | Promise.Thenable<T3>, T4 | Promise.Thenable <T4>, T5 | Promise.Thenable<T5>, T6 | Promise.Thenable<T6>, T7 | Promise.Thenable<T7>]): Promise<[T1, T2, T3, T4, T5, T6, T7]>;
-  static all <T1, T2, T3, T4, T5, T6> (values: [T1 | Promise.Thenable<T1>, T2 | Promise.Thenable<T2>, T3 | Promise.Thenable<T3>, T4 | Promise.Thenable <T4>, T5 | Promise.Thenable<T5>, T6 | Promise.Thenable<T6>]): Promise<[T1, T2, T3, T4, T5, T6]>;
-  static all <T1, T2, T3, T4, T5> (values: [T1 | Promise.Thenable<T1>, T2 | Promise.Thenable<T2>, T3 | Promise.Thenable<T3>, T4 | Promise.Thenable <T4>, T5 | Promise.Thenable<T5>]): Promise<[T1, T2, T3, T4, T5]>;
-  static all <T1, T2, T3, T4> (values: [T1 | Promise.Thenable<T1>, T2 | Promise.Thenable<T2>, T3 | Promise.Thenable<T3>, T4 | Promise.Thenable <T4>]): Promise<[T1, T2, T3, T4]>;
-  static all <T1, T2, T3> (values: [T1 | Promise.Thenable<T1>, T2 | Promise.Thenable<T2>, T3 | Promise.Thenable<T3>]): Promise<[T1, T2, T3]>;
-  static all <T1, T2> (values: [T1 | Promise.Thenable<T1>, T2 | Promise.Thenable<T2>]): Promise<[T1, T2]>;
-  static all <T1> (values: [T1 | Promise.Thenable<T1>]): Promise<[T1]>;
-  static all <TAll> (values: Array<TAll | Promise.Thenable<TAll>>): Promise<TAll[]>;
-
-  /**
-   * Make a Promise that fulfills when any item fulfills, and rejects if any item rejects.
-   */
-  static race <R> (promises: (R | Promise.Thenable<R>)[]): Promise<R>;
+/// <reference types="node" />
+import net from 'net';
+import http from 'http';
+import https from 'https';
+import { Duplex } from 'stream';
+import { EventEmitter } from 'events';
+declare function createAgent(opts?: createAgent.AgentOptions): createAgent.Agent;
+declare function createAgent(callback: createAgent.AgentCallback, opts?: createAgent.AgentOptions): createAgent.Agent;
+declare namespace createAgent {
+    interface ClientRequest extends http.ClientRequest {
+        _last?: boolean;
+        _hadError?: boolean;
+        method: string;
+    }
+    interface AgentRequestOptions {
+        host?: string;
+        path?: string;
+        port: number;
+    }
+    interface HttpRequestOptions extends AgentRequestOptions, Omit<http.RequestOptions, keyof AgentRequestOptions> {
+        secureEndpoint: false;
+    }
+    interface HttpsRequestOptions extends AgentRequestOptions, Omit<https.RequestOptions, keyof AgentRequestOptions> {
+        secureEndpoint: true;
+    }
+    type RequestOptions = HttpRequestOptions | HttpsRequestOptions;
+    type AgentLike = Pick<createAgent.Agent, 'addRequest'> | http.Agent;
+    type AgentCallbackReturn = Duplex | AgentLike;
+    type AgentCallbackCallback = (err?: Error | null, socket?: createAgent.AgentCallbackReturn) => void;
+    type AgentCallbackPromise = (req: createAgent.ClientRequest, opts: createAgent.RequestOptions) => createAgent.AgentCallbackReturn | Promise<createAgent.AgentCallbackReturn>;
+    type AgentCallback = typeof Agent.prototype.callback;
+    type AgentOptions = {
+        timeout?: number;
+    };
+    /**
+     * Base `http.Agent` implementation.
+     * No pooling/keep-alive is implemented by default.
+     *
+     * @param {Function} callback
+     * @api public
+     */
+    class Agent extends EventEmitter {
+        timeout: number | null;
+        maxFreeSockets: number;
+        maxTotalSockets: number;
+        maxSockets: number;
+        sockets: {
+            [key: string]: net.Socket[];
+        };
+        freeSockets: {
+            [key: string]: net.Socket[];
+        };
+        requests: {
+            [key: string]: http.IncomingMessage[];
+        };
+        options: https.AgentOptions;
+        private promisifiedCallback?;
+        private explicitDefaultPort?;
+        private explicitProtocol?;
+        constructor(callback?: createAgent.AgentCallback | createAgent.AgentOptions, _opts?: createAgent.AgentOptions);
+        get defaultPort(): number;
+        set defaultPort(v: number);
+        get protocol(): string;
+        set protocol(v: string);
+        callback(req: createAgent.ClientRequest, opts: createAgent.RequestOptions, fn: createAgent.AgentCallbackCallback): void;
+        callback(req: createAgent.ClientRequest, opts: createAgent.RequestOptions): createAgent.AgentCallbackReturn | Promise<createAgent.AgentCallbackReturn>;
+        /**
+         * Called by node-core's "_http_client.js" module when creating
+         * a new HTTP request with this Agent instance.
+         *
+         * @api public
+         */
+        addRequest(req: ClientRequest, _opts: RequestOptions): void;
+        freeSocket(socket: net.Socket, opts: AgentOptions): void;
+        destroy(): void;
+    }
 }
-
-declare namespace Promise {
-  export interface Thenable <R> {
-    then <U> (onFulfilled?: (value: R) => U | Thenable<U>, onRejected?: (error: any) => U | Thenable<U>): Thenable<U>;
-    then <U> (onFulfilled?: (value: R) => U | Thenable<U>, onRejected?: (error: any) => void): Thenable<U>;
-  }
-}
-
-export = Promise;
+export = createAgent;
