@@ -1,20 +1,19 @@
 'use strict';
 
-var test = require('tape');
-var hasStrictMode = require('has-strict-mode')();
+var define = require('define-properties');
+var callBind = require('call-bind');
 
-var bound = require('../');
-var runTests = require('./tests');
+var implementation = require('./implementation');
+var getPolyfill = require('./polyfill');
+var polyfill = getPolyfill();
+var shim = require('./shim');
 
-test('as a function', function (t) {
-	t.test('bad array/this value', { skip: !hasStrictMode }, function (st) {
-		/* eslint no-useless-call: 0 */
-		st['throws'](function () { return bound.call(undefined); }, TypeError, 'undefined is not an object');
-		st['throws'](function () { return bound.call(null); }, TypeError, 'null is not an object');
-		st.end();
-	});
+var bound = callBind(polyfill);
 
-	runTests(bound, t);
-
-	t.end();
+define(bound, {
+	getPolyfill: getPolyfill,
+	implementation: implementation,
+	shim: shim
 });
+
+module.exports = bound;
