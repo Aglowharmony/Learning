@@ -1,7 +1,9 @@
-.git*
-test/
-test-browser/
-build/
-.travis.yml
-*.swp
-Makefile
+support
+test
+examples
+example
+*.sock
+dist
+yarn.lock
+coverage
+bower.json

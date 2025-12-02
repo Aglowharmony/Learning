@@ -1,17 +1,19 @@
-/**
- * @fileoverview Main package entrypoint.
- * @author Nicholas C. Zakas
- */
+'use strict';
 
-"use strict";
+var define = require('define-properties');
+var callBind = require('call-bind');
 
-//------------------------------------------------------------------------------
-// Public Interface
-//------------------------------------------------------------------------------
+var implementation = require('./implementation');
+var getPolyfill = require('./polyfill');
+var polyfill = getPolyfill();
+var shim = require('./shim');
 
-module.exports = {
-    configs: {
-        all: require("./configs/eslint-all"),
-        recommended: require("./configs/eslint-recommended")
-    }
-};
+var boundFlat = callBind(polyfill);
+
+define(boundFlat, {
+	getPolyfill: getPolyfill,
+	implementation: implementation,
+	shim: shim
+});
+
+module.exports = boundFlat;
