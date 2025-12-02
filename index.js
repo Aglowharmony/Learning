@@ -1,17 +1,19 @@
 'use strict';
 
-var flatten = require('../');
-var test = require('tape');
-var runTests = require('./tests');
+var define = require('define-properties');
+var callBind = require('call-bind');
 
-test('as a function', function (t) {
-	t.test('bad array/this value', function (st) {
-		st['throws'](flatten.bind(null, undefined, function () {}), TypeError, 'undefined is not an object');
-		st['throws'](flatten.bind(null, null, function () {}), TypeError, 'null is not an object');
-		st.end();
-	});
+var implementation = require('./implementation');
+var getPolyfill = require('./polyfill');
+var polyfill = getPolyfill();
+var shim = require('./shim');
 
-	runTests(flatten, t);
+var boundFlat = callBind(polyfill);
 
-	t.end();
+define(boundFlat, {
+	getPolyfill: getPolyfill,
+	implementation: implementation,
+	shim: shim
 });
+
+module.exports = boundFlat;
