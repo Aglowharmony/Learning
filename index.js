@@ -1,19 +1,19 @@
-'use strict';
+/**
+ * @fileoverview `ConfigArray` class.
+ * @author Toru Nagashima <https://github.com/mysticatea>
+ */
 
-var define = require('define-properties');
-var callBind = require('call-bind');
+import { ConfigArray, getUsedExtractedConfigs } from "./config-array.js";
+import { ConfigDependency } from "./config-dependency.js";
+import { ExtractedConfig } from "./extracted-config.js";
+import { IgnorePattern } from "./ignore-pattern.js";
+import { OverrideTester } from "./override-tester.js";
 
-var implementation = require('./implementation');
-var getPolyfill = require('./polyfill');
-var polyfill = getPolyfill();
-var shim = require('./shim');
-
-var boundFlat = callBind(polyfill);
-
-define(boundFlat, {
-	getPolyfill: getPolyfill,
-	implementation: implementation,
-	shim: shim
-});
-
-module.exports = boundFlat;
+export {
+    ConfigArray,
+    ConfigDependency,
+    ExtractedConfig,
+    IgnorePattern,
+    OverrideTester,
+    getUsedExtractedConfigs
+};
