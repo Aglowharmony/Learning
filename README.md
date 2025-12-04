@@ -1,75 +1,84 @@
-# array.prototype.flat <sup>[![Version Badge][npm-version-svg]][package-url]</sup>
+argparse
+========
 
-[![github actions][actions-image]][actions-url]
-[![coverage][codecov-image]][codecov-url]
-[![dependency status][deps-svg]][deps-url]
-[![dev dependency status][dev-deps-svg]][dev-deps-url]
-[![License][license-image]][license-url]
-[![Downloads][downloads-image]][downloads-url]
+[![Build Status](https://secure.travis-ci.org/nodeca/argparse.svg?branch=master)](http://travis-ci.org/nodeca/argparse)
+[![NPM version](https://img.shields.io/npm/v/argparse.svg)](https://www.npmjs.org/package/argparse)
 
-[![npm badge][npm-badge-png]][package-url]
+CLI arguments parser for node.js, with [sub-commands](https://docs.python.org/3.9/library/argparse.html#sub-commands) support. Port of python's [argparse](http://docs.python.org/dev/library/argparse.html) (version [3.9.0](https://github.com/python/cpython/blob/v3.9.0rc1/Lib/argparse.py)).
 
-An ES2019 spec-compliant `Array.prototype.flat` shim/polyfill/replacement that works as far down as ES3.
+**Difference with original.**
 
-This package implements the [es-shim API](https://github.com/es-shims/api) interface. It works in an ES3-supported environment and complies with the proposed [spec](https://tc39.github.io/proposal-flatMap/).
+- JS has no keyword arguments support.
+  -  Pass options instead: `new ArgumentParser({ description: 'example', add_help: true })`.
+- JS has no python's types `int`, `float`, ...
+  - Use string-typed names: `.add_argument('-b', { type: 'int', help: 'help' })`.
+- `%r` format specifier uses `require('util').inspect()`.
 
-Because `Array.prototype.flat` depends on a receiver (the `this` value), the main export takes the array to operate on as the first argument.
+More details in [doc](./doc).
 
-## Getting started
 
-```sh
-npm install --save array.prototype.flat
+Example
+-------
+
+`test.js` file:
+
+```javascript
+#!/usr/bin/env node
+'use strict';
+
+const { ArgumentParser } = require('argparse');
+const { version } = require('./package.json');
+
+const parser = new ArgumentParser({
+  description: 'Argparse example'
+});
+
+parser.add_argument('-v', '--version', { action: 'version', version });
+parser.add_argument('-f', '--foo', { help: 'foo bar' });
+parser.add_argument('-b', '--bar', { help: 'bar foo' });
+parser.add_argument('--baz', { help: 'baz bar' });
+
+console.dir(parser.parse_args());
 ```
 
-## Usage/Examples
+Display help:
 
-```js
-var flat = require('array.prototype.flat');
-var assert = require('assert');
+```
+$ ./test.js -h
+usage: test.js [-h] [-v] [-f FOO] [-b BAR] [--baz BAZ]
 
-var arr = [1, [2], [], 3, [[4]]];
+Argparse example
 
-assert.deepEqual(flat(arr, 1), [1, 2, 3, [4]]);
+optional arguments:
+  -h, --help         show this help message and exit
+  -v, --version      show program's version number and exit
+  -f FOO, --foo FOO  foo bar
+  -b BAR, --bar BAR  bar foo
+  --baz BAZ          baz bar
 ```
 
-```js
-var flat = require('array.prototype.flat');
-var assert = require('assert');
-/* when Array#flat is not present */
-delete Array.prototype.flat;
-var shimmedFlat = flat.shim();
+Parse arguments:
 
-assert.equal(shimmedFlat, flat.getPolyfill());
-assert.deepEqual(arr.flat(), flat(arr));
+```
+$ ./test.js -f=3 --bar=4 --baz 5
+{ foo: '3', bar: '4', baz: '5' }
 ```
 
-```js
-var flat = require('array.prototype.flat');
-var assert = require('assert');
-/* when Array#flat is present */
-var shimmedIncludes = flat.shim();
 
-var mapper = function (x) { return [x, 1]; };
+API docs
+--------
 
-assert.equal(shimmedIncludes, Array.prototype.flat);
-assert.deepEqual(arr.flat(mapper), flat(arr, mapper));
-```
+Since this is a port with minimal divergence, there's no separate documentation.
+Use original one instead, with notes about difference.
 
-## Tests
-Simply clone the repo, `npm install`, and run `npm test`
+1. [Original doc](https://docs.python.org/3.9/library/argparse.html).
+2. [Original tutorial](https://docs.python.org/3.9/howto/argparse.html).
+3. [Difference with python](./doc).
 
-[package-url]: https://npmjs.org/package/array.prototype.flat
-[npm-version-svg]: https://versionbadg.es/es-shims/Array.prototype.flat.svg
-[deps-svg]: https://david-dm.org/es-shims/Array.prototype.flat.svg
-[deps-url]: https://david-dm.org/es-shims/Array.prototype.flat
-[dev-deps-svg]: https://david-dm.org/es-shims/Array.prototype.flat/dev-status.svg
-[dev-deps-url]: https://david-dm.org/es-shims/Array.prototype.flat#info=devDependencies
-[npm-badge-png]: https://nodei.co/npm/array.prototype.flat.png?downloads=true&stars=true
-[license-image]: https://img.shields.io/npm/l/array.prototype.flat.svg
-[license-url]: LICENSE
-[downloads-image]: https://img.shields.io/npm/dm/array.prototype.flat.svg
-[downloads-url]: https://npm-stat.com/charts.html?package=array.prototype.flat
-[codecov-image]: https://codecov.io/gh/es-shims/Array.prototype.flat/branch/main/graphs/badge.svg
-[codecov-url]: https://app.codecov.io/gh/es-shims/Array.prototype.flat/
-[actions-image]: https://img.shields.io/endpoint?url=https://github-actions-badge-u3jn4tfpocch.runkit.sh/es-shims/Array.prototype.flat
-[actions-url]: https://github.com/es-shims/Array.prototype.flat/actions
+
+argparse for enterprise
+-----------------------
+
+Available as part of the Tidelift Subscription
+
+The maintainers of argparse and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source dependencies you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact dependencies you use. [Learn more.](https://tidelift.com/subscription/pkg/npm-argparse?utm_source=npm-argparse&utm_medium=referral&utm_campaign=enterprise&utm_term=repo)
