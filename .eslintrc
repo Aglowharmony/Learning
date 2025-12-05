@@ -4,18 +4,17 @@
 	"extends": "@ljharb",
 
 	"rules": {
+		"array-bracket-newline": 0,
+		"id-length": 0,
 		"new-cap": [2, {
 			"capIsNewExceptions": [
-				"ArraySpeciesCreate",
+				"GetIntrinsic",
 				"Call",
-				"CreateDataPropertyOrThrow",
-				"FlattenIntoArray",
 				"Get",
-				"HasProperty",
-				"IsArray",
-				"Set",
-				"ToIntegerOrInfinity",
-				"ToLength",
+				"IsCallable",
+				"LengthOfArrayLike",
+				"RequireObjectCoercible",
+				"ToBoolean",
 				"ToObject",
 				"ToString",
 			],
@@ -28,8 +27,9 @@
 			"files": "test/**",
 			"rules": {
 				"func-name-matching": 0,
-				"max-params": 0,
-				"no-invalid-this": [1],
+				"max-lines-per-function": 0,
+				"no-invalid-this": 1,
+				"strict": 1,
 			},
 		},
 	],
