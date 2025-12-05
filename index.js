@@ -1,56 +1,18 @@
-/**
- * @fileoverview Package exports for @eslint/eslintrc
- * @author Nicholas C. Zakas
- */
-//------------------------------------------------------------------------------
-// Requirements
-//------------------------------------------------------------------------------
+'use strict';
 
-import {
-    ConfigArrayFactory,
-    createContext as createConfigArrayFactoryContext
-} from "./config-array-factory.js";
+var index = require('../');
+var callBind = require('call-bind');
+var test = require('tape');
+var runTests = require('./tests');
 
-import { CascadingConfigArrayFactory } from "./cascading-config-array-factory.js";
-import * as ModuleResolver from "./shared/relative-module-resolver.js";
-import { ConfigArray, getUsedExtractedConfigs } from "./config-array/index.js";
-import { ConfigDependency } from "./config-array/config-dependency.js";
-import { ExtractedConfig } from "./config-array/extracted-config.js";
-import { IgnorePattern } from "./config-array/ignore-pattern.js";
-import { OverrideTester } from "./config-array/override-tester.js";
-import * as ConfigOps from "./shared/config-ops.js";
-import ConfigValidator from "./shared/config-validator.js";
-import * as naming from "./shared/naming.js";
-import { FlatCompat } from "./flat-compat.js";
-import environments from "../conf/environments.js";
+test('as a function', function (t) {
+	t.test('bad array/this value', function (st) {
+		st['throws'](callBind(index, null, undefined, function () {}), TypeError, 'undefined is not an object');
+		st['throws'](callBind(index, null, null, function () {}), TypeError, 'null is not an object');
+		st.end();
+	});
 
-//-----------------------------------------------------------------------------
-// Exports
-//-----------------------------------------------------------------------------
+	runTests(index, t);
 
-const Legacy = {
-    ConfigArray,
-    createConfigArrayFactoryContext,
-    CascadingConfigArrayFactory,
-    ConfigArrayFactory,
-    ConfigDependency,
-    ExtractedConfig,
-    IgnorePattern,
-    OverrideTester,
-    getUsedExtractedConfigs,
-    environments,
-
-    // shared
-    ConfigOps,
-    ConfigValidator,
-    ModuleResolver,
-    naming
-};
-
-export {
-
-    Legacy,
-
-    FlatCompat
-
-};
+	t.end();
+});
