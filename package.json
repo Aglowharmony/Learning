@@ -1,31 +1,30 @@
 {
-  "name": "argparse",
-  "description": "CLI arguments parser. Native port of python's argparse.",
-  "version": "2.0.1",
-  "keywords": [
-    "cli",
-    "parser",
-    "argparse",
-    "option",
-    "args"
+  "name": "@csstools/normalize.css",
+  "version": "12.1.1",
+  "description": "A cross-browser CSS foundation",
+  "author": "Jonathan Neal <jonathantneal@hotmail.com>",
+  "contributors": [
+    "Jonathan Neal <jonathantneal@hotmail.com> (http://jonathantneal.com/)",
+    "Nicolas Gallagher <nicolas@nicolasgallagher.com> (http://nicolasgallagher.com/)",
+    "Luciano Battagliero <lucianobattagliero+git@gmail.com> (https://lucianobattagliero.com/)"
   ],
-  "main": "argparse.js",
+  "license": "CC0-1.0",
+  "repository": "csstools/normalize.css",
+  "homepage": "https://github.com/csstools/normalize.css#readme",
+  "bugs": "https://github.com/csstools/normalize.css/issues",
+  "main": "normalize.css",
+  "style": "normalize.css",
   "files": [
-    "argparse.js",
-    "lib/"
+    "normalize.css",
+    "opinionated.css"
   ],
-  "license": "Python-2.0",
-  "repository": "nodeca/argparse",
   "scripts": {
-    "lint": "eslint .",
-    "test": "npm run lint && nyc mocha",
-    "coverage": "npm run test && nyc report --reporter html"
+    "test": "echo \"no test\""
   },
-  "devDependencies": {
-    "@babel/eslint-parser": "^7.11.0",
-    "@babel/plugin-syntax-class-properties": "^7.10.4",
-    "eslint": "^7.5.0",
-    "mocha": "^8.0.1",
-    "nyc": "^15.1.0"
-  }
+  "keywords": [
+    "css",
+    "normalizes",
+    "browsers",
+    "fixes"
+  ]
 }
