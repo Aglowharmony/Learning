@@ -1,22 +1,20 @@
 'use strict';
 
-var ArraySpeciesCreate = require('es-abstract/2024/ArraySpeciesCreate');
-var FlattenIntoArray = require('es-abstract/2024/FlattenIntoArray');
-var Get = require('es-abstract/2024/Get');
-var ToIntegerOrInfinity = require('es-abstract/2024/ToIntegerOrInfinity');
-var ToLength = require('es-abstract/2024/ToLength');
-var ToObject = require('es-abstract/2024/ToObject');
+var implementation = require('../implementation');
+var callBind = require('call-bind');
+var test = require('tape');
+var hasStrictMode = require('has-strict-mode')();
+var runTests = require('./tests');
 
-module.exports = function flat() {
-	var O = ToObject(this);
-	var sourceLen = ToLength(Get(O, 'length'));
+test('as a function', function (t) {
+	t.test('bad array/this value', { skip: !hasStrictMode }, function (st) {
+		/* eslint no-useless-call: 0 */
+		st['throws'](function () { implementation.call(undefined); }, TypeError, 'undefined is not an object');
+		st['throws'](function () { implementation.call(null); }, TypeError, 'null is not an object');
+		st.end();
+	});
 
-	var depthNum = 1;
-	if (arguments.length > 0 && typeof arguments[0] !== 'undefined') {
-		depthNum = ToIntegerOrInfinity(arguments[0]);
-	}
+	runTests(callBind(implementation), t);
 
-	var A = ArraySpeciesCreate(O, 0);
-	FlattenIntoArray(A, O, sourceLen, 0, depthNum);
-	return A;
-};
+	t.end();
+});
