@@ -1,11 +1,6 @@
-/**
- * Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-export { default as BufferedConsole } from './BufferedConsole';
-export { default as CustomConsole } from './CustomConsole';
-export { default as NullConsole } from './NullConsole';
-export { default as getConsoleOutput } from './getConsoleOutput';
-export type { ConsoleBuffer, LogMessage, LogType, LogEntry } from './types';
+export { emitForest, emitForestLines, parseFunctionRanges, parseOffsets } from "./ascii";
+export { cloneFunctionCov, cloneProcessCov, cloneScriptCov, cloneRangeCov } from "./clone";
+export { compareScriptCovs, compareFunctionCovs, compareRangeCovs } from "./compare";
+export { mergeFunctionCovs, mergeProcessCovs, mergeScriptCovs } from "./merge";
+export { RangeTree } from "./range-tree";
+export { ProcessCov, ScriptCov, FunctionCov, RangeCov } from "./types";
