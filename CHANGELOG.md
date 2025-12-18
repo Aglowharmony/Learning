@@ -1,216 +1,250 @@
-# Changelog
+## Next
 
-All notable changes to this project will be documented in this file.
+- **[Breaking change]** Replace `OutModules` enum by custom compiler option `mjsModule`.
+- **[Breaking change]** Drop support for Pug, Sass, Angular & Webpack.
+- **[Feature]** Expose custom registries for each target.
+- **[Feature]** Add `dist.tscOptions` for `lib` target to override options for
+  distribution builds.
+- **[Feature]** Native ESM tests with mocha.
+- **[Fix]** Disable deprecated TsLint rules from the default config
+- **[Fix]** Remove use of experimental `fs/promises` module.
+- **[Internal]** Fix continuous deployment script (stop confusing PRs to master
+  with push to master)
+- **[Internal]** Update dependencies
+- **[Internal]** Fix deprecated Mocha types.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+## 0.17.1 (2017-05-03)
 
+- **[Fix]** Update dependencies, remove `std/esm` warning.
 
-## [2.0.1] - 2020-08-29
-### Fixed
-- Fix issue with `process.argv` when used with interpreters (`coffee`, `ts-node`, etc.), #150.
+## 0.17.0 (2017-04-22)
 
+- **[Breaking change]** Update dependencies. Use `esm` instead of `@std/esm`, update Typescript to `2.8.3`.
+- **[Fix]** Fix Node processes spawn on Windows (Mocha, Nyc)
 
-## [2.0.0] - 2020-08-14
-### Changed
-- Full rewrite. Now port from python 3.9.0 & more precise following.
-  See [doc](./doc) for difference and migration info.
-- node.js 10+ required
-- Removed most of local docs in favour of original ones.
+## 0.16.2 (2017-02-07)
 
+- **[Fix]** Fix Typedoc generation: use `tsconfig.json` generated for the lib.
+- **[Fix]** Write source map for `.mjs` files
+- **[Fix]** Copy sources to `_src` when publishing a lib (#87).
+- **[Internal]** Restore continuous deployment of documentation.
 
-## [1.0.10] - 2018-02-15
-### Fixed
-- Use .concat instead of + for arrays, #122.
+## 0.16.1 (2017-01-20)
 
+- **[Feature]** Support `mocha` tests on `.mjs` files (using `@std/esm`). Enabled by default
+  if `outModules` is configured to emit `.mjs`. **You currently need to add
+  `"@std/esm": {"esm": "cjs"}` to your `package.json`.**
 
-## [1.0.9] - 2016-09-29
-### Changed
-- Rerelease after 1.0.8 - deps cleanup.
+## 0.16.0 (2017-01-09)
 
+- **[Breaking change]** Enable `allowSyntheticDefaultImports` and `esModuleInterop` by default
+- **[Fix]** Allow deep module imports in default Tslint rules
+- **[Fix]** Drop dependency on deprecated `gulp-util`
+- **[Internal]** Replace most custom typings by types from `@types`
 
-## [1.0.8] - 2016-09-29
-### Changed
-- Maintenance (deps bump, fix node 6.5+ tests, coverage report).
+## 0.15.8 (2017-12-05)
 
+- **[Fix]** Exit with non-zero code if command tested with coverage fails
+- **[Fix]** Solve duplicated error message when using the `run` mocha task.
+- **[Fix]** Exit with non-zero code when building scripts fails.
 
-## [1.0.7] - 2016-03-17
-### Changed
-- Teach `addArgument` to accept string arg names. #97, @tomxtobin.
+## 0.15.7 (2017-11-29)
 
+- **[Feature]** Add `coverage` task to `mocha` target, use it for the default task
 
-## [1.0.6] - 2016-02-06
-### Changed
-- Maintenance: moved to eslint & updated CS.
+## 0.15.6 (2017-11-29)
 
+- **[Fix]** Fix path to source in source maps.
+- **[Fix]** Disable `number-literal-format` in default Tslint rules. It enforced uppercase for hex.
+- **[Internal]** Enable integration with Greenkeeper.
+- **[Internal]** Enable integration with Codecov
+- **[Internal]** Enable code coverage
 
-## [1.0.5] - 2016-02-05
-### Changed
-- Removed lodash dependency to significantly reduce install size.
-  Thanks to @mourner.
+## 0.15.5 (2017-11-10)
 
+- **[Feature]** Enable the following TsLint rules: `no-duplicate-switch-case`, `no-implicit-dependencies`,
+  `no-return-await`
+- **[Internal]** Update self-dependency `0.15.4`, this restores the README on _npm_
+- **[Internal]** Add homepage and author fields to package.json
 
-## [1.0.4] - 2016-01-17
-### Changed
-- Maintenance: lodash update to 4.0.0.
+## 0.15.4 (2017-11-10)
 
+- **[Fix]** Add support for custom additional copy for distribution builds. [#49](https://github.com/demurgos/turbo-gulp/issues/49)
+- **[Internal]** Update self-dependency to `turbo-gulp`
+- **[Internal]** Add link to license in `README.md`
 
-## [1.0.3] - 2015-10-27
-### Fixed
-- Fix parse `=` in args: `--examplepath="C:\myfolder\env=x64"`. #84, @CatWithApple.
+## 0.15.3 (2017-11-09)
 
+**Rename to `turbo-gulp`**. This package was previously named `demurgos-web-build-tools`.
+This version is fully compatible: you can just change the name of your dependency.
 
-## [1.0.2] - 2015-03-22
-### Changed
-- Relaxed lodash version dependency.
+## 0.15.2 (2017-11-09)
 
+**The package is prepared to be renamed `turbo-gulp`.**
+This is the last version released as `demurgos-web-build-tools`.
 
-## [1.0.1] - 2015-02-20
-### Changed
-- Changed dependencies to be compatible with ancient nodejs.
+- **[Feature]** Add support for watch mode for library targets.
+- **[Fix]** Disable experimental support for `*.mjs` by default.
+- **[Fix]** Do not emit duplicate TS errors
 
+## 0.15.1 (2017-10-19)
 
-## [1.0.0] - 2015-02-19
-### Changed
-- Maintenance release.
-- Replaced `underscore` with `lodash`.
-- Bumped version to 1.0.0 to better reflect semver meaning.
-- HISTORY.md -> CHANGELOG.md
+- **[Feature]** Add experimental support for `*.mjs` files
+- **[Fix]** Fix support of releases from Continuous Deployment using Travis.
 
+## 0.15.0 (2017-10-18)
 
-## [0.1.16] - 2013-12-01
-### Changed
-- Maintenance release. Updated dependencies and docs.
+- **[Fix]** Add error handling for git deployment.
+- **[Internal]** Enable continuous deployment of the `master` branch.
 
+## 0.15.0-beta.11 (2017-08-29)
 
-## [0.1.15] - 2013-05-13
-### Fixed
-- Fixed #55, @trebor89
+- **[Feature]** Add `LibTarget.dist.copySrc` option to disable copy of source files to the dist directory.
+  This allows to prevent issues with missing custom typings.
+- **[Fix]** Mark `deploy` property of `LibTarget.typedoc` as optional.
+- **[Internal]** Update self-dependency to `v0.15.0-beta.10`.
 
+## 0.15.0-beta.10 (2017-08-28)
 
-## [0.1.14] - 2013-05-12
-### Fixed
-- Fixed #62, @maxtaco
+- **[Breaking]** Update Tslint rules to use `tslint@5.7.0`.
+- **[Fix]** Set `allowJs` to false in default TSC options.
+- **[Fix]** Do not pipe output of git commands to stdout.
+- **[Internal]** Update self-dependency to `v0.15.0-beta.9`.
 
+## 0.15.0-beta.9 (2017-08-28)
 
-## [0.1.13] - 2013-04-08
-### Changed
-- Added `.npmignore` to reduce package size
+- **[Breaking]** Drop old-style `test` target.
+- **[Breaking]** Drop old-style `node` target.
+- **[Feature]** Add `mocha` target to run tests in `spec.ts` files.
+- **[Feature]** Add `node` target to build and run top-level Node applications.
+- **[Feature]** Provide `generateNodeTasks`, `generateLibTasks` and `generateMochaTasks` functions.
+  They create the tasks but do not register them. 
+- **[Fix]** Run `clean` before `dist`, if defined.
+- **[Fix]** Run `dist` before `publish`.
 
+## 0.15.0-beta.8 (2017-08-26)
 
-## [0.1.12] - 2013-02-10
-### Fixed
-- Fixed conflictHandler (#46), @hpaulj
+- **[Fix]** Remove auth token and registry options for `<lib>:dist:publish`. It is better served
+  by configuring the environment appropriately.
 
+## 0.15.0-beta.7 (2017-08-26)
 
-## [0.1.11] - 2013-02-07
-### Added
-- Added 70+ tests (ported from python), @hpaulj
-- Added conflictHandler, @applepicke
-- Added fromfilePrefixChar, @hpaulj
+- **[Feature]** Add `clean` task to `lib` targets.
+- **[Fix]** Ensure that `gitHead` is defined when publishing a package to npm.
 
-### Fixed
-- Multiple bugfixes, @hpaulj
+## 0.15.0-beta.6 (2017-08-22)
 
+- **[Feature]** Add support for Typedoc deployment to a remote git branch (such as `gh-pages`)
+- **[Feature]** Add support for `copy` tasks in new library target.
+- **[Fix]** Resolve absolute paths when compiling scripts with custom typings.
 
-## [0.1.10] - 2012-12-30
-### Added
-- Added [mutual exclusion](http://docs.python.org/dev/library/argparse.html#mutual-exclusion)
-  support, thanks to @hpaulj
+## 0.15.0-beta.5 (2017-08-14)
 
-### Fixed
-- Fixed options check for `storeConst` & `appendConst` actions, thanks to @hpaulj
+- **[Fix]** Fix package entry for the main module.
 
+## 0.15.0-beta.4 (2017-08-14)
 
-## [0.1.9] - 2012-12-27
-### Fixed
-- Fixed option dest interferens with other options (issue #23), thanks to @hpaulj
-- Fixed default value behavior with `*` positionals, thanks to @hpaulj
-- Improve `getDefault()` behavior, thanks to @hpaulj
-- Improve negative argument parsing, thanks to @hpaulj
+- **[Breaking]** Drop ES5 build exposed to browsers with the `browser` field in `package.json`.
+- **[Feature]** Introduce first new-style target (`LibTarget`). it supports typedoc generation, dev builds and
+  simple distribution.
 
+## 0.15.0-beta.3 (2017-08-11)
 
-## [0.1.8] - 2012-12-01
-### Fixed
-- Fixed parser parents (issue #19), thanks to @hpaulj
-- Fixed negative argument parse (issue #20), thanks to @hpaulj
+- **[Breaking]** Update default lib target to use target-specific `srcDir`.
+- **[Feature]** Allow to complete `srcDir` in target.
+- **[Feature]** Add experimental library distribution supporting deep requires.
 
+## 0.15.0-beta.2 (2017-08-10)
 
-## [0.1.7] - 2012-10-14
-### Fixed
-- Fixed 'choices' argument parse (issue #16)
-- Fixed stderr output (issue #15)
+- **[Fix]** Default to CommonJS for project tsconfig.json
+- **[Fix]** Add Typescript configuration for default project.
+- **[Internal]** Update self-dependency to `0.15.0-beta.1`.
 
+## 0.15.0-beta.1 (2017-08-09)
 
-## [0.1.6] - 2012-09-09
-### Fixed
-- Fixed check for conflict of options (thanks to @tomxtobin)
+- **[Feature]** Support typed TSLint rules.
+- **[Internal]** Update gulpfile.ts to use build tools `0.15.0-beta.0`.
+- **[Fix]** Fix regressions caused by `0.15.0-beta.0` (missing type definition).
 
+## 0.15.0-beta.0 (2017-08-09)
 
-## [0.1.5] - 2012-09-03
-### Fixed
-- Fix parser #setDefaults method (thanks to @tomxtobin)
+- **[Breaking]** Expose option interfaces directly in the main module instead of the `config` namespace.
+- **[Breaking]** Rename `DEFAULT_PROJECT_OPTIONS` to `DEFAULT_PROJECT`.
+- **[Feature]** Emit project-wide `tsconfig.json`.
+- **[Internal]** Convert gulpfile to Typescript, use `ts-node` to run it.
+- **[Internal]** Update dependencies
 
+## 0.14.3 (2017-07-16)
 
-## [0.1.4] - 2012-07-30
-### Fixed
-- Fixed pseudo-argument support (thanks to @CGamesPlay)
-- Fixed addHelp default (should be true), if not set (thanks to @benblank)
+- **[Feature]** Add `:lint:fix` project task to fix some lint errors.
 
+## 0.14.2 (2017-07-10)
 
-## [0.1.3] - 2012-06-27
-### Fixed
-- Fixed formatter api name: Formatter -> HelpFormatter
+- **[Internal]** Update dependencies: add `package-lock.json` and update `tslint`.
 
+## 0.14.1 (2017-06-17)
 
-## [0.1.2] - 2012-05-29
-### Fixed
-- Removed excess whitespace in help
-- Fixed error reporting, when parcer with subcommands
-  called with empty arguments
+- **[Internal]** Update dependencies.
+- **[Internal]** Drop dependency on _Bluebird_.
+- **[Internal]** Drop dependency on _typings_.
 
-### Added
-- Added basic tests
+## 0.14.0 (2017-05-10)
 
+- **[Breaking]** Enforce trailing commas by default for multiline objects
+- **[Feature]** Allow bump from either `master` or a branch with the same name as the tag (exampel: `v1.2.3`)
+- **[Feature]** Support TSLint 8, allow to extend the default rules
+- **[Patch]** Allow mergeable namespaces
 
-## [0.1.1] - 2012-05-23
-### Fixed
-- Fixed line wrapping in help formatter
-- Added better error reporting on invalid arguments
+# 0.13.1
 
+- **[Patch]** Allow namespaces in the default TS-Lint config
 
-## [0.1.0] - 2012-05-16
-### Added
-- First release.
+# 0.13.0
 
+- **[Breaking]** Major overhaul of the angular target. The server build no longer depends on the client.
+- **[Breaking]** Update to `gulp@4` (from `gulp@3`)
+- **[Breaking]** Update to `tslint@7` (from `tslint@6`), add stricter default rules
+- **[Breaking]** Update signature of targetGenerators and project tasks: it only uses
+  `ProjectOptions` and `Target` now, the additional options are embedded in those two objects.
+- **[Breaking]** Remove `:install`, `:instal:npm` and `:install:typings`. Use the `prepare` script in
+  your `package.json` file instead.
+- Add `:tslint.json` project task to generate configuration for `tslint`
+- Add first class support for processing of `pug` and `sass` files, similar to `copy`
+- Implement end-to-end tests
+- Enable `emitDecoratorMetadata` in default typescript options.
+- Allow configuration of `:lint` with the `tslintOptions` property of the project configuration.
+- Add `<target>:watch` tasks for incremental builds.
 
-[2.0.1]: https://github.com/nodeca/argparse/compare/2.0.0...2.0.1
-[2.0.0]: https://github.com/nodeca/argparse/compare/1.0.10...2.0.0
-[1.0.10]: https://github.com/nodeca/argparse/compare/1.0.9...1.0.10
-[1.0.9]: https://github.com/nodeca/argparse/compare/1.0.8...1.0.9
-[1.0.8]: https://github.com/nodeca/argparse/compare/1.0.7...1.0.8
-[1.0.7]: https://github.com/nodeca/argparse/compare/1.0.6...1.0.7
-[1.0.6]: https://github.com/nodeca/argparse/compare/1.0.5...1.0.6
-[1.0.5]: https://github.com/nodeca/argparse/compare/1.0.4...1.0.5
-[1.0.4]: https://github.com/nodeca/argparse/compare/1.0.3...1.0.4
-[1.0.3]: https://github.com/nodeca/argparse/compare/1.0.2...1.0.3
-[1.0.2]: https://github.com/nodeca/argparse/compare/1.0.1...1.0.2
-[1.0.1]: https://github.com/nodeca/argparse/compare/1.0.0...1.0.1
-[1.0.0]: https://github.com/nodeca/argparse/compare/0.1.16...1.0.0
-[0.1.16]: https://github.com/nodeca/argparse/compare/0.1.15...0.1.16
-[0.1.15]: https://github.com/nodeca/argparse/compare/0.1.14...0.1.15
-[0.1.14]: https://github.com/nodeca/argparse/compare/0.1.13...0.1.14
-[0.1.13]: https://github.com/nodeca/argparse/compare/0.1.12...0.1.13
-[0.1.12]: https://github.com/nodeca/argparse/compare/0.1.11...0.1.12
-[0.1.11]: https://github.com/nodeca/argparse/compare/0.1.10...0.1.11
-[0.1.10]: https://github.com/nodeca/argparse/compare/0.1.9...0.1.10
-[0.1.9]: https://github.com/nodeca/argparse/compare/0.1.8...0.1.9
-[0.1.8]: https://github.com/nodeca/argparse/compare/0.1.7...0.1.8
-[0.1.7]: https://github.com/nodeca/argparse/compare/0.1.6...0.1.7
-[0.1.6]: https://github.com/nodeca/argparse/compare/0.1.5...0.1.6
-[0.1.5]: https://github.com/nodeca/argparse/compare/0.1.4...0.1.5
-[0.1.4]: https://github.com/nodeca/argparse/compare/0.1.3...0.1.4
-[0.1.3]: https://github.com/nodeca/argparse/compare/0.1.2...0.1.3
-[0.1.2]: https://github.com/nodeca/argparse/compare/0.1.1...0.1.2
-[0.1.1]: https://github.com/nodeca/argparse/compare/0.1.0...0.1.1
-[0.1.0]: https://github.com/nodeca/argparse/releases/tag/0.1.0
+# 0.12.3
+
+- Support `templateUrl` and `styleUrls` in angular modules.
+
+# 0.12.2
+
+- Add `<target>:build:copy` task. It copies user-defined files.
+
+# 0.12.1
+
+- Fix `<target>:watch` task.
+
+# 0.12.0
+
+- **[Breaking]**: Change naming convention for tasks. The names primary part is
+  the target, then the action (`lib:build` instead of `build:lib`) to group
+  the tasks per target.
+- **[Breaking]**: Use `typeRoots` instead of `definitions` in configuration to
+  specify Typescript definition files.
+- Generate `tsconfig.json` file (mainly for editors)
+- Implement the `test` target to run unit-tests with `mocha`.
+
+# 0.11.2
+
+- Target `angular`: Add `build:<target>:assets:sass` for `.scss` files (Sassy CSS)
+
+# 0.11.1
+
+- Rename project to `web-build-tools` (`demurgos-web-build-tools` on _npm_)
+- Target `angular`: Add `build:<target>:assets`, `build:<target>:pug` and `build:<target>:static`.
+- Update `gulp-typescript`: solve error message during compilation
+- Targets `node` and `angular`: `build:<target>:scripts` now include in-lined source maps
+- Target `node`: `watch:<target>` to support incremental builds

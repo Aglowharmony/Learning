@@ -1,314 +1,398 @@
-import {
-  createEmotionMacro,
-  transformers as vanillaTransformers
-} from './emotion-macro'
-import { createStyledMacro, styledTransformer } from './styled-macro'
-import coreMacro, {
-  transformers as coreTransformers,
-  transformCsslessArrayExpression,
-  transformCsslessObjectExpression
-} from './core-macro'
-import { getStyledOptions, createTransformerMacro } from './utils'
+"use strict";
 
-const getCssExport = (reexported, importSource, mapping) => {
-  const cssExport = Object.keys(mapping).find(localExportName => {
-    const [packageName, exportName] = mapping[localExportName].canonicalImport
-    return packageName === '@emotion/react' && exportName === 'css'
-  })
-
-  if (!cssExport) {
-    throw new Error(
-      `You have specified that '${importSource}' re-exports '${reexported}' from '@emotion/react' but it doesn't also re-export 'css' from '@emotion/react', 'css' is necessary for certain optimisations, please re-export it from '${importSource}'`
-    )
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "buildDynamicImport", {
+  enumerable: true,
+  get: function () {
+    return _dynamicImport.buildDynamicImport;
   }
-
-  return cssExport
-}
-
-let webStyledMacro = createStyledMacro({
-  importSource: '@emotion/styled/base',
-  originalImportSource: '@emotion/styled',
-  isWeb: true
-})
-let nativeStyledMacro = createStyledMacro({
-  importSource: '@emotion/native',
-  originalImportSource: '@emotion/native',
-  isWeb: false
-})
-let primitivesStyledMacro = createStyledMacro({
-  importSource: '@emotion/primitives',
-  originalImportSource: '@emotion/primitives',
-  isWeb: false
-})
-let vanillaEmotionMacro = createEmotionMacro('@emotion/css')
-
-let transformersSource = {
-  '@emotion/css': vanillaTransformers,
-  '@emotion/react': coreTransformers,
-  '@emotion/styled': {
-    default: [
-      styledTransformer,
-      { styledBaseImport: ['@emotion/styled/base', 'default'], isWeb: true }
-    ]
-  },
-  '@emotion/primitives': {
-    default: [styledTransformer, { isWeb: false }]
-  },
-  '@emotion/native': {
-    default: [styledTransformer, { isWeb: false }]
+});
+exports.buildNamespaceInitStatements = buildNamespaceInitStatements;
+exports.ensureStatementsHoisted = ensureStatementsHoisted;
+Object.defineProperty(exports, "getModuleName", {
+  enumerable: true,
+  get: function () {
+    return _getModuleName.default;
   }
-}
-
-export const macros = {
-  core: coreMacro,
-  nativeStyled: nativeStyledMacro,
-  primitivesStyled: primitivesStyledMacro,
-  webStyled: webStyledMacro,
-  vanillaEmotion: vanillaEmotionMacro
-}
-
-/*
-export type BabelPath = any
-
-export type EmotionBabelPluginPass = any
-*/
-
-const AUTO_LABEL_VALUES = ['dev-only', 'never', 'always']
-
-export default function (babel, options) {
-  if (
-    options.autoLabel !== undefined &&
-    !AUTO_LABEL_VALUES.includes(options.autoLabel)
-  ) {
-    throw new Error(
-      `The 'autoLabel' option must be undefined, or one of the following: ${AUTO_LABEL_VALUES.map(
-        s => `"${s}"`
-      ).join(', ')}`
-    )
+});
+Object.defineProperty(exports, "hasExports", {
+  enumerable: true,
+  get: function () {
+    return _normalizeAndLoadMetadata.hasExports;
   }
-
-  let t = babel.types
+});
+Object.defineProperty(exports, "isModule", {
+  enumerable: true,
+  get: function () {
+    return _helperModuleImports.isModule;
+  }
+});
+Object.defineProperty(exports, "isSideEffectImport", {
+  enumerable: true,
+  get: function () {
+    return _normalizeAndLoadMetadata.isSideEffectImport;
+  }
+});
+exports.rewriteModuleStatementsAndPrepareHeader = rewriteModuleStatementsAndPrepareHeader;
+Object.defineProperty(exports, "rewriteThis", {
+  enumerable: true,
+  get: function () {
+    return _rewriteThis.default;
+  }
+});
+exports.wrapInterop = wrapInterop;
+var _assert = require("assert");
+var _core = require("@babel/core");
+var _helperModuleImports = require("@babel/helper-module-imports");
+var _rewriteThis = require("./rewrite-this.js");
+var _rewriteLiveReferences = require("./rewrite-live-references.js");
+var _normalizeAndLoadMetadata = require("./normalize-and-load-metadata.js");
+var Lazy = require("./lazy-modules.js");
+var _dynamicImport = require("./dynamic-import.js");
+var _getModuleName = require("./get-module-name.js");
+{
+  exports.getDynamicImportSource = require("./dynamic-import").getDynamicImportSource;
+}
+function rewriteModuleStatementsAndPrepareHeader(path, {
+  exportName,
+  strict,
+  allowTopLevelThis,
+  strictMode,
+  noInterop,
+  importInterop = noInterop ? "none" : "babel",
+  lazy,
+  getWrapperPayload = Lazy.toGetWrapperPayload(lazy != null ? lazy : false),
+  wrapReference = Lazy.wrapReference,
+  esNamespaceOnly,
+  filename,
+  constantReexports = arguments[1].loose,
+  enumerableModuleMeta = arguments[1].loose,
+  noIncompleteNsImportDetection
+}) {
+  (0, _normalizeAndLoadMetadata.validateImportInteropOption)(importInterop);
+  _assert((0, _helperModuleImports.isModule)(path), "Cannot process module statements in a script");
+  path.node.sourceType = "script";
+  const meta = (0, _normalizeAndLoadMetadata.default)(path, exportName, {
+    importInterop,
+    initializeReexports: constantReexports,
+    getWrapperPayload,
+    esNamespaceOnly,
+    filename
+  });
+  if (!allowTopLevelThis) {
+    (0, _rewriteThis.default)(path);
+  }
+  (0, _rewriteLiveReferences.default)(path, meta, wrapReference);
+  if (strictMode !== false) {
+    const hasStrict = path.node.directives.some(directive => {
+      return directive.value.value === "use strict";
+    });
+    if (!hasStrict) {
+      path.unshiftContainer("directives", _core.types.directive(_core.types.directiveLiteral("use strict")));
+    }
+  }
+  const headers = [];
+  if ((0, _normalizeAndLoadMetadata.hasExports)(meta) && !strict) {
+    headers.push(buildESModuleHeader(meta, enumerableModuleMeta));
+  }
+  const nameList = buildExportNameListDeclaration(path, meta);
+  if (nameList) {
+    meta.exportNameListName = nameList.name;
+    headers.push(nameList.statement);
+  }
+  headers.push(...buildExportInitializationStatements(path, meta, wrapReference, constantReexports, noIncompleteNsImportDetection));
   return {
-    name: '@emotion',
-    // https://github.com/babel/babel/blob/0c97749e0fe8ad845b902e0b23a24b308b0bf05d/packages/babel-plugin-syntax-jsx/src/index.ts#L9-L18
-    manipulateOptions(opts, parserOpts) {
-      const { plugins } = parserOpts
-
-      if (
-        plugins.some(p => {
-          const plugin = Array.isArray(p) ? p[0] : p
-          return plugin === 'typescript' || plugin === 'jsx'
-        })
-      ) {
-        return
+    meta,
+    headers
+  };
+}
+function ensureStatementsHoisted(statements) {
+  statements.forEach(header => {
+    header._blockHoist = 3;
+  });
+}
+function wrapInterop(programPath, expr, type) {
+  if (type === "none") {
+    return null;
+  }
+  if (type === "node-namespace") {
+    return _core.types.callExpression(programPath.hub.addHelper("interopRequireWildcard"), [expr, _core.types.booleanLiteral(true)]);
+  } else if (type === "node-default") {
+    return null;
+  }
+  let helper;
+  if (type === "default") {
+    helper = "interopRequireDefault";
+  } else if (type === "namespace") {
+    helper = "interopRequireWildcard";
+  } else {
+    throw new Error(`Unknown interop: ${type}`);
+  }
+  return _core.types.callExpression(programPath.hub.addHelper(helper), [expr]);
+}
+function buildNamespaceInitStatements(metadata, sourceMetadata, constantReexports = false, wrapReference = Lazy.wrapReference) {
+  var _wrapReference;
+  const statements = [];
+  const srcNamespaceId = _core.types.identifier(sourceMetadata.name);
+  for (const localName of sourceMetadata.importsNamespace) {
+    if (localName === sourceMetadata.name) continue;
+    statements.push(_core.template.statement`var NAME = SOURCE;`({
+      NAME: localName,
+      SOURCE: _core.types.cloneNode(srcNamespaceId)
+    }));
+  }
+  const srcNamespace = (_wrapReference = wrapReference(srcNamespaceId, sourceMetadata.wrap)) != null ? _wrapReference : srcNamespaceId;
+  if (constantReexports) {
+    statements.push(...buildReexportsFromMeta(metadata, sourceMetadata, true, wrapReference));
+  }
+  for (const exportName of sourceMetadata.reexportNamespace) {
+    statements.push((!_core.types.isIdentifier(srcNamespace) ? _core.template.statement`
+            Object.defineProperty(EXPORTS, "NAME", {
+              enumerable: true,
+              get: function() {
+                return NAMESPACE;
+              }
+            });
+          ` : _core.template.statement`EXPORTS.NAME = NAMESPACE;`)({
+      EXPORTS: metadata.exportName,
+      NAME: exportName,
+      NAMESPACE: _core.types.cloneNode(srcNamespace)
+    }));
+  }
+  if (sourceMetadata.reexportAll) {
+    const statement = buildNamespaceReexport(metadata, _core.types.cloneNode(srcNamespace), constantReexports);
+    statement.loc = sourceMetadata.reexportAll.loc;
+    statements.push(statement);
+  }
+  return statements;
+}
+const ReexportTemplate = {
+  constant: ({
+    exports,
+    exportName,
+    namespaceImport
+  }) => _core.template.statement.ast`
+      ${exports}.${exportName} = ${namespaceImport};
+    `,
+  constantComputed: ({
+    exports,
+    exportName,
+    namespaceImport
+  }) => _core.template.statement.ast`
+      ${exports}["${exportName}"] = ${namespaceImport};
+    `,
+  spec: ({
+    exports,
+    exportName,
+    namespaceImport
+  }) => _core.template.statement.ast`
+      Object.defineProperty(${exports}, "${exportName}", {
+        enumerable: true,
+        get: function() {
+          return ${namespaceImport};
+        },
+      });
+    `
+};
+function buildReexportsFromMeta(meta, metadata, constantReexports, wrapReference) {
+  var _wrapReference2;
+  let namespace = _core.types.identifier(metadata.name);
+  namespace = (_wrapReference2 = wrapReference(namespace, metadata.wrap)) != null ? _wrapReference2 : namespace;
+  const {
+    stringSpecifiers
+  } = meta;
+  return Array.from(metadata.reexports, ([exportName, importName]) => {
+    let namespaceImport = _core.types.cloneNode(namespace);
+    if (importName === "default" && metadata.interop === "node-default") {} else if (stringSpecifiers.has(importName)) {
+      namespaceImport = _core.types.memberExpression(namespaceImport, _core.types.stringLiteral(importName), true);
+    } else {
+      namespaceImport = _core.types.memberExpression(namespaceImport, _core.types.identifier(importName));
+    }
+    const astNodes = {
+      exports: meta.exportName,
+      exportName,
+      namespaceImport
+    };
+    if (constantReexports || _core.types.isIdentifier(namespaceImport)) {
+      if (stringSpecifiers.has(exportName)) {
+        return ReexportTemplate.constantComputed(astNodes);
+      } else {
+        return ReexportTemplate.constant(astNodes);
       }
+    } else {
+      return ReexportTemplate.spec(astNodes);
+    }
+  });
+}
+function buildESModuleHeader(metadata, enumerableModuleMeta = false) {
+  return (enumerableModuleMeta ? _core.template.statement`
+        EXPORTS.__esModule = true;
+      ` : _core.template.statement`
+        Object.defineProperty(EXPORTS, "__esModule", {
+          value: true,
+        });
+      `)({
+    EXPORTS: metadata.exportName
+  });
+}
+function buildNamespaceReexport(metadata, namespace, constantReexports) {
+  return (constantReexports ? _core.template.statement`
+        Object.keys(NAMESPACE).forEach(function(key) {
+          if (key === "default" || key === "__esModule") return;
+          VERIFY_NAME_LIST;
+          if (key in EXPORTS && EXPORTS[key] === NAMESPACE[key]) return;
 
-      plugins.push('jsx')
-    },
-    visitor: {
-      ImportDeclaration(path, state) {
-        const macro = state.pluginMacros[path.node.source.value]
-        // most of this is from https://github.com/kentcdodds/babel-plugin-macros/blob/main/src/index.js
-        if (macro === undefined) {
-          return
-        }
-        if (t.isImportNamespaceSpecifier(path.node.specifiers[0])) {
-          return
-        }
-        const imports = path.node.specifiers.map(s => ({
-          localName: s.local.name,
-          importedName:
-            s.type === 'ImportDefaultSpecifier' ? 'default' : s.imported.name
-        }))
-        let shouldExit = false
-        let hasReferences = false
-        const referencePathsByImportName = imports.reduce(
-          (byName, { importedName, localName }) => {
-            let binding = path.scope.getBinding(localName)
-            if (!binding) {
-              shouldExit = true
-              return byName
-            }
-            byName[importedName] = binding.referencePaths
-            hasReferences =
-              hasReferences || Boolean(byName[importedName].length)
-            return byName
-          },
-          {}
-        )
-        if (!hasReferences || shouldExit) {
-          return
-        }
-        /**
-         * Other plugins that run before babel-plugin-macros might use path.replace, where a path is
-         * put into its own replacement. Apparently babel does not update the scope after such
-         * an operation. As a remedy, the whole scope is traversed again with an empty "Identifier"
-         * visitor - this makes the problem go away.
-         *
-         * See: https://github.com/kentcdodds/import-all.macro/issues/7
-         */
-        state.file.scope.path.traverse({
-          Identifier() {}
-        })
+          EXPORTS[key] = NAMESPACE[key];
+        });
+      ` : _core.template.statement`
+        Object.keys(NAMESPACE).forEach(function(key) {
+          if (key === "default" || key === "__esModule") return;
+          VERIFY_NAME_LIST;
+          if (key in EXPORTS && EXPORTS[key] === NAMESPACE[key]) return;
 
-        macro({
-          path,
-          references: referencePathsByImportName,
-          state,
-          babel,
-          isEmotionCall: true,
-          isBabelMacrosCall: true
-        })
-      },
-      Program(path, state) {
-        let macros = {}
-        let jsxReactImports /*: Array<{
-          importSource: string,
-          export: string,
-          cssExport: string
-        }> */ = [
-          { importSource: '@emotion/react', export: 'jsx', cssExport: 'css' }
-        ]
-        state.jsxReactImport = jsxReactImports[0]
-        Object.keys(state.opts.importMap || {}).forEach(importSource => {
-          let value = state.opts.importMap[importSource]
-          let transformers = {}
-          Object.keys(value).forEach(localExportName => {
-            let { canonicalImport, ...options } = value[localExportName]
-            let [packageName, exportName] = canonicalImport
-            if (packageName === '@emotion/react' && exportName === 'jsx') {
-              jsxReactImports.push({
-                importSource,
-                export: localExportName,
-                cssExport: getCssExport('jsx', importSource, value)
-              })
-              return
-            }
-            let packageTransformers = transformersSource[packageName]
-
-            if (packageTransformers === undefined) {
-              throw new Error(
-                `There is no transformer for the export '${exportName}' in '${packageName}'`
-              )
-            }
-
-            let extraOptions
-
-            if (packageName === '@emotion/react' && exportName === 'Global') {
-              // this option is not supposed to be set in importMap
-              extraOptions = {
-                cssExport: getCssExport('Global', importSource, value)
-              }
-            } else if (
-              packageName === '@emotion/styled' &&
-              exportName === 'default'
-            ) {
-              // this is supposed to override defaultOptions value
-              // and let correct value to be set if coming in options
-              extraOptions = {
-                styledBaseImport: undefined
-              }
-            }
-
-            let [exportTransformer, defaultOptions] = Array.isArray(
-              packageTransformers[exportName]
-            )
-              ? packageTransformers[exportName]
-              : [packageTransformers[exportName]]
-
-            transformers[localExportName] = [
-              exportTransformer,
-              {
-                ...defaultOptions,
-                ...extraOptions,
-                ...options
-              }
-            ]
-          })
-          macros[importSource] = createTransformerMacro(transformers, {
-            importSource
-          })
-        })
-        state.pluginMacros = {
-          '@emotion/styled': webStyledMacro,
-          '@emotion/react': coreMacro,
-          '@emotion/primitives': primitivesStyledMacro,
-          '@emotion/native': nativeStyledMacro,
-          '@emotion/css': vanillaEmotionMacro,
-          ...macros
-        }
-
-        for (const node of path.node.body) {
-          if (t.isImportDeclaration(node)) {
-            let jsxReactImport = jsxReactImports.find(
-              thing =>
-                node.source.value === thing.importSource &&
-                node.specifiers.some(
-                  x =>
-                    t.isImportSpecifier(x) && x.imported.name === thing.export
-                )
-            )
-            if (jsxReactImport) {
-              state.jsxReactImport = jsxReactImport
-              break
-            }
-          }
-        }
-
-        if (state.opts.cssPropOptimization === false) {
-          state.transformCssProp = false
-        } else {
-          state.transformCssProp = true
-        }
-
-        if (state.opts.sourceMap === false) {
-          state.emotionSourceMap = false
-        } else {
-          state.emotionSourceMap = true
-        }
-      },
-      JSXAttribute(path, state) {
-        if (path.node.name.name !== 'css' || !state.transformCssProp) {
-          return
-        }
-
-        if (t.isJSXExpressionContainer(path.node.value)) {
-          if (t.isArrayExpression(path.node.value.expression)) {
-            transformCsslessArrayExpression({
-              state,
-              babel,
-              path
-            })
-          } else if (t.isObjectExpression(path.node.value.expression)) {
-            transformCsslessObjectExpression({
-              state,
-              babel,
-              path,
-              cssImport: state.jsxReactImport
-            })
-          }
-        }
-      },
-      CallExpression: {
-        exit(path /*: BabelPath */, state /*: EmotionBabelPluginPass */) {
-          try {
-            if (
-              path.node.callee &&
-              path.node.callee.property &&
-              path.node.callee.property.name === 'withComponent'
-            ) {
-              switch (path.node.arguments.length) {
-                case 1:
-                case 2: {
-                  path.node.arguments[1] = getStyledOptions(t, path, state)
-                }
-              }
-            }
-          } catch (e) {
-            throw path.buildCodeFrameError(e)
-          }
-        }
+          Object.defineProperty(EXPORTS, key, {
+            enumerable: true,
+            get: function() {
+              return NAMESPACE[key];
+            },
+          });
+        });
+    `)({
+    NAMESPACE: namespace,
+    EXPORTS: metadata.exportName,
+    VERIFY_NAME_LIST: metadata.exportNameListName ? (0, _core.template)`
+            if (Object.prototype.hasOwnProperty.call(EXPORTS_LIST, key)) return;
+          `({
+      EXPORTS_LIST: metadata.exportNameListName
+    }) : null
+  });
+}
+function buildExportNameListDeclaration(programPath, metadata) {
+  const exportedVars = Object.create(null);
+  for (const data of metadata.local.values()) {
+    for (const name of data.names) {
+      exportedVars[name] = true;
+    }
+  }
+  let hasReexport = false;
+  for (const data of metadata.source.values()) {
+    for (const exportName of data.reexports.keys()) {
+      exportedVars[exportName] = true;
+    }
+    for (const exportName of data.reexportNamespace) {
+      exportedVars[exportName] = true;
+    }
+    hasReexport = hasReexport || !!data.reexportAll;
+  }
+  if (!hasReexport || Object.keys(exportedVars).length === 0) return null;
+  const name = programPath.scope.generateUidIdentifier("exportNames");
+  delete exportedVars.default;
+  return {
+    name: name.name,
+    statement: _core.types.variableDeclaration("var", [_core.types.variableDeclarator(name, _core.types.valueToNode(exportedVars))])
+  };
+}
+function buildExportInitializationStatements(programPath, metadata, wrapReference, constantReexports = false, noIncompleteNsImportDetection = false) {
+  const initStatements = [];
+  for (const [localName, data] of metadata.local) {
+    if (data.kind === "import") {} else if (data.kind === "hoisted") {
+      initStatements.push([data.names[0], buildInitStatement(metadata, data.names, _core.types.identifier(localName))]);
+    } else if (!noIncompleteNsImportDetection) {
+      for (const exportName of data.names) {
+        initStatements.push([exportName, null]);
       }
     }
   }
+  for (const data of metadata.source.values()) {
+    if (!constantReexports) {
+      const reexportsStatements = buildReexportsFromMeta(metadata, data, false, wrapReference);
+      const reexports = [...data.reexports.keys()];
+      for (let i = 0; i < reexportsStatements.length; i++) {
+        initStatements.push([reexports[i], reexportsStatements[i]]);
+      }
+    }
+    if (!noIncompleteNsImportDetection) {
+      for (const exportName of data.reexportNamespace) {
+        initStatements.push([exportName, null]);
+      }
+    }
+  }
+  initStatements.sort(([a], [b]) => {
+    if (a < b) return -1;
+    if (b < a) return 1;
+    return 0;
+  });
+  const results = [];
+  if (noIncompleteNsImportDetection) {
+    for (const [, initStatement] of initStatements) {
+      results.push(initStatement);
+    }
+  } else {
+    const chunkSize = 100;
+    for (let i = 0; i < initStatements.length; i += chunkSize) {
+      let uninitializedExportNames = [];
+      for (let j = 0; j < chunkSize && i + j < initStatements.length; j++) {
+        const [exportName, initStatement] = initStatements[i + j];
+        if (initStatement !== null) {
+          if (uninitializedExportNames.length > 0) {
+            results.push(buildInitStatement(metadata, uninitializedExportNames, programPath.scope.buildUndefinedNode()));
+            uninitializedExportNames = [];
+          }
+          results.push(initStatement);
+        } else {
+          uninitializedExportNames.push(exportName);
+        }
+      }
+      if (uninitializedExportNames.length > 0) {
+        results.push(buildInitStatement(metadata, uninitializedExportNames, programPath.scope.buildUndefinedNode()));
+      }
+    }
+  }
+  return results;
 }
+const InitTemplate = {
+  computed: ({
+    exports,
+    name,
+    value
+  }) => _core.template.expression.ast`${exports}["${name}"] = ${value}`,
+  default: ({
+    exports,
+    name,
+    value
+  }) => _core.template.expression.ast`${exports}.${name} = ${value}`,
+  define: ({
+    exports,
+    name,
+    value
+  }) => _core.template.expression.ast`
+      Object.defineProperty(${exports}, "${name}", {
+        enumerable: true,
+        value: void 0,
+        writable: true
+      })["${name}"] = ${value}`
+};
+function buildInitStatement(metadata, exportNames, initExpr) {
+  const {
+    stringSpecifiers,
+    exportName: exports
+  } = metadata;
+  return _core.types.expressionStatement(exportNames.reduce((value, name) => {
+    const params = {
+      exports,
+      name,
+      value
+    };
+    if (name === "__proto__") {
+      return InitTemplate.define(params);
+    }
+    if (stringSpecifiers.has(name)) {
+      return InitTemplate.computed(params);
+    }
+    return InitTemplate.default(params);
+  }, initExpr));
+}
+
+//# sourceMappingURL=index.js.map
