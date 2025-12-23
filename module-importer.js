@@ -1,10 +1,14 @@
-import { createRequire } from 'module';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-
 /**
  * @fileoverview Universal module importer
  */
+
+//-----------------------------------------------------------------------------
+// Imports
+//-----------------------------------------------------------------------------
+
+import { createRequire } from "module";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 
 //-----------------------------------------------------------------------------
 // Helpers
