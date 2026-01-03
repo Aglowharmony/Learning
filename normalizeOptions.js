@@ -1,41 +1,22 @@
 const { d, n } = require('../../options');
 
 /**
- * Normalizes the options for the plugin.
- * @param {import('../types').ReactRefreshPluginOptions} options Non-normalized plugin options.
- * @returns {import('../types').NormalizedPluginOptions} Normalized plugin options.
+ * Normalizes the options for the loader.
+ * @param {import('../types').ReactRefreshLoaderOptions} options Non-normalized loader options.
+ * @returns {import('../types').NormalizedLoaderOptions} Normalized loader options.
  */
 const normalizeOptions = (options) => {
-  d(options, 'exclude', /node_modules/i);
-  d(options, 'include', /\.([cm]js|[jt]sx?|flow)$/i);
-  d(options, 'forceEnable');
-  d(options, 'library');
+  d(options, 'const', false);
 
-  n(options, 'overlay', (overlay) => {
-    /** @type {import('../types').NormalizedErrorOverlayOptions} */
-    const defaults = {
-      entry: require.resolve('../../client/ErrorOverlayEntry'),
-      module: require.resolve('../../overlay'),
-      sockIntegration: 'wds',
-    };
-
-    if (overlay === false) {
-      return false;
-    }
-    if (typeof overlay === 'undefined' || overlay === true) {
-      return defaults;
+  n(options, 'esModule', (esModule) => {
+    if (typeof esModule === 'boolean' || typeof esModule === 'undefined') {
+      return esModule;
     }
 
-    d(overlay, 'entry', defaults.entry);
-    d(overlay, 'module', defaults.module);
-    d(overlay, 'sockIntegration', defaults.sockIntegration);
-    d(overlay, 'sockHost');
-    d(overlay, 'sockPath');
-    d(overlay, 'sockPort');
-    d(overlay, 'sockProtocol');
-    d(options, 'useURLPolyfill');
+    d(esModule, 'include');
+    d(esModule, 'exclude');
 
-    return overlay;
+    return esModule;
   });
 
   return options;
