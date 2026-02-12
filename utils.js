@@ -1,189 +1,435 @@
-"use strict";
+'use strict';
 
-exports.__esModule = true;
-exports.createUtilsGetter = createUtilsGetter;
-exports.getImportSource = getImportSource;
-exports.getRequireSource = getRequireSource;
-exports.has = has;
-exports.intersection = intersection;
-exports.resolveKey = resolveKey;
-exports.resolveSource = resolveSource;
-var _babel = _interopRequireWildcard(require("@babel/core"));
-function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function (e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || "object" != typeof e && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) "default" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }
-const {
-  types: t,
-  template: template
-} = _babel.default || _babel;
-function intersection(a, b) {
-  const result = new Set();
-  a.forEach(v => b.has(v) && result.add(v));
-  return result;
-}
-function has(object, key) {
-  return Object.prototype.hasOwnProperty.call(object, key);
-}
-function resolve(path, resolved = new Set()) {
-  if (resolved.has(path)) return;
-  resolved.add(path);
-  if (path.isVariableDeclarator()) {
-    if (path.get("id").isIdentifier()) {
-      return resolve(path.get("init"), resolved);
-    }
-  } else if (path.isReferencedIdentifier()) {
-    const binding = path.scope.getBinding(path.node.name);
-    if (!binding) return path;
-    if (!binding.constant) return;
-    return resolve(binding.path, resolved);
-  }
-  return path;
-}
-function resolveId(path) {
-  if (path.isIdentifier() && !path.scope.hasBinding(path.node.name, /* noGlobals */true)) {
-    return path.node.name;
-  }
-  const resolved = resolve(path);
-  if (resolved != null && resolved.isIdentifier()) {
-    return resolved.node.name;
-  }
-}
-function resolveKey(path, computed = false) {
-  const {
-    scope
-  } = path;
-  if (path.isStringLiteral()) return path.node.value;
-  const isIdentifier = path.isIdentifier();
-  if (isIdentifier && !(computed || path.parent.computed)) {
-    return path.node.name;
-  }
-  if (computed && path.isMemberExpression() && path.get("object").isIdentifier({
-    name: "Symbol"
-  }) && !scope.hasBinding("Symbol", /* noGlobals */true)) {
-    const sym = resolveKey(path.get("property"), path.node.computed);
-    if (sym) return "Symbol." + sym;
-  }
-  if (isIdentifier ? scope.hasBinding(path.node.name, /* noGlobals */true) : path.isPure()) {
-    const {
-      value
-    } = path.evaluate();
-    if (typeof value === "string") return value;
-  }
-}
-function resolveSource(obj) {
-  if (obj.isMemberExpression() && obj.get("property").isIdentifier({
-    name: "prototype"
-  })) {
-    const id = resolveId(obj.get("object"));
-    if (id) {
-      return {
-        id,
-        placement: "prototype"
-      };
-    }
-    return {
-      id: null,
-      placement: null
-    };
-  }
-  const id = resolveId(obj);
-  if (id) {
-    return {
-      id,
-      placement: "static"
-    };
-  }
-  const path = resolve(obj);
-  switch (path == null ? void 0 : path.type) {
-    case "RegExpLiteral":
-      return {
-        id: "RegExp",
-        placement: "prototype"
-      };
-    case "FunctionExpression":
-      return {
-        id: "Function",
-        placement: "prototype"
-      };
-    case "StringLiteral":
-      return {
-        id: "String",
-        placement: "prototype"
-      };
-    case "NumberLiteral":
-      return {
-        id: "Number",
-        placement: "prototype"
-      };
-    case "BooleanLiteral":
-      return {
-        id: "Boolean",
-        placement: "prototype"
-      };
-    case "ObjectExpression":
-      return {
-        id: "Object",
-        placement: "prototype"
-      };
-    case "ArrayExpression":
-      return {
-        id: "Array",
-        placement: "prototype"
-      };
-  }
-  return {
-    id: null,
-    placement: null
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+exports.wrapAnsiString =
+  exports.trimAndFormatPath =
+  exports.relativePath =
+  exports.printDisplayName =
+  exports.getSummary =
+  exports.formatTestPath =
+    void 0;
+
+function path() {
+  const data = _interopRequireWildcard(require('path'));
+
+  path = function () {
+    return data;
   };
+
+  return data;
 }
-function getImportSource({
-  node
-}) {
-  if (node.specifiers.length === 0) return node.source.value;
+
+function _chalk() {
+  const data = _interopRequireDefault(require('chalk'));
+
+  _chalk = function () {
+    return data;
+  };
+
+  return data;
 }
-function getRequireSource({
-  node
-}) {
-  if (!t.isExpressionStatement(node)) return;
-  const {
-    expression
-  } = node;
-  if (t.isCallExpression(expression) && t.isIdentifier(expression.callee) && expression.callee.name === "require" && expression.arguments.length === 1 && t.isStringLiteral(expression.arguments[0])) {
-    return expression.arguments[0].value;
+
+function _slash() {
+  const data = _interopRequireDefault(require('slash'));
+
+  _slash = function () {
+    return data;
+  };
+
+  return data;
+}
+
+function _jestUtil() {
+  const data = require('jest-util');
+
+  _jestUtil = function () {
+    return data;
+  };
+
+  return data;
+}
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {default: obj};
+}
+
+function _getRequireWildcardCache(nodeInterop) {
+  if (typeof WeakMap !== 'function') return null;
+  var cacheBabelInterop = new WeakMap();
+  var cacheNodeInterop = new WeakMap();
+  return (_getRequireWildcardCache = function (nodeInterop) {
+    return nodeInterop ? cacheNodeInterop : cacheBabelInterop;
+  })(nodeInterop);
+}
+
+function _interopRequireWildcard(obj, nodeInterop) {
+  if (!nodeInterop && obj && obj.__esModule) {
+    return obj;
   }
-}
-function hoist(node) {
-  // @ts-expect-error
-  node._blockHoist = 3;
-  return node;
-}
-function createUtilsGetter(cache) {
-  return path => {
-    const prog = path.findParent(p => p.isProgram());
-    return {
-      injectGlobalImport(url, moduleName) {
-        cache.storeAnonymous(prog, url, moduleName, (isScript, source) => {
-          return isScript ? template.statement.ast`require(${source})` : t.importDeclaration([], source);
-        });
-      },
-      injectNamedImport(url, name, hint = name, moduleName) {
-        return cache.storeNamed(prog, url, name, moduleName, (isScript, source, name) => {
-          const id = prog.scope.generateUidIdentifier(hint);
-          return {
-            node: isScript ? hoist(template.statement.ast`
-                  var ${id} = require(${source}).${name}
-                `) : t.importDeclaration([t.importSpecifier(id, name)], source),
-            name: id.name
-          };
-        });
-      },
-      injectDefaultImport(url, hint = url, moduleName) {
-        return cache.storeNamed(prog, url, "default", moduleName, (isScript, source) => {
-          const id = prog.scope.generateUidIdentifier(hint);
-          return {
-            node: isScript ? hoist(template.statement.ast`var ${id} = require(${source})`) : t.importDeclaration([t.importDefaultSpecifier(id)], source),
-            name: id.name
-          };
-        });
+  if (obj === null || (typeof obj !== 'object' && typeof obj !== 'function')) {
+    return {default: obj};
+  }
+  var cache = _getRequireWildcardCache(nodeInterop);
+  if (cache && cache.has(obj)) {
+    return cache.get(obj);
+  }
+  var newObj = {};
+  var hasPropertyDescriptor =
+    Object.defineProperty && Object.getOwnPropertyDescriptor;
+  for (var key in obj) {
+    if (key !== 'default' && Object.prototype.hasOwnProperty.call(obj, key)) {
+      var desc = hasPropertyDescriptor
+        ? Object.getOwnPropertyDescriptor(obj, key)
+        : null;
+      if (desc && (desc.get || desc.set)) {
+        Object.defineProperty(newObj, key, desc);
+      } else {
+        newObj[key] = obj[key];
       }
-    };
-  };
+    }
+  }
+  newObj.default = obj;
+  if (cache) {
+    cache.set(obj, newObj);
+  }
+  return newObj;
 }
+
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+const PROGRESS_BAR_WIDTH = 40;
+
+const printDisplayName = config => {
+  const {displayName} = config;
+
+  const white = _chalk().default.reset.inverse.white;
+
+  if (!displayName) {
+    return '';
+  }
+
+  const {name, color} = displayName;
+  const chosenColor = _chalk().default.reset.inverse[color]
+    ? _chalk().default.reset.inverse[color]
+    : white;
+  return _chalk().default.supportsColor ? chosenColor(` ${name} `) : name;
+};
+
+exports.printDisplayName = printDisplayName;
+
+const trimAndFormatPath = (pad, config, testPath, columns) => {
+  const maxLength = columns - pad;
+  const relative = relativePath(config, testPath);
+  const {basename} = relative;
+  let {dirname} = relative; // length is ok
+
+  if ((dirname + path().sep + basename).length <= maxLength) {
+    return (0, _slash().default)(
+      _chalk().default.dim(dirname + path().sep) +
+        _chalk().default.bold(basename)
+    );
+  } // we can fit trimmed dirname and full basename
+
+  const basenameLength = basename.length;
+
+  if (basenameLength + 4 < maxLength) {
+    const dirnameLength = maxLength - 4 - basenameLength;
+    dirname =
+      '...' + dirname.slice(dirname.length - dirnameLength, dirname.length);
+    return (0, _slash().default)(
+      _chalk().default.dim(dirname + path().sep) +
+        _chalk().default.bold(basename)
+    );
+  }
+
+  if (basenameLength + 4 === maxLength) {
+    return (0, _slash().default)(
+      _chalk().default.dim('...' + path().sep) + _chalk().default.bold(basename)
+    );
+  } // can't fit dirname, but can fit trimmed basename
+
+  return (0, _slash().default)(
+    _chalk().default.bold(
+      '...' + basename.slice(basename.length - maxLength - 4, basename.length)
+    )
+  );
+};
+
+exports.trimAndFormatPath = trimAndFormatPath;
+
+const formatTestPath = (config, testPath) => {
+  const {dirname, basename} = relativePath(config, testPath);
+  return (0, _slash().default)(
+    _chalk().default.dim(dirname + path().sep) + _chalk().default.bold(basename)
+  );
+};
+
+exports.formatTestPath = formatTestPath;
+
+const relativePath = (config, testPath) => {
+  // this function can be called with ProjectConfigs or GlobalConfigs. GlobalConfigs
+  // do not have config.cwd, only config.rootDir. Try using config.cwd, fallback
+  // to config.rootDir. (Also, some unit just use config.rootDir, which is ok)
+  testPath = path().relative(config.cwd || config.rootDir, testPath);
+  const dirname = path().dirname(testPath);
+  const basename = path().basename(testPath);
+  return {
+    basename,
+    dirname
+  };
+};
+
+exports.relativePath = relativePath;
+
+const getValuesCurrentTestCases = (currentTestCases = []) => {
+  let numFailingTests = 0;
+  let numPassingTests = 0;
+  let numPendingTests = 0;
+  let numTodoTests = 0;
+  let numTotalTests = 0;
+  currentTestCases.forEach(testCase => {
+    switch (testCase.testCaseResult.status) {
+      case 'failed': {
+        numFailingTests++;
+        break;
+      }
+
+      case 'passed': {
+        numPassingTests++;
+        break;
+      }
+
+      case 'skipped': {
+        numPendingTests++;
+        break;
+      }
+
+      case 'todo': {
+        numTodoTests++;
+        break;
+      }
+    }
+
+    numTotalTests++;
+  });
+  return {
+    numFailingTests,
+    numPassingTests,
+    numPendingTests,
+    numTodoTests,
+    numTotalTests
+  };
+};
+
+const getSummary = (aggregatedResults, options) => {
+  let runTime = (Date.now() - aggregatedResults.startTime) / 1000;
+
+  if (options && options.roundTime) {
+    runTime = Math.floor(runTime);
+  }
+
+  const valuesForCurrentTestCases = getValuesCurrentTestCases(
+    options === null || options === void 0 ? void 0 : options.currentTestCases
+  );
+  const estimatedTime = (options && options.estimatedTime) || 0;
+  const snapshotResults = aggregatedResults.snapshot;
+  const snapshotsAdded = snapshotResults.added;
+  const snapshotsFailed = snapshotResults.unmatched;
+  const snapshotsOutdated = snapshotResults.unchecked;
+  const snapshotsFilesRemoved = snapshotResults.filesRemoved;
+  const snapshotsDidUpdate = snapshotResults.didUpdate;
+  const snapshotsPassed = snapshotResults.matched;
+  const snapshotsTotal = snapshotResults.total;
+  const snapshotsUpdated = snapshotResults.updated;
+  const suitesFailed = aggregatedResults.numFailedTestSuites;
+  const suitesPassed = aggregatedResults.numPassedTestSuites;
+  const suitesPending = aggregatedResults.numPendingTestSuites;
+  const suitesRun = suitesFailed + suitesPassed;
+  const suitesTotal = aggregatedResults.numTotalTestSuites;
+  const testsFailed = aggregatedResults.numFailedTests;
+  const testsPassed = aggregatedResults.numPassedTests;
+  const testsPending = aggregatedResults.numPendingTests;
+  const testsTodo = aggregatedResults.numTodoTests;
+  const testsTotal = aggregatedResults.numTotalTests;
+  const width = (options && options.width) || 0;
+  const suites =
+    _chalk().default.bold('Test Suites: ') +
+    (suitesFailed
+      ? _chalk().default.bold.red(`${suitesFailed} failed`) + ', '
+      : '') +
+    (suitesPending
+      ? _chalk().default.bold.yellow(`${suitesPending} skipped`) + ', '
+      : '') +
+    (suitesPassed
+      ? _chalk().default.bold.green(`${suitesPassed} passed`) + ', '
+      : '') +
+    (suitesRun !== suitesTotal
+      ? suitesRun + ' of ' + suitesTotal
+      : suitesTotal) +
+    ' total';
+  const updatedTestsFailed =
+    testsFailed + valuesForCurrentTestCases.numFailingTests;
+  const updatedTestsPending =
+    testsPending + valuesForCurrentTestCases.numPendingTests;
+  const updatedTestsTodo = testsTodo + valuesForCurrentTestCases.numTodoTests;
+  const updatedTestsPassed =
+    testsPassed + valuesForCurrentTestCases.numPassingTests;
+  const updatedTestsTotal =
+    testsTotal + valuesForCurrentTestCases.numTotalTests;
+  const tests =
+    _chalk().default.bold('Tests:       ') +
+    (updatedTestsFailed > 0
+      ? _chalk().default.bold.red(`${updatedTestsFailed} failed`) + ', '
+      : '') +
+    (updatedTestsPending > 0
+      ? _chalk().default.bold.yellow(`${updatedTestsPending} skipped`) + ', '
+      : '') +
+    (updatedTestsTodo > 0
+      ? _chalk().default.bold.magenta(`${updatedTestsTodo} todo`) + ', '
+      : '') +
+    (updatedTestsPassed > 0
+      ? _chalk().default.bold.green(`${updatedTestsPassed} passed`) + ', '
+      : '') +
+    `${updatedTestsTotal} total`;
+  const snapshots =
+    _chalk().default.bold('Snapshots:   ') +
+    (snapshotsFailed
+      ? _chalk().default.bold.red(`${snapshotsFailed} failed`) + ', '
+      : '') +
+    (snapshotsOutdated && !snapshotsDidUpdate
+      ? _chalk().default.bold.yellow(`${snapshotsOutdated} obsolete`) + ', '
+      : '') +
+    (snapshotsOutdated && snapshotsDidUpdate
+      ? _chalk().default.bold.green(`${snapshotsOutdated} removed`) + ', '
+      : '') +
+    (snapshotsFilesRemoved && !snapshotsDidUpdate
+      ? _chalk().default.bold.yellow(
+          (0, _jestUtil().pluralize)('file', snapshotsFilesRemoved) +
+            ' obsolete'
+        ) + ', '
+      : '') +
+    (snapshotsFilesRemoved && snapshotsDidUpdate
+      ? _chalk().default.bold.green(
+          (0, _jestUtil().pluralize)('file', snapshotsFilesRemoved) + ' removed'
+        ) + ', '
+      : '') +
+    (snapshotsUpdated
+      ? _chalk().default.bold.green(`${snapshotsUpdated} updated`) + ', '
+      : '') +
+    (snapshotsAdded
+      ? _chalk().default.bold.green(`${snapshotsAdded} written`) + ', '
+      : '') +
+    (snapshotsPassed
+      ? _chalk().default.bold.green(`${snapshotsPassed} passed`) + ', '
+      : '') +
+    `${snapshotsTotal} total`;
+  const time = renderTime(runTime, estimatedTime, width);
+  return [suites, tests, snapshots, time].join('\n');
+};
+
+exports.getSummary = getSummary;
+
+const renderTime = (runTime, estimatedTime, width) => {
+  // If we are more than one second over the estimated time, highlight it.
+  const renderedTime =
+    estimatedTime && runTime >= estimatedTime + 1
+      ? _chalk().default.bold.yellow((0, _jestUtil().formatTime)(runTime, 0))
+      : (0, _jestUtil().formatTime)(runTime, 0);
+  let time = _chalk().default.bold('Time:') + `        ${renderedTime}`;
+
+  if (runTime < estimatedTime) {
+    time += `, estimated ${(0, _jestUtil().formatTime)(estimatedTime, 0)}`;
+  } // Only show a progress bar if the test run is actually going to take
+  // some time.
+
+  if (estimatedTime > 2 && runTime < estimatedTime && width) {
+    const availableWidth = Math.min(PROGRESS_BAR_WIDTH, width);
+    const length = Math.min(
+      Math.floor((runTime / estimatedTime) * availableWidth),
+      availableWidth
+    );
+
+    if (availableWidth >= 2) {
+      time +=
+        '\n' +
+        _chalk().default.green('█').repeat(length) +
+        _chalk()
+          .default.white('█')
+          .repeat(availableWidth - length);
+    }
+  }
+
+  return time;
+}; // word-wrap a string that contains ANSI escape sequences.
+// ANSI escape sequences do not add to the string length.
+
+const wrapAnsiString = (string, terminalWidth) => {
+  if (terminalWidth === 0) {
+    // if the terminal width is zero, don't bother word-wrapping
+    return string;
+  }
+
+  const ANSI_REGEXP = /[\u001b\u009b]\[\d{1,2}m/gu;
+  const tokens = [];
+  let lastIndex = 0;
+  let match;
+
+  while ((match = ANSI_REGEXP.exec(string))) {
+    const ansi = match[0];
+    const index = match['index'];
+
+    if (index != lastIndex) {
+      tokens.push(['string', string.slice(lastIndex, index)]);
+    }
+
+    tokens.push(['ansi', ansi]);
+    lastIndex = index + ansi.length;
+  }
+
+  if (lastIndex != string.length - 1) {
+    tokens.push(['string', string.slice(lastIndex, string.length)]);
+  }
+
+  let lastLineLength = 0;
+  return tokens
+    .reduce(
+      (lines, [kind, token]) => {
+        if (kind === 'string') {
+          if (lastLineLength + token.length > terminalWidth) {
+            while (token.length) {
+              const chunk = token.slice(0, terminalWidth - lastLineLength);
+              const remaining = token.slice(
+                terminalWidth - lastLineLength,
+                token.length
+              );
+              lines[lines.length - 1] += chunk;
+              lastLineLength += chunk.length;
+              token = remaining;
+
+              if (token.length) {
+                lines.push('');
+                lastLineLength = 0;
+              }
+            }
+          } else {
+            lines[lines.length - 1] += token;
+            lastLineLength += token.length;
+          }
+        } else {
+          lines[lines.length - 1] += token;
+        }
+
+        return lines;
+      },
+      ['']
+    )
+    .join('\n');
+};
+
+exports.wrapAnsiString = wrapAnsiString;
