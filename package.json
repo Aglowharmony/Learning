@@ -1,48 +1,65 @@
 {
-  "name": "@bcoe/v8-coverage",
-  "version": "0.2.3",
-  "description": "Helper functions for V8 coverage files.",
-  "author": "Charles Samborski <demurgos@demurgos.net> (https://demurgos.net)",
+  "name": "@emotion/utils",
+  "version": "1.4.2",
+  "description": "internal utils for emotion",
+  "main": "dist/emotion-utils.cjs.js",
+  "module": "dist/emotion-utils.esm.js",
+  "types": "dist/emotion-utils.cjs.d.ts",
+  "exports": {
+    ".": {
+      "types": {
+        "import": "./dist/emotion-utils.cjs.mjs",
+        "default": "./dist/emotion-utils.cjs.js"
+      },
+      "edge-light": {
+        "module": "./dist/emotion-utils.edge-light.esm.js",
+        "import": "./dist/emotion-utils.edge-light.cjs.mjs",
+        "default": "./dist/emotion-utils.edge-light.cjs.js"
+      },
+      "worker": {
+        "module": "./dist/emotion-utils.edge-light.esm.js",
+        "import": "./dist/emotion-utils.edge-light.cjs.mjs",
+        "default": "./dist/emotion-utils.edge-light.cjs.js"
+      },
+      "workerd": {
+        "module": "./dist/emotion-utils.edge-light.esm.js",
+        "import": "./dist/emotion-utils.edge-light.cjs.mjs",
+        "default": "./dist/emotion-utils.edge-light.cjs.js"
+      },
+      "browser": {
+        "module": "./dist/emotion-utils.browser.esm.js",
+        "import": "./dist/emotion-utils.browser.cjs.mjs",
+        "default": "./dist/emotion-utils.browser.cjs.js"
+      },
+      "module": "./dist/emotion-utils.esm.js",
+      "import": "./dist/emotion-utils.cjs.mjs",
+      "default": "./dist/emotion-utils.cjs.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "imports": {
+    "#is-browser": {
+      "edge-light": "./src/conditions/false.ts",
+      "workerd": "./src/conditions/false.ts",
+      "worker": "./src/conditions/false.ts",
+      "browser": "./src/conditions/true.ts",
+      "default": "./src/conditions/is-browser.ts"
+    }
+  },
   "license": "MIT",
-  "main": "dist/lib/index",
-  "types": "dist/lib/index.d.ts",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/demurgos/v8-coverage.git"
-  },
-  "homepage": "https://demurgos.github.io/v8-coverage",
   "scripts": {
-    "prepare": "gulp all:tsconfig.json && gulp dist",
-    "pretest": "gulp lib:build",
-    "test": "gulp test",
-    "lint": "gulp :lint:fix"
+    "test:typescript": "dtslint types"
   },
+  "repository": "https://github.com/emotion-js/emotion/tree/main/packages/utils",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
   "devDependencies": {
-    "@types/chai": "^4.1.4",
-    "@types/gulp": "^4.0.5",
-    "@types/minimist": "^1.2.0",
-    "@types/mocha": "^5.2.2",
-    "@types/node": "^10.5.4",
-    "chai": "^4.1.2",
-    "codecov": "^3.0.2",
-    "gulp": "^4.0.0",
-    "gulp-cli": "^2.0.1",
-    "minimist": "^1.2.0",
-    "pre-commit": "^1.2.2",
-    "ts-node": "^8.3.0",
-    "turbo-gulp": "^0.20.1"
-  },
-  "nyc": {
-    "include": [
-      "build/test/lib/**/*.js",
-      "build/test/lib/**/*.mjs"
-    ],
-    "reporter": [
-      "text",
-      "html"
-    ],
-    "extension": [
-      ".mjs"
-    ]
+    "@definitelytyped/dtslint": "0.0.112",
+    "typescript": "^5.4.5"
   }
 }
