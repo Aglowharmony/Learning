@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>LevelUp Startup</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+</head>
+
+<body onload="welcomeMessage()">
+
+<header>
+
+    <h2>LevelUp</h2>
+
+    <nav>
+
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact</a>
+
+    </nav>
+
+    <div class="cart" onclick="toggleCart()">
+        🛒 Cart <span id="cartCount" class="cart-count">0</span>
+    </div>
+
+</header>
+
+<section class="hero">
+
+    <h1>Build Your Startup</h1>
+
+    <p>Learn technology, build projects and launch your ideas with LevelUp.</p>
+
+    <a class="btn" href="products.html">Explore Products</a>
+
+</section>
+
+<section class="page">
+
+    <h1>Why Choose Us</h1>
+
+    <div class="card-container">
+
+        <div class="card">
+
+            <img src="https://images.unsplash.com/photo-1551434678-e076c223a692">
+
+            <h3>Learn Web Development</h3>
+
+            <p>Master HTML, CSS and JavaScript by building real startup projects.</p>
+
+        </div>
+
+        <div class="card">
+
+            <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d">
+
+            <h3>Startup Mentoring</h3>
+
+            <p>Get guidance on building and launching your startup idea.</p>
+
+        </div>
+
+        <div class="card">
+
+            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c">
+
+            <h3>Community</h3>
+
+            <p>Connect with builders, founders and developers.</p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<div class="cart-panel" id="cartPanel">
+
+    <div class="cart-header">
+
+        <h3>Your Cart</h3>
+
+        <button class="close-cart" onclick="toggleCart()">✖</button>
+
+    </div>
+
+    <ul id="cartItems"></ul>
+
+    <div class="cart-footer">
+
+        <button onclick="clearCart()" class="clear-cart">Clear Cart</button>
+
+    </div>
+
+</div>
+
+<footer>
+
+    <div class="footer-container">
+
+        <div class="footer-col">
+
+            <h3 class="logo">LevelUp</h3>
+
+            <p>
+                Helping students learn technology, build startups and grow through innovation.
+            </p>
+
+            <div class="social-icons">
+
+                <a href="https://www.instagram.com/levelupofficial.in/"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.linkedin.com/company/levelupevents"><i class="fab fa-instagram"></i></a>
+                <a href="https://discord.com/invite/5WjkenMeHC"><i class="fab fa-discord"></i></a>
+                <a href="https://youtube.com/@levelupofficial-in?si=9eGdfHSz66hm5krV"><i class="fab fa-youtube"></i></a>
+
+            </div>
+
+        </div>
+
+        <div class="footer-col">
+
+            <h4>Quick Links</h4>
+
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="services.html">Services</a>
+            <a href="contact.html">Contact</a>
+
+        </div>
+
+        <div class="footer-col">
+
+            <h4>Resources</h4>
+
+            <a href="#">Startup Guides</a>
+            <a href="#">Web Development</a>
+            <a href="#">Community</a>
+            <a href="#">Workshops</a>
+
+        </div>
+
+        <div class="footer-col">
+
+            <h4>Contact</h4>
+
+            <p>Email: hello@levelup.com</p>
+            <p>Location: Mumbai, India</p>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+        <p>© 2026 LevelUp | Learn • Build • Launch</p>
+
+    </div>
+
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
+

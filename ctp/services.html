@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Services</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<header>
+
+    <h2>LevelUp</h2>
+
+    <nav>
+
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact</a>
+
+    </nav>
+
+    <div class="cart" onclick="toggleCart()">
+        🛒 Cart <span id="cartCount" class="cart-count">0</span>
+    </div>
+
+</header>
+
+<section class="page">
+
+    <h1>Our Services</h1>
+    <p>Helping students build skills, launch startups and grow with technology.</p>
+
+    <div class="card-container">
+
+        <!-- Web Development -->
+
+        <div class="card">
+
+            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085">
+
+            <h3>Web Development</h3>
+
+            <p>Learn how to build modern websites from scratch.</p>
+
+            <button onclick="toggleDetails('web')">Know More</button>
+
+            <div id="web" class="details">
+
+                <h4>Overview</h4>
+                <p>
+                    Learn how websites work and build your own projects using HTML, CSS and JavaScript.
+                    Perfect for beginners entering the tech world.
+                </p>
+
+                <h4>Learning Roadmap</h4>
+
+                <ul>
+                    <li>HTML – Structure of a website</li>
+                    <li>CSS – Design and layout</li>
+                    <li>JavaScript – Website interactivity</li>
+                    <li>GitHub – Version control</li>
+                    <li>Deployment – Hosting your site online</li>
+                </ul>
+
+                <h4>Recommended Resources</h4>
+
+                <ul>
+                    <li>MDN Web Docs</li>
+                    <li>freeCodeCamp</li>
+                    <li>JavaScript.info</li>
+                    <li>GitHub Learning Lab</li>
+                </ul>
+
+            </div>
+
+        </div>
+
+
+        <!-- Startup Building -->
+
+        <div class="card">
+
+            <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0">
+
+            <h3>Startup Building</h3>
+
+            <p>Turn your ideas into real startup projects.</p>
+
+            <button onclick="toggleDetails('startup')">Know More</button>
+
+            <div id="startup" class="details">
+
+                <h4>Overview</h4>
+                <p>
+                    Learn how startups are built, validated and launched.
+                    Understand how to turn your idea into a product.
+                </p>
+
+                <h4>Startup Roadmap</h4>
+
+                <ul>
+                    <li>Identify a real-world problem</li>
+                    <li>Validate the idea with users</li>
+                    <li>Create a simple MVP</li>
+                    <li>Launch your product</li>
+                    <li>Improve based on feedback</li>
+                </ul>
+
+                <h4>Recommended Resources</h4>
+
+                <ul>
+                    <li>Y Combinator Startup School</li>
+                    <li>Paul Graham Essays</li>
+                    <li>Lean Startup Method</li>
+                    <li>Product Hunt</li>
+                </ul>
+
+            </div>
+
+        </div>
+
+
+        <!-- Mentoring -->
+
+        <div class="card">
+
+            <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d">
+
+            <h3>Startup Mentoring</h3>
+
+            <p>Guidance for students building startups.</p>
+
+            <button onclick="toggleDetails('mentor')">Know More</button>
+
+            <div id="mentor" class="details">
+
+                <h4>Overview</h4>
+                <p>
+                    Mentorship helps students avoid common startup mistakes and build products faster.
+                </p>
+
+                <h4>Mentorship Areas</h4>
+
+                <ul>
+                    <li>Idea validation</li>
+                    <li>MVP building</li>
+                    <li>Product strategy</li>
+                    <li>Team building</li>
+                    <li>Pitch preparation</li>
+                </ul>
+
+                <h4>Resources</h4>
+
+                <ul>
+                    <li>Startup pitch decks</li>
+                    <li>Market research tools</li>
+                    <li>Product development frameworks</li>
+                </ul>
+
+            </div>
+
+        </div>
+
+
+        <!-- Community -->
+
+        <div class="card">
+
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c">
+
+            <h3>Community Building</h3>
+
+            <p>Connecting builders, founders and learners.</p>
+
+            <button onclick="toggleDetails('community')">Know More</button>
+
+            <div id="community" class="details">
+
+                <h4>Overview</h4>
+                <p>
+                    Communities help people learn faster by sharing ideas, projects and opportunities.
+                </p>
+
+                <h4>Community Activities</h4>
+
+                <ul>
+                    <li>Workshops</li>
+                    <li>Startup meetups</li>
+                    <li>Hackathons</li>
+                    <li>Networking events</li>
+                    <li>Collaborative projects</li>
+                </ul>
+
+                <h4>Platforms</h4>
+
+                <ul>
+                    <li>Discord communities</li>
+                    <li>LinkedIn groups</li>
+                    <li>GitHub collaboration</li>
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<div class="cart-panel" id="cartPanel">
+
+    <div class="cart-header">
+
+        <h3>Your Cart</h3>
+
+        <button class="close-cart" onclick="toggleCart()">✖</button>
+
+    </div>
+
+    <ul id="cartItems"></ul>
+
+    <div class="cart-footer">
+
+        <button onclick="clearCart()" class="clear-cart">Clear Cart</button>
+
+    </div>
+
+</div>
+
+<footer>
+
+    <div class="footer-container">
+
+        <div class="footer-col">
+
+            <h3 class="logo">LevelUp</h3>
+
+            <p>
+                Helping students learn technology, build startups and grow through innovation.
+            </p>
+
+            <div class="social-icons">
+
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+
+            </div>
+
+        </div>
+
+        <div class="footer-col">
+
+            <h4>Quick Links</h4>
+
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="services.html">Services</a>
+            <a href="contact.html">Contact</a>
+
+        </div>
+
+        <div class="footer-col">
+
+            <h4>Resources</h4>
+
+            <a href="#">Startup Guides</a>
+            <a href="#">Web Development</a>
+            <a href="#">Community</a>
+            <a href="#">Workshops</a>
+
+        </div>
+
+        <div class="footer-col">
+
+            <h4>Contact</h4>
+
+            <p>Email: hello@levelup.com</p>
+            <p>Location: Mumbai, India</p>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+        <p>© 2026 LevelUp | Learn • Build • Launch</p>
+
+    </div>
+
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
+
