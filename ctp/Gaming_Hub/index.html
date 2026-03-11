@@ -1,131 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vengeance Hub | Gaming Intel</title>
-    
-    <!-- 1. STYLE LINKS -->
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
-    <!-- Orbitron for that 'Batman Tech' Font -->
-    <link href="https://fonts.googleapis.com" rel="stylesheet">
-    <!-- AOS: The 'Crazy Scroll' Library -->
-    <link href="https://unpkg.com" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VENGEANCE HUB | Gaming Command</title>
+
+  <!-- STYLES & FONTS -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
+  <!-- Orbitron for Titles, Poppins for Body -->
+  <link href="https://fonts.googleapis.com" rel="stylesheet">
+
+  <!-- AOS: The 'Crazy Scroll' Library (CDN Version) -->
+  <link href="https://unpkg.com" rel="stylesheet">
 </head>
 
 <body>
 
+<!-- 1. HIGH-TECH NAVIGATION -->
 <header>
-    <nav>
-        <img src="images/nn.png" class="logo" alt="HUB">
-        <a href="index.html">Intel (News)</a>
-        <a href="#store">Store</a>
-        <a href="#profile">Profile</a>
-    </nav>
-
-    <!-- Clicking this opens your sidebar -->
-    <div class="cart" onclick="toggleCart()">
-        <i class="fas fa-crosshairs"></i> TRACKED DEALS (<span id="cartCount">0</span>)
+  <nav>
+    <div class="nav-left">
+      <img src="images/logo.png" class="logo" alt="V">
+      <a href="index.html" class="active">INTEL</a>
+      <a href="armory.html">ARMORY</a>
+      <a href="deployments.html">DEPLOYMENTS</a>
+      <a href="vault.html">THE VAULT</a>
     </div>
+
+    <div class="nav-right">
+      <!-- Intel Tracker Icon -->
+      <div class="icon-btn" onclick="toggleCart()">
+        <i class="fas fa-crosshairs"></i>
+        <span id="cartCount">0</span>
+      </div>
+
+      <!-- PROFILE DROPDOWN ANCHOR -->
+      <div class="profile-container">
+        <!-- Using Witcher 3 image for your avatar as requested -->
+        <img src="images/witcher3.jpg" class="avatar-trigger" onclick="toggleProfileMenu()">
+
+        <div id="profileDropdown" class="profile-menu">
+          <div class="menu-header">
+            <h4>OPERATIVE_77</h4>
+            <p id="profile-rank">SHADOW INITIATE</p>
+          </div>
+          <div class="xp-mini-bar">
+            <div id="xpProgress" class="xp-fill"></div>
+          </div>
+          <div class="menu-divider"></div>
+          <a href="profile.html"><i class="fas fa-user-shield"></i> MY STATS</a>
+          <a href="#" class="logout-link"><i class="fas fa-power-off"></i> DISCONNECT</a>
+        </div>
+      </div>
+    </div>
+  </nav>
 </header>
 
-<!-- HERO SECTION: The Big Entrance -->
-<section class="hero" data-aos="zoom-in">
-    <h1 class="glitch">VENGEANCE HUB</h1>
-    <p>Your central command for news, sales, and system requirements.</p>
-    <div class="hero-btns">
-        <button onclick="window.location.href='#store'">Enter Store</button>
-        <button class="btn-alt" onclick="gainXP(20)">Sync Data (+20 XP)</button>
+<!-- 2. MASSIVE HERO SECTION (Using your Matrix image) -->
+<section class="hero-main">
+  <div class="matrix-bg-overlay"></div>
+  <div class="hero-content" data-aos="zoom-out" data-aos-duration="1500">
+    <h1 class="glitch-text">VENGEANCE_HUB</h1>
+    <p>SATELLITE FEED [ONLINE] | ACCESSING DEPLOYMENT DATA...</p>
+
+    <div class="hero-actions">
+      <!-- Redirects to Armory (Store) -->
+      <button class="btn-primary" onclick="window.location.href='armory.html'">ENTER ARMORY</button>
+      <!-- Triggers Daily Bonus Alert and XP increase -->
+      <button class="btn-bonus" onclick="claimDailyBonus()">
+        <i class="fas fa-gift"></i> DAILY BONUS
+      </button>
     </div>
+  </div>
 </section>
 
-<!-- GAMING NEWS SECTION -->
-<section class="page">
-    <h1 data-aos="fade-right">LATEST INTEL</h1>
-    <p>Fresh updates from the global gaming network.</p>
+<!-- 3. CINEMATIC NEWS HIGHLIGHTS (Intel Section) -->
+<section class="news-highlights" id="intel">
+  <h2 class="section-label" data-aos="fade-right">TOP INTEL</h2>
 
-    <div class="card-container">
-        <!-- News Card 1 -->
-        <div class="card" data-aos="fade-up" data-aos-delay="100">
-            <img src="https://images.unsplash.com" alt="News">
-            <h3>GTA VI Map Update</h3>
-            <p>Leaked coordinates show a massive Vice City expansion. Ready your rigs.</p>
-            <button onclick="toggleDetails('news1')">Read More</button>
-            <div id="news1" class="details">
-                <h4>Full Report:</h4>
-                <p>The map is expected to be 2.5x larger than Los Santos with fully interactive interiors.</p>
-            </div>
-        </div>
-
-        <!-- News Card 2 (Store Item) -->
-        <div class="card" data-aos="fade-up" data-aos-delay="300" id="store">
-            <img src="https://images.unsplash.com" alt="Sale">
-            <h3>Elden Ring: Shadow</h3>
-            <p>Current Lowest: <span style="color: #00f3ff;">$39.99</span> (Steam)</p>
-            <button onclick="addToCart('Elden Ring: $39.99')">Track Deal</button>
-        </div>
-
-        <!-- News Card 3 (Requirements) -->
-        <div class="card" data-aos="fade-up" data-aos-delay="500">
-            <img src="https://images.unsplash.com" alt="Hardware">
-            <h3>Cyberpunk 2077 Specs</h3>
-            <p>Check if your Bat-computer can handle Night City at Overdrive settings.</p>
-            <button onclick="toggleDetails('req1')">Requirements</button>
-            <div id="req1" class="details">
-                <h4>Minimum Specs:</h4>
-                <ul>
-                    <li>GPU: RTX 2060</li>
-                    <li>RAM: 16GB</li>
-                    <li>Storage: 70GB SSD</li>
-                </ul>
-            </div>
-        </div>
+  <!-- News Strip 1 (GTA 6) -->
+  <div class="news-strip" data-aos="fade-up">
+    <div class="news-img-box">
+      <img src="images/gta6.jpg" alt="GTA 6">
     </div>
+    <div class="news-text">
+      <span class="badge">LEAK</span>
+      <h3>GTA VI: Vice City Expansion</h3>
+      <p>Leaked satellite data confirms the map is 2.5x larger than Los Santos. Ready your rigs for 2025.</p>
+    </div>
+  </div>
+
+  <!-- News Strip 2 (Warzone) -->
+  <div class="news-strip" data-aos="fade-up" data-aos-delay="200">
+    <div class="news-img-box">
+      <img src="images/warzone.jpg" alt="Warzone">
+    </div>
+    <div class="news-text">
+      <span class="badge cyan">MARKET</span>
+      <h3>Warzone: Combat Update</h3>
+      <p>Major tactical titles currently at historical lows. Check Armory for current sale status.</p>
+    </div>
+  </div>
 </section>
 
-<!-- USER PROFILE SECTION (For Stats Presentation) -->
-<section class="page" id="profile" style="background: #050505;">
-    <h1 data-aos="fade-up">OPERATIVE PROFILE</h1>
-    <div class="profile-card" data-aos="flip-up">
-        <h3>Rank: <span id="profile-rank" style="color: #bc13fe;">Shadow Initiate</span></h3>
-        <div class="xp-bar-bg">
-            <div id="xpProgress" class="xp-bar-fill"></div>
-        </div>
-        <p>Current Status: <span style="color: #00f3ff;">Online</span></p>
+<!-- 4. UPCOMING DEPLOYMENTS (Games) -->
+<section class="upcoming-section">
+  <h2 class="section-label" data-aos="fade-right">UPCOMING DEPLOYMENTS</h2>
+  <div class="upcoming-grid">
+
+    <!-- Game 1 (God of War) -->
+    <div class="upcoming-card" data-aos="flip-left">
+      <div class="release-tag">2026</div>
+      <img src="images/godofwar.jpg" alt="GOW">
+      <div class="card-info">
+        <h4>GOD OF WAR: RAGNAROK</h4>
+        <p>Status: PRE-INTEL</p>
+      </div>
     </div>
+
+    <!-- Game 2 (Last of Us 2) -->
+    <div class="upcoming-card" data-aos="flip-left" data-aos-delay="200">
+      <div class="release-tag">2026</div>
+      <img src="images/lou2.jpg" alt="LOU2">
+      <div class="card-info">
+        <h4>THE LAST OF US PART II</h4>
+        <p>Status: ARCHIVING...</p>
+      </div>
+    </div>
+
+  </div>
 </section>
 
-<!-- THE SLIDE-OUT TRACKER (Cart) -->
+<!-- 5. SLIDE-OUT TRACKER (Cart) -->
 <div class="cart-panel" id="cartPanel">
-    <div class="cart-header">
-        <h3>Tracked Intel</h3>
-        <button class="close-cart" onclick="toggleCart()">✖</button>
-    </div>
-    <ul id="cartItems"></ul>
-    <div class="cart-footer">
-        <button onclick="clearCart()" class="clear-cart">Purge Intel</button>
-    </div>
+  <div class="cart-header">
+    <h3>TRACKED INTEL</h3>
+    <button class="close-cart" onclick="toggleCart()">✖</button>
+  </div>
+  <ul id="cartItems"></ul>
+  <div class="cart-footer">
+    <button onclick="clearCart()" class="clear-cart">PURGE INTEL</button>
+  </div>
 </div>
 
+<!-- 6. FOOTER -->
 <footer>
-    <div class="footer-bottom">
-        <p>© 2026 Vengeance Hub | Built for the Night</p>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <img src="images/logo.png" class="footer-logo">
+      <p>The central command for gaming intelligence. Built for the night.</p>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-discord"></i></a>
+        <a href="#"><i class="fab fa-twitch"></i></a>
+        <a href="#"><i class="fab fa-steam"></i></a>
+      </div>
     </div>
+    <div class="footer-col">
+      <h4>OPERATIONS</h4>
+      <a href="index.html">Intel Feed</a>
+      <a href="armory.html">The Armory</a>
+      <a href="deployments.html">Deployments</a>
+    </div>
+    <div class="footer-col">
+      <h4>RESOURCES</h4>
+      <a href="#">Support</a>
+      <a href="vault.html">Data Vault</a>
+      <a href="#">Operative Code</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 VENGEANCE HUB | SMIT SHAH PROJECTS</p>
+  </div>
 </footer>
 
-<!-- 2. SCRIPTS -->
-<!-- AOS Scroll Library -->
+<!-- 7. SCRIPTS (AOS AND MAIN JS) -->
 <script src="https://unpkg.com"></script>
-<script>
-    // Simple init for the crazy scroll animations
-    AOS.init({
-        duration: 1000,
-        once: false,
-        mirror: true
-    });
-</script>
 <script src="script.js"></script>
+<script>
+  // Initialize AOS Animations
+  AOS.init({
+    duration: 1000,
+    once: false,
+    mirror: true
+  });
+</script>
 
 </body>
 </html>
