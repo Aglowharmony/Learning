@@ -9,10 +9,30 @@ window.onload = function() {
   updateProfileUI();
   updateIntelTracker();
 
-  // Aesthetic Console Log for your presentation
+  // 1. Hero Text "Drop-In" Animation
+  anime({
+    targets: '.glitch-text',
+    translateY: [-100, 0], // Drops from top
+    opacity: [0, 1],
+    duration: 2000,
+    easing: 'easeOutExpo'
+  });
+
+  // 2. Staggered Content Reveal (News Strips & Cards)
+  // This makes them fly in from the left one-by-one
+  anime({
+    targets: '.news-strip, .upcoming-card, .store-card, .vault-card',
+    translateX: [-200, 0],
+    opacity: [0, 1],
+    delay: anime.stagger(200), // 200ms delay between each card
+    duration: 1500,
+    easing: 'easeOutElastic(1, .6)' // Adds a cool "bounce" effect
+  });
+
   console.log("%c [SYSTEM]: Vengeance Hub Terminal Online.", "color: #bc13fe; font-weight: bold;");
-  console.log("%c [STATUS]: Satellite Link Secured.", "color: #00f3ff;");
 };
+
+
 
 /* --- 3. PROFILE DROPDOWN LOGIC --- */
 function toggleProfileMenu() {
@@ -146,7 +166,7 @@ window.addEventListener('click', function(e) {
 function logout() {
   // 1. Show an alert or terminal message
   const confirmExit = confirm("CRITICAL: Terminating satellite link. Wipe local intel?");
-  
+
   if (confirmExit) {
       // 2. Clear the data (Reset XP and Cart)
       localStorage.removeItem("userXP");
@@ -158,3 +178,6 @@ function logout() {
       window.location.href = "logout.html";
   }
 }
+
+
+

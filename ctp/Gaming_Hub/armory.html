@@ -14,7 +14,9 @@
 <header>
     <nav>
         <div class="nav-left">
-            <img src="images/logo.png" class="logo" alt="V">
+          <a href="index.html">
+            <img src="images/logo.png" class="logo" alt="Armory">
+          </a>
             <a href="index.html">INTEL</a>
             <a href="armory.html" class="active">ARMORY</a>
             <a href="deployments.html">DEPLOYMENTS</a>
@@ -25,7 +27,7 @@
             <div class="profile-container">
                 <img src="images/witcher3.jpg" class="avatar-trigger" onclick="toggleProfileMenu()">
                 <div id="profileDropdown" class="profile-menu">
-                    <div class="menu-header"><h4>OPERATIVE_77</h4><p id="profile-rank">Shadow Initiate</p></div>
+                    <div class="menu-header"><h4>Aglowharmony10</h4><p id="profile-rank">Shadow Initiate</p></div>
                     <div class="xp-mini-bar"><div id="xpProgress" class="xp-fill"></div></div>
                     <a href="profile.html">MY STATS</a>
                     <a href="index.html" class="logout-link">DISCONNECT</a>
@@ -35,7 +37,7 @@
     </nav>
 </header>
 
-<!-- STORE HERO -->
+<!--armory hero-->
 <section class="store-hero" style="background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('images/armory.jpg') center/cover;">
     <div class="hero-content" data-aos="zoom-in">
         <h1 class="glitch-text">THE ARMORY</h1>
@@ -50,13 +52,14 @@
 <!-- STORE GRID -->
 <section class="store-container">
     <div class="store-grid" id="gameGrid">
-        
-        <!-- Game 1 -->
+
+
+        <!--g1-->
         <div class="store-card" data-aos="fade-up" data-name="God of War">
             <div class="store-badge">LOWEST PRICE</div>
-            <img src="images/godofwar.jpg" alt="GOW">
+            <img src="images/godofwar.png" alt="GOW">
             <div class="store-info">
-                <h3>GOD OF WAR: RAGNAROK</h3>
+                <h3>Marvels</h3>
                 <div class="price-compare">
                     <span>Steam: <strong class="cyan">$29.99</strong></span>
                     <span>Epic: <strong>$34.99</strong></span>
@@ -65,7 +68,8 @@
             </div>
         </div>
 
-        <!-- Game 2 -->
+
+        <!--g2-->
         <div class="store-card" data-aos="fade-up" data-aos-delay="100" data-name="Warzone">
             <div class="store-badge">FREE</div>
             <img src="images/warzone.jpg" alt="Warzone">
@@ -79,7 +83,8 @@
             </div>
         </div>
 
-        <!-- Game 3 -->
+
+        <!--g3-->
         <div class="store-card" data-aos="fade-up" data-aos-delay="200" data-name="Witcher">
             <img src="images/witcher3.jpg" alt="Witcher">
             <div class="store-info">
@@ -92,35 +97,90 @@
             </div>
         </div>
 
+
+      <!--g4-->
+      <div class="store-card" data-aos="fade-up" data-aos-delay="200" data-name="Witcher">
+        <img src="images/witcher3.jpg" alt="Witcher">
+        <div class="store-info">
+          <h3>THE WITCHER 3</h3>
+          <div class="price-compare">
+            <span>GOG: <strong class="cyan">$9.99</strong></span>
+            <span>Steam: <strong>$14.99</strong></span>
+          </div>
+          <button class="btn-primary" onclick="addToCart('Witcher 3: $9.99')">SYNC DEAL</button>
+        </div>
+      </div>
+
+
+      <!--g5-->
+      <div class="store-card" data-aos="fade-up" data-aos-delay="200" data-name="Witcher">
+        <img src="images/witcher3.jpg" alt="Witcher">
+        <div class="store-info">
+          <h3>THE WITCHER 3</h3>
+          <div class="price-compare">
+            <span>GOG: <strong class="cyan">$9.99</strong></span>
+            <span>Steam: <strong>$14.99</strong></span>
+          </div>
+          <button class="btn-primary" onclick="addToCart('Witcher 3: $9.99')">SYNC DEAL</button>
+        </div>
+      </div>
+
+
+      <!--g6-->
+      <div class="store-card" data-aos="fade-up" data-aos-delay="200" data-name="Witcher">
+        <img src="images/witcher3.jpg" alt="Witcher">
+        <div class="store-info">
+          <h3>THE WITCHER 3</h3>
+          <div class="price-compare">
+            <span>GOG: <strong class="cyan">$9.99</strong></span>
+            <span>Steam: <strong>$14.99</strong></span>
+          </div>
+          <button class="btn-primary" onclick="addToCart('Witcher 3: $9.99')">SYNC DEAL</button>
+        </div>
+      </div>
+
+
     </div>
 </section>
 
 <!-- TRACKER PANEL -->
-<div class="cart-panel" id="cartPanel">
-    <div class="cart-header"><h3>TRACKED INTEL</h3><button class="close-cart" onclick="toggleCart()">✖</button></div>
-    <ul id="cartItems"></ul>
-    <div class="cart-footer"><button onclick="clearCart()" class="clear-cart">PURGE INTEL</button></div>
-</div>
-
-<script src="https://unpkg.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 <script src="script.js"></script>
-<script>
-    AOS.init({ duration: 1000, mirror: true });
 
-    // SIMPLE SEARCH FILTER LOGIC
-    function filterGames() {
-        let input = document.getElementById('gameSearch').value.toLowerCase();
-        let cards = document.getElementsByClassName('store-card');
-        
-        for (let i = 0; i < cards.length; i++) {
-            let name = cards[i].getAttribute('data-name').toLowerCase();
-            if (name.includes(input)) {
-                cards[i].style.display = "block";
-            } else {
-                cards[i].style.display = "none";
-            }
-        }
-    }
+<script>
+  // RICH SEARCH FILTER LOGIC
+  function filterGames() {
+    let input = document.getElementById('gameSearch').value.toLowerCase();
+    let cards = document.querySelectorAll('.store-card');
+
+    cards.forEach(card => {
+      let name = card.getAttribute('data-name').toLowerCase();
+
+      if (name.includes(input)) {
+        // Smoothly bring back the card
+        card.style.display = "block";
+        anime({
+          targets: card,
+          opacity: [0, 1],
+          scale: [0.9, 1],
+          duration: 500,
+          easing: 'easeOutExpo'
+        });
+      } else {
+        // Smoothly fade out the card
+        anime({
+          targets: card,
+          opacity: 0,
+          scale: 0.9,
+          duration: 400,
+          easing: 'easeOutExpo',
+          complete: () => {
+            card.style.display = "none";
+          }
+        });
+      }
+    });
+  }
 </script>
 </body>
 </html>

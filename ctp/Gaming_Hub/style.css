@@ -33,7 +33,7 @@ header {
   border-bottom: 2px solid var(--neon-purple);
   position: sticky;
   top: 0;
-  z-index: 9999 !important; 
+  z-index: 9999 !important;
 }
 
 
@@ -140,16 +140,62 @@ nav a:hover, nav a.active {
   z-index: -1;
 }
 
+/* --- SOFT NEON BLOOM --- */
 .glitch-text {
   font-family: 'Orbitron', sans-serif;
-  font-size: clamp(40px, 10vw, 80px);
-  letter-spacing: 8px;
-  color: white;
-  text-shadow: 0 0 20px var(--neon-purple);
+  font-size: clamp(50px, 10vw, 85px);
+  font-weight: 900;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 12px;
   margin-bottom: 20px;
+  position: relative;
+
+  /* 1. LAYERED SOFT GLOW (No Jitter) */
+  text-shadow:
+    0 0 10px rgba(255, 255, 255, 0.8),
+    0 0 20px var(--neon-purple),
+    0 0 40px var(--neon-purple),
+    0 0 80px rgba(188, 19, 254, 0.3);
+
+  /* 2. THE FLOWING LIGHT ANIMATION */
+  animation: soft-pulse 5s infinite ease-in-out;
 }
 
-.hero-actions { display: flex; gap: 20px; justify-content: center; margin-top: 30px; }
+/* 3. THE "AURA" BEHIND THE TEXT */
+.glitch-text::before {
+  content: "VENGEANCE_HUB";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--neon-cyan);
+  z-index: -1;
+  filter: blur(25px); /* Soft glow background */
+  opacity: 0.5;
+  animation: flow-aura 8s infinite linear alternate;
+}
+
+/* --- ANIMATION KEYFRAMES --- */
+
+/* Smooth breathing of the main glow */
+@keyframes soft-pulse {
+  0%, 100% {
+    transform: scale(1);
+    text-shadow: 0 0 15px var(--neon-purple), 0 0 30px var(--neon-purple);
+  }
+  50% {
+    transform: scale(1.03);
+    text-shadow: 0 0 25px var(--neon-purple), 0 0 50px var(--neon-cyan);
+  }
+}
+
+/* Slow color-flow behind the text */
+@keyframes flow-aura {
+  0% { transform: translateX(-5px); filter: blur(20px) hue-rotate(0deg); }
+  100% { transform: translateX(5px); filter: blur(35px) hue-rotate(45deg); }
+}
 
 /* --- 4. INTERACTIVE BUTTONS --- */
 button {
@@ -634,5 +680,25 @@ footer {
 @keyframes backgroundPulse {
   from { transform: scale(1); }
   to { transform: scale(1.05); }
+}
+
+
+
+.clear-cart {
+  width: 100%;
+  margin-top: 20px;
+  background: transparent;
+  border: 1px solid #ff4444; /* Alert Red */
+  color: #ff4444;
+  padding: 12px;
+  font-family: 'Orbitron';
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.clear-cart:hover {
+  background: #ff4444;
+  color: white;
+  box-shadow: 0 0 20px rgba(255, 68, 68, 0.4);
 }
 

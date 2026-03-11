@@ -1,25 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VENGEANCE HUB | Gaming Command</title>
 
-  <!-- 1. FIXED STYLES & FONTS (FULL LINKS) -->
+
+  <!-- fonts -->
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
   <link href="https://fonts.googleapis.com" rel="stylesheet">
-  <link href="https://unpkg.com" rel="stylesheet">
+
+  <!--animejs library-->
+  <script src="https://cdnjs.cloudflare.com"></script>
+
+  <style>
+    /* Hero Background with your Titan Armory image */
+    .hero-main {
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+      url('images/armory.jpg') no-repeat center center;
+      background-size: cover;
+      background-attachment: fixed;
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- NAVIGATION -->
+
 <header>
   <nav>
     <div class="nav-left">
       <a href="index.html">
-        <img src="images/logo.png" class="logo" alt="Titan Armory Home">
+        <img src="images/logo.png" class="logo" alt="Armory">
       </a>
       <a href="index.html" class="active">INTEL</a>
       <a href="armory.html">ARMORY</a>
@@ -38,8 +49,8 @@
 
         <div id="profileDropdown" class="profile-menu">
           <div class="menu-header">
-            <h4>OPERATIVE_77</h4>
-            <p id="profile-rank">SHADOW INITIATE</p>
+            <h4>Aglowharmony10</h4>
+            <p id="profile-rank">Ghost</p>
           </div>
           <div class="xp-mini-bar">
             <div id="xpProgress" class="xp-fill"></div>
@@ -47,7 +58,7 @@
           <div class="menu-divider"></div>
           <a href="profile.html"><i class="fas fa-user-shield"></i> MY STATS</a>
 
-          <!-- FIXED LOGOUT TRIGGER HERE -->
+          <!--for logout section-->
           <a href="javascript:void(0)" class="logout-link" onclick="logout()">
             <i class="fas fa-power-off"></i> DISCONNECT
           </a>
@@ -57,7 +68,7 @@
   </nav>
 </header>
 
-<!-- HERO SECTION -->
+<!--hero section!!!-->
 <section class="hero-main">
   <div class="matrix-bg-overlay"></div>
   <div class="hero-content" data-aos="zoom-out" data-aos-duration="1500">
@@ -73,11 +84,11 @@
   </div>
 </section>
 
-<!-- INTEL SECTION -->
+<!--Top intel section home page second row-->
 <section class="news-highlights" id="intel">
-  <h2 class="section-label" data-aos="fade-right">TOP INTEL</h2>
+  <h2 class="section-label animate-intel">TOP INTEL</h2>
 
-  <div class="news-strip" data-aos="fade-up">
+  <div class="news-strip animate-intel">
     <div class="news-img-box">
       <img src="images/gta6.jpg" alt="GTA 6">
     </div>
@@ -88,43 +99,45 @@
     </div>
   </div>
 
-  <div class="news-strip" data-aos="fade-up" data-aos-delay="200">
+  <div class="news-strip animate-intel">
     <div class="news-img-box">
       <img src="images/warzone.jpg" alt="Warzone">
     </div>
     <div class="news-text">
-      <span class="badge cyan">MARKET</span>
-      <h3>Warzone: Combat Update</h3>
-      <p>Major tactical titles currently at historical lows. Check Armory for current sale status.</p>
+      <span class="badge cyan">Official</span>
+      <h3>Warzone: Map Update</h3>
+      <p>New warzone map upcoming on based on original blackout map releasing on 13th March!</p>
     </div>
   </div>
 </section>
 
-<!-- UPCOMING SECTION -->
+<!-- upcoming deplyoments -->
 <section class="upcoming-section">
-  <h2 class="section-label" data-aos="fade-right">UPCOMING DEPLOYMENTS</h2>
+  <h2 class="section-label animate-deployment">UPCOMING DEPLOYMENTS</h2>
+
   <div class="upcoming-grid">
-    <div class="upcoming-card" data-aos="flip-left">
-      <div class="release-tag">2026</div>
-      <img src="images/godofwar.jpg" alt="GOW">
+    <div class="upcoming-card animate-deployment">
+      <div class="release-tag">15/9/2026</div>
+      <img src="images/godofwar.png" alt="GOW">
       <div class="card-info">
-        <h4>GOD OF WAR: RAGNAROK</h4>
-        <p>Status: PRE-INTEL</p>
+        <h4>Marvel’s Wolverine</h4>
+        <p>Status: Confirmed</p>
       </div>
     </div>
 
-    <div class="upcoming-card" data-aos="flip-left" data-aos-delay="200">
-      <div class="release-tag">2026</div>
+    <div class="upcoming-card animate-deployment">
+      <div class="release-tag">2027+</div>
       <img src="images/lou2.jpg" alt="LOU2">
       <div class="card-info">
-        <h4>THE LAST OF US PART II</h4>
-        <p>Status: ARCHIVING...</p>
+        <h4>THE LAST OF US PART III</h4>
+        <p>Status: Yet to be confirmed</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CART PANEL -->
+
+<!-- cart dropdown panel -->
 <div class="cart-panel" id="cartPanel">
   <div class="cart-header">
     <h3>TRACKED INTEL</h3>
@@ -136,7 +149,8 @@
   </div>
 </div>
 
-<!-- FOOTER -->
+
+<!-- footer -->
 <footer>
   <div class="footer-grid">
     <div class="footer-col">
@@ -162,20 +176,12 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2026 VENGEANCE HUB | SMIT SHAH PROJECTS</p>
+    <p>© 2026 VENGEANCE HUB | SMIT SHAH</p>
   </div>
 </footer>
 
-<!-- 2. FIXED SCRIPTS (FULL LINKS) -->
-<script src="https://unpkg.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 <script src="script.js"></script>
-<script>
-  AOS.init({
-    duration: 1000,
-    once: false,
-    mirror: true
-  });
-</script>
 
 </body>
 </html>
