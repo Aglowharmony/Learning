@@ -47,8 +47,9 @@
     color:#334155;
     font-weight:500;
     transition:0.3s;
-       word-spacing:-130px;
-       padding-top: 150px;
+    word-spacing:-130px;
+    padding-top: 150px;
+
     }
 
     nav a:hover{

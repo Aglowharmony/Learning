@@ -5,7 +5,7 @@ let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 function welcomeMessage(){
 
-alert("Welcome to LevelUp 🚀 Build Your Startup Page");
+alert("Xbox");
 
 updateCart();
 
