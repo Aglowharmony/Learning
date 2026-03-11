@@ -42,15 +42,23 @@
      /*NAVIGATION*/
 
      nav a{
-    margin-left:25px;
+    margin-left: 134px;
     text-decoration:none;
     color:#334155;
     font-weight:500;
     transition:0.3s;
+       word-spacing:-130px;
+       padding-top: 150px;
     }
 
     nav a:hover{
     color:#2563eb;
+    }
+    .logo{
+      display:flex;
+      width = 10px;
+      height:50px;
+      border-radius: 50%;
     }
 
 
