@@ -1,15 +1,9 @@
-/* --- 1. SYSTEM DATA (LocalStorage) --- */
-// Recovers data from browser memory so stats persist after refresh
 let userXP = parseInt(localStorage.getItem("userXP")) || 65;
 let userRank = localStorage.getItem("userRank") || "SHADOW INITIATE";
 let trackedIntel = JSON.parse(localStorage.getItem("trackedIntel")) || [];
-
-/* --- 2. INITIALIZATION ON LOAD --- */
 window.onload = function() {
   updateProfileUI();
   updateIntelTracker();
-
-  // 1. Hero Text "Drop-In" Animation
   anime({
     targets: '.glitch-text',
     translateY: [-100, 0], // Drops from top
@@ -17,9 +11,6 @@ window.onload = function() {
     duration: 2000,
     easing: 'easeOutExpo'
   });
-
-  // 2. Staggered Content Reveal (News Strips & Cards)
-  // This makes them fly in from the left one-by-one
   anime({
     targets: '.news-strip, .upcoming-card, .store-card, .vault-card',
     translateX: [-200, 0],
@@ -34,74 +25,50 @@ window.onload = function() {
 
 
 
-/* --- 3. PROFILE DROPDOWN LOGIC --- */
 function toggleProfileMenu() {
   const menu = document.getElementById("profileDropdown");
 
-  // Close Intel Tracker if open to prevent UI clutter
   const tracker = document.getElementById("cartPanel");
   if(tracker) tracker.classList.remove("active");
-
-  // Toggle Display
   if (menu.style.display === "block") {
     menu.style.display = "none";
   } else {
     menu.style.display = "block";
   }
 }
-
-// Updates the XP Bar width and Rank text
 function updateProfileUI() {
   const xpFill = document.getElementById("xpProgress");
   const rankLabel = document.getElementById("profile-rank");
   const countLabel = document.getElementById("cartCount");
-
-  // Smoothly animate the XP bar width
   if (xpFill) xpFill.style.width = userXP + "%";
   if (rankLabel) rankLabel.innerText = userRank;
   if (countLabel) countLabel.innerText = trackedIntel.length;
 }
-
-/* --- 4. DAILY BONUS LOGIC (XP REWARD) --- */
 function claimDailyBonus() {
   const today = new Date().toDateString();
   const lastClaim = localStorage.getItem("lastBonusDate");
-
-  // Prevent double claiming
   if (lastClaim === today) {
     alert("ACCESS DENIED: Daily Intel Bonus already synced for this cycle.");
     return;
   }
-
-  // Award +20 XP
   userXP += 20;
-
-  // Handle Level Up
   if (userXP >= 100) {
     userXP = 100;
     userRank = "ELITE OPERATIVE";
   }
-
-  // Save to LocalStorage
   localStorage.setItem("userXP", userXP);
   localStorage.setItem("userRank", userRank);
   localStorage.setItem("lastBonusDate", today);
-
-  // Update the UI
   updateProfileUI();
   alert("INTEL SYNCED: +20 XP Added to Operative Profile!");
 }
-
-/* --- 5. INTEL TRACKER (CART) LOGIC --- */
 function toggleCart() {
   const panel = document.getElementById("cartPanel");
   panel.classList.toggle("active");
 
-  // Close Profile menu if open to avoid overlap
   const profileMenu = document.getElementById("profileDropdown");
   if (profileMenu) profileMenu.style.display = "none";
 }
-
 function addToCart(gameName) {
   trackedIntel.push(gameName);
   localStorage.setItem("trackedIntel", JSON.stringify(trackedIntel));
@@ -109,14 +76,12 @@ function addToCart(gameName) {
   updateIntelTracker();
   alert("INTEL ACQUIRED: " + gameName + " added to tracker.");
 }
-
 function updateIntelTracker() {
   const list = document.getElementById("cartItems");
   const count = document.getElementById("cartCount");
 
   if (count) count.innerText = trackedIntel.length;
   if (!list) return;
-
   list.innerHTML = "";
   trackedIntel.forEach((item, index) => {
     let li = document.createElement("li");
@@ -137,26 +102,20 @@ function updateIntelTracker() {
     list.appendChild(li);
   });
 }
-
 function removeIntel(index) {
   trackedIntel.splice(index, 1);
   localStorage.setItem("trackedIntel", JSON.stringify(trackedIntel));
   updateIntelTracker();
 }
-
 function clearCart() {
   trackedIntel = [];
   localStorage.removeItem("trackedIntel");
   updateIntelTracker();
-  toggleCart(); // Close panel after clearing
+  toggleCart();
 }
-
-/* --- 6. UTILITY: CLOSE MENUS ON OUTSIDE CLICK --- */
 window.addEventListener('click', function(e) {
   const menu = document.getElementById("profileDropdown");
   const avatar = document.querySelector('.avatar-trigger');
-
-  // If clicking outside both the avatar and the menu, hide the menu
   if (menu && avatar && !avatar.contains(e.target) && !menu.contains(e.target)) {
     menu.style.display = "none";
   }
@@ -164,20 +123,85 @@ window.addEventListener('click', function(e) {
 
 
 function logout() {
-  // 1. Show an alert or terminal message
   const confirmExit = confirm("CRITICAL: Terminating satellite link. Wipe local intel?");
-
   if (confirmExit) {
-      // 2. Clear the data (Reset XP and Cart)
       localStorage.removeItem("userXP");
       localStorage.removeItem("userRank");
       localStorage.removeItem("trackedIntel");
       localStorage.removeItem("lastBonusDate");
-
-      // 3. Redirect to the dark logout page
       window.location.href = "logout.html";
   }
 }
+
+
+
+
+
+
+
+const roadmapTl = anime.timeline({
+  easing: 'easeOutExpo',
+  duration: 1000
+});
+roadmapTl
+  .add({
+    targets: '.timeline-line',
+    height: ['0%', '100%'],
+    opacity: [0, 1],
+    duration: 1500
+  })
+  .add({
+    targets: '.animate-roadmap',
+    translateX: (el) => el.classList.contains('left') ? [-100, 0] : [100, 0],
+    opacity: [0, 1],
+    scale: [0.8, 1],
+    delay: anime.stagger(200),
+    easing: 'easeOutElastic(1, .6)'
+  }, '-=1000');
+
+
+
+
+window.addEventListener('load', () => {
+  const bg = document.getElementById('target-bg');
+  for (let i = 0; i < 20; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 3 + 1 + 'px';
+    p.style.width = size;
+    p.style.height = size;
+    p.style.left = Math.random() * 100 + '%';
+    p.style.top = Math.random() * 100 + '%';
+    bg.appendChild(p);
+  }
+  anime({
+    targets: '.particle',
+    translateX: () => anime.random(-50, 50),
+    translateY: () => anime.random(-50, 50),
+    opacity: [0.1, 0.4, 0.1],
+    easing: 'linear',
+    duration: () => anime.random(3000, 7000),
+    delay: () => anime.random(0, 1000),
+    loop: true,
+    direction: 'alternate'
+  });
+  anime({
+    targets: '.minimal-header',
+    translateY: [-100, 0],
+    opacity: [0, 1],
+    easing: 'easeOutExpo',
+    duration: 1000
+  });
+  anime({
+    targets: '.animate-profile',
+    translateY: [40, 0],
+    opacity: [0, 1],
+    delay: anime.stagger(150, {start: 500}),
+    easing: 'easeOutQuart'
+  });
+});
+
+
 
 
 

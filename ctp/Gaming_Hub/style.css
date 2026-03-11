@@ -688,17 +688,266 @@ footer {
   width: 100%;
   margin-top: 20px;
   background: transparent;
-  border: 1px solid #ff4444; /* Alert Red */
-  color: #ff4444;
+  border: 1px solid var(--neon-purple);
+  color: var(--neon-purple);
   padding: 12px;
   font-family: 'Orbitron';
+  text-transform: uppercase;
+  letter-spacing: 2px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .clear-cart:hover {
-  background: #ff4444;
-  color: white;
-  box-shadow: 0 0 20px rgba(255, 68, 68, 0.4);
+  background: var(--neon-purple);
+  color: #000;
+  box-shadow: 0 0 25px rgba(188, 19, 254, 0.5);
+  transform: translateY(-2px);
 }
 
+
+/* Initial state to prevent flashing */
+.store-card {
+  opacity: 0;
+  perspective: 1000px; /* Enables the 3D rotation in JS */
+}
+
+/* Hover "Rich" Upgrade */
+.store-card:hover {
+  border-color: var(--neon-cyan);
+  transform: translateY(-10px) rotateY(5deg); /* Slight 3D tilt on hover */
+  box-shadow: 0 15px 40px rgba(0, 243, 255, 0.2);
+}
+
+/* Make the SYNC button pulse when you hover the card */
+.store-card:hover .btn-primary {
+  background: var(--neon-purple);
+  box-shadow: 0 0 20px var(--neon-purple);
+  letter-spacing: 3px;
+  transition: all 0.4s ease;
+}
+
+/* The Glowing Badge Pulse */
+.store-badge {
+  animation: badge-pulse 2s infinite alternate;
+}
+
+@keyframes badge-pulse {
+  from { opacity: 0.7; box-shadow: 0 0 5px var(--neon-cyan); }
+  to { opacity: 1; box-shadow: 0 0 15px var(--neon-cyan); }
+}
+
+
+
+
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 2px;
+  background: var(--neon-purple);
+  box-shadow: 0 0 15px var(--neon-purple);
+  transform: translateX(-50%);
+  height: 0;
+}
+
+.animate-roadmap {
+  opacity: 0;
+}
+
+.timeline-item:hover .hype-fill {
+  filter: brightness(1.5);
+  box-shadow: 0 0 20px var(--neon-purple);
+}
+
+
+/* Minimal Header Style */
+.minimal-header {
+  padding: 20px 5%;
+  background: rgba(10, 10, 12, 0.9);
+  border-bottom: 1px solid rgba(0, 243, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.back-link {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  text-decoration: none;
+  color: var(--text-dim);
+  font-family: 'Orbitron';
+  font-size: 0.8rem;
+  transition: 0.3s;
+}
+
+.back-link:hover {
+  color: var(--neon-cyan);
+  letter-spacing: 1px;
+}
+
+/* Moving Background Particles */
+.profile-bg-effects {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #0a0a0c 100%);
+}
+
+.particle {
+  position: absolute;
+  background: var(--neon-cyan);
+  border-radius: 50%;
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+/* Avatar Hologram Effect */
+.large-avatar {
+  border: 3px solid var(--neon-purple);
+  box-shadow: 0 0 20px rgba(188, 19, 254, 0.3);
+  position: relative;
+  animation: hologram-flicker 4s infinite;
+}
+
+@keyframes hologram-flicker {
+  0% { filter: hue-rotate(0deg) brightness(1); }
+  5% { filter: hue-rotate(90deg) brightness(1.5); }
+  10% { filter: hue-rotate(0deg) brightness(1); }
+  100% { filter: hue-rotate(0deg) brightness(1); }
+}
+
+
+
+
+
+.vault-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Fast-pop small grid */
+  gap: 15px;
+  padding: 30px;
+}
+.vault-card {
+  background: #0d0d0f;
+  border: 1px solid rgba(188, 19, 254, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.vault-img-container {
+  position: relative;
+  height: 250px; /* Small & sharp */
+}
+.vault-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.5s;
+}
+.intel-overlay {
+  position: absolute;
+  bottom: -100%;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 243, 255, 0.85); /* Cyan tint */
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  transition: 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+.intel-overlay span {
+  font-family: 'Orbitron';
+  font-size: 10px;
+  color: #000;
+  font-weight: 900;
+}
+.vault-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--neon-cyan);
+  box-shadow: 0 10px 30px rgba(0, 243, 255, 0.2);
+}
+.vault-card:hover .intel-overlay {
+  bottom: 0;
+}
+.vault-info h3 {
+  font-size: 0.85rem;
+  padding: 12px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+
+
+
+
+.logout-body {
+  background: #050505;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;         /* The secret sauce */
+  align-items: center;    /* Vertical center */
+  justify-content: center; /* Horizontal center */
+  overflow: hidden;
+  position: relative;
+}
+.logout-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 5;
+}
+.logged-out-text {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  font-size: clamp(60px, 15vw, 160px);
+  color: #fff;
+  letter-spacing: 20px;
+  text-indent: 20px;
+  text-shadow: 2px 2px 0px #bc13fe, -2px -2px 0px #00f3ff;
+  line-height: 1; /* Changed from 0.9 to 1 for perfect vertical boxing */
+  margin: 0;
+}
+.scanlines {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+  linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  background-size: 100% 4px, 3px 100%;
+  z-index: 10;
+  pointer-events: none; /* Allows you to click the button through the scanlines */
+}
+.glitch {
+  position: relative;
+  animation: glitch-anim 3s infinite linear alternate-reverse;
+}
+@keyframes glitch-anim {
+  0% { text-shadow: 2px 2px 0 #bc13fe; transform: translate(0); }
+  20% { text-shadow: -2px -2px 0 #00f3ff; transform: translate(-2px, 2px); }
+  40% { text-shadow: 2px -2px 0 #bc13fe; transform: translate(2px, -2px); }
+  100% { text-shadow: 2px 2px 0 #bc13fe; transform: translate(0); }
+}
+.btn-reconnect {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid #222;
+  color: #888;
+  margin-top: 50px;
+  padding: 15px 40px;
+  font-family: 'Orbitron';
+  cursor: pointer;
+  transition: 0.3s;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.btn-reconnect:hover {
+  background: #fff;
+  color: #000;
+  box-shadow: 0 0 30px #fff;
+}

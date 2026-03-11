@@ -1,94 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DEPLOYMENTS | Tactical Roadmap</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
-    <link href="https://fonts.googleapis.com" rel="stylesheet">
-    <link href="https://unpkg.com" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DEPLOYMENTS | Tactical Roadmap</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <header>
-    <nav>
-        <div class="nav-left">
-            <img src="images/logo.png" class="logo" alt="V">
-            <a href="index.html">INTEL</a>
-            <a href="armory.html">ARMORY</a>
-            <a href="deployments.html" class="active">DEPLOYMENTS</a>
-            <a href="library.html">THE VAULT</a>
+  <nav>
+    <div class="nav-left">
+      <a href="index.html">
+        <img src="images/logo.png" class="logo" alt="Armory">
+      </a>
+      <a href="index.html">INTEL</a>
+      <a href="armory.html">ARMORY</a>
+      <a href="deployments.html" class="active">DEPLOYMENTS</a>
+      <a href="vault.html">THE VAULT</a>
+    </div>
+    <div class="nav-right">
+      <div class="icon-btn" onclick="toggleCart()"><i class="fas fa-crosshairs"></i><span id="cartCount">0</span></div>
+      <div class="profile-container">
+        <img src="images/witcher3.jpg" class="avatar-trigger" onclick="toggleProfileMenu()">
+        <div id="profileDropdown" class="profile-menu">
+          <div class="menu-header"><h4>Aglowharmony10</h4><p id="profile-rank">Shadow Initiate</p></div>
+          <div class="xp-mini-bar"><div id="xpProgress" class="xp-fill"></div></div>
+          <a href="profile.html">MY STATS</a>
+          <a href="logout.html" class="logout-link">DISCONNECT</a>
         </div>
-        <div class="nav-right">
-            <div class="icon-btn" onclick="toggleCart()"><i class="fas fa-crosshairs"></i><span id="cartCount">0</span></div>
-            <div class="profile-container">
-                <img src="images/witcher3.jpg" class="avatar-trigger" onclick="toggleProfileMenu()">
-                <div id="profileDropdown" class="profile-menu">
-                    <div class="menu-header"><h4>OPERATIVE_77</h4><p id="profile-rank">Shadow Initiate</p></div>
-                    <div class="xp-mini-bar"><div id="xpProgress" class="xp-fill"></div></div>
-                    <a href="profile.html">MY STATS</a>
-                    <a href="index.html" class="logout-link">DISCONNECT</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+      </div>
+    </div>
+  </nav>
 </header>
 
-<!-- ROADMAP HERO -->
 <section class="roadmap-hero">
-    <div class="hero-content" data-aos="zoom-in">
-        <h1 class="glitch-text">DEPLOYMENT</h1>
-        <p>FUTURE OPERATIONS & MARKET PREDICTIONS [ENCRYPTED]</p>
-    </div>
+  <div class="hero-content">
+    <h1 class="glitch-text animate-text">DEPLOYMENT</h1>
+    <p class="animate-text">FUTURE OPERATIONS & MARKET PREDICTIONS [ENCRYPTED]</p>
+  </div>
 </section>
 
-<!-- TIMELINE SECTION -->
 <section class="timeline-container">
-    <div class="timeline-line"></div> <!-- The neon connecting line -->
+  <div class="timeline-line"></div>
 
-    <!-- Milestone 1 -->
-    <div class="timeline-item left" data-aos="fade-right">
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-            <span class="date">FALL 2025</span>
-            <img src="images/gta6.jpg" alt="GTA 6">
-            <h3>GRAND THEFT AUTO VI</h3>
-            <div class="hype-label">HYPE LEVEL: 99%</div>
-            <div class="hype-bar"><div class="hype-fill" style="width: 99%;"></div></div>
-            <button class="btn-primary" onclick="addToCart('Watchlist: GTA VI')">WATCHLIST</button>
-        </div>
+  <div class="timeline-item left animate-roadmap">
+    <div class="timeline-dot"></div>
+    <div class="timeline-content">
+      <span class="date">FALL 2025</span>
+      <img src="images/gta6.jpg" alt="GTA 6">
+      <h3>GRAND THEFT AUTO VI</h3>
+      <div class="hype-label">HYPE LEVEL: 99%</div>
+      <div class="hype-bar"><div class="hype-fill" style="width: 99%;"></div></div>
+      <button class="btn-primary" onclick="addToCart('Watchlist: GTA VI')">WATCHLIST</button>
     </div>
+  </div>
 
-    <!-- Milestone 2 -->
-    <div class="timeline-item right" data-aos="fade-left">
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-            <span class="date">EARLY 2026</span>
-            <img src="images/godofwar.jpg" alt="GOW">
-            <h3>GOD OF WAR: RAGNAROK PC</h3>
-            <div class="hype-label">HYPE LEVEL: 85%</div>
-            <div class="hype-bar"><div class="hype-fill" style="width: 85%;"></div></div>
-            <button class="btn-primary" onclick="addToCart('Watchlist: GOW PC')">WATCHLIST</button>
-        </div>
+  <div class="timeline-item right animate-roadmap">
+    <div class="timeline-dot"></div>
+    <div class="timeline-content">
+      <span class="date">EARLY 2026</span>
+      <img src="images/godofwar.jpg" alt="GOW">
+      <h3>GOD OF WAR: RAGNAROK PC</h3>
+      <div class="hype-label">HYPE LEVEL: 85%</div>
+      <div class="hype-bar"><div class="hype-fill" style="width: 85%;"></div></div>
+      <button class="btn-primary" onclick="addToCart('Watchlist: GOW PC')">WATCHLIST</button>
     </div>
+  </div>
 
-    <!-- Milestone 3 -->
-    <div class="timeline-item left" data-aos="fade-right">
-        <div class="timeline-dot"></div>
-        <div class="timeline-content">
-            <span class="date">MID 2026</span>
-            <img src="images/lou2.jpg" alt="LOU2">
-            <h3>THE LAST OF US PART II</h3>
-            <div class="hype-label">HYPE LEVEL: 92%</div>
-            <div class="hype-bar"><div class="hype-fill" style="width: 92%;"></div></div>
-            <button class="btn-primary" onclick="addToCart('Watchlist: TLOU 2')">WATCHLIST</button>
-        </div>
+  <div class="timeline-item left animate-roadmap">
+    <div class="timeline-dot"></div>
+    <div class="timeline-content">
+      <span class="date">MID 2026</span>
+      <img src="images/lou2.jpg" alt="LOU2">
+      <h3>THE LAST OF US PART II</h3>
+      <div class="hype-label">HYPE LEVEL: 92%</div>
+      <div class="hype-bar"><div class="hype-fill" style="width: 92%;"></div></div>
+      <button class="btn-primary" onclick="addToCart('Watchlist: TLOU 2')">WATCHLIST</button>
     </div>
+  </div>
 </section>
 
-<script src="https://unpkg.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 <script src="script.js"></script>
-<script>AOS.init({ duration: 1000, mirror: true });</script>
 </body>
 </html>

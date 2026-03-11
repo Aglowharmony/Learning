@@ -20,7 +20,7 @@
             <a href="index.html">INTEL</a>
             <a href="armory.html" class="active">ARMORY</a>
             <a href="deployments.html">DEPLOYMENTS</a>
-            <a href="library.html">THE VAULT</a>
+            <a href="vault.html">THE VAULT</a>
         </div>
         <div class="nav-right">
             <div class="icon-btn" onclick="toggleCart()"><i class="fas fa-crosshairs"></i><span id="cartCount">0</span></div>
@@ -30,7 +30,7 @@
                     <div class="menu-header"><h4>Aglowharmony10</h4><p id="profile-rank">Shadow Initiate</p></div>
                     <div class="xp-mini-bar"><div id="xpProgress" class="xp-fill"></div></div>
                     <a href="profile.html">MY STATS</a>
-                    <a href="index.html" class="logout-link">DISCONNECT</a>
+                    <a href="logout.html" class="logout-link">DISCONNECT</a>
                 </div>
             </div>
         </div>
@@ -51,96 +51,34 @@
 
 <!-- STORE GRID -->
 <section class="store-container">
-    <div class="store-grid" id="gameGrid">
-
-
-        <!--g1-->
-        <div class="store-card" data-aos="fade-up" data-name="God of War">
-            <div class="store-badge">LOWEST PRICE</div>
-            <img src="images/godofwar.png" alt="GOW">
-            <div class="store-info">
-                <h3>Marvels</h3>
-                <div class="price-compare">
-                    <span>Steam: <strong class="cyan">$29.99</strong></span>
-                    <span>Epic: <strong>$34.99</strong></span>
-                </div>
-                <button class="btn-primary" onclick="addToCart('God of War: $29.99')">SYNC DEAL</button>
-            </div>
+  <div class="store-grid" id="gameGrid">
+    <div class="store-card" data-name="God of War">
+      <div class="store-badge">LOWEST PRICE</div>
+      <img src="images/godofwar.png" alt="GOW">
+      <div class="store-info">
+        <h3>GOD OF WAR</h3>
+        <div class="price-compare">
+          <span>Steam: <strong class="cyan">$29.99</strong></span>
+          <span>Epic: <strong>$34.99</strong></span>
         </div>
-
-
-        <!--g2-->
-        <div class="store-card" data-aos="fade-up" data-aos-delay="100" data-name="Warzone">
-            <div class="store-badge">FREE</div>
-            <img src="images/warzone.jpg" alt="Warzone">
-            <div class="store-info">
-                <h3>CALL OF DUTY: WARZONE</h3>
-                <div class="price-compare">
-                    <span>Battlenet: <strong class="cyan">$0.00</strong></span>
-                    <span>Steam: <strong>$0.00</strong></span>
-                </div>
-                <button class="btn-primary" onclick="addToCart('Warzone: Free')">SYNC DEAL</button>
-            </div>
-        </div>
-
-
-        <!--g3-->
-        <div class="store-card" data-aos="fade-up" data-aos-delay="200" data-name="Witcher">
-            <img src="images/witcher3.jpg" alt="Witcher">
-            <div class="store-info">
-                <h3>THE WITCHER 3</h3>
-                <div class="price-compare">
-                    <span>GOG: <strong class="cyan">$9.99</strong></span>
-                    <span>Steam: <strong>$14.99</strong></span>
-                </div>
-                <button class="btn-primary" onclick="addToCart('Witcher 3: $9.99')">SYNC DEAL</button>
-            </div>
-        </div>
-
-
-      <!--g4-->
-      <div class="store-card" data-aos="fade-up" data-aos-delay="200" data-name="Witcher">
-        <img src="images/witcher3.jpg" alt="Witcher">
-        <div class="store-info">
-          <h3>THE WITCHER 3</h3>
-          <div class="price-compare">
-            <span>GOG: <strong class="cyan">$9.99</strong></span>
-            <span>Steam: <strong>$14.99</strong></span>
-          </div>
-          <button class="btn-primary" onclick="addToCart('Witcher 3: $9.99')">SYNC DEAL</button>
-        </div>
+        <button class="btn-primary" onclick="addToCart('God of War: $29.99')">SYNC DEAL</button>
       </div>
-
-
-      <!--g5-->
-      <div class="store-card" data-aos="fade-up" data-aos-delay="200" data-name="Witcher">
-        <img src="images/witcher3.jpg" alt="Witcher">
-        <div class="store-info">
-          <h3>THE WITCHER 3</h3>
-          <div class="price-compare">
-            <span>GOG: <strong class="cyan">$9.99</strong></span>
-            <span>Steam: <strong>$14.99</strong></span>
-          </div>
-          <button class="btn-primary" onclick="addToCart('Witcher 3: $9.99')">SYNC DEAL</button>
-        </div>
-      </div>
-
-
-      <!--g6-->
-      <div class="store-card" data-aos="fade-up" data-aos-delay="200" data-name="Witcher">
-        <img src="images/witcher3.jpg" alt="Witcher">
-        <div class="store-info">
-          <h3>THE WITCHER 3</h3>
-          <div class="price-compare">
-            <span>GOG: <strong class="cyan">$9.99</strong></span>
-            <span>Steam: <strong>$14.99</strong></span>
-          </div>
-          <button class="btn-primary" onclick="addToCart('Witcher 3: $9.99')">SYNC DEAL</button>
-        </div>
-      </div>
-
-
     </div>
+
+    <div class="store-card" data-name="Warzone">
+      <div class="store-badge">FREE</div>
+      <img src="images/warzone.jpg" alt="Warzone">
+      <div class="store-info">
+        <h3>CALL OF DUTY: WARZONE</h3>
+        <div class="price-compare">
+          <span>Battlenet: <strong class="cyan">$0.00</strong></span>
+          <span>Steam: <strong>$0.00</strong></span>
+        </div>
+        <button class="btn-primary" onclick="addToCart('Warzone: Free')">SYNC DEAL</button>
+      </div>
+    </div>
+
+  </div>
 </section>
 
 <!-- TRACKER PANEL -->
@@ -148,7 +86,7 @@
 <script src="script.js"></script>
 
 <script>
-  // RICH SEARCH FILTER LOGIC
+  /*search*/
   function filterGames() {
     let input = document.getElementById('gameSearch').value.toLowerCase();
     let cards = document.querySelectorAll('.store-card');
@@ -157,7 +95,6 @@
       let name = card.getAttribute('data-name').toLowerCase();
 
       if (name.includes(input)) {
-        // Smoothly bring back the card
         card.style.display = "block";
         anime({
           targets: card,
