@@ -5,19 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VENGEANCE HUB | Gaming Command</title>
 
-  <!-- STYLES & FONTS -->
+  <!-- 1. FIXED STYLES & FONTS (FULL LINKS) -->
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
-  <!-- Orbitron for Titles, Poppins for Body -->
   <link href="https://fonts.googleapis.com" rel="stylesheet">
-
-  <!-- AOS: The 'Crazy Scroll' Library (CDN Version) -->
   <link href="https://unpkg.com" rel="stylesheet">
 </head>
 
 <body>
 
-<!-- 1. HIGH-TECH NAVIGATION -->
+<!-- NAVIGATION -->
 <header>
   <nav>
     <div class="nav-left">
@@ -29,15 +26,12 @@
     </div>
 
     <div class="nav-right">
-      <!-- Intel Tracker Icon -->
       <div class="icon-btn" onclick="toggleCart()">
         <i class="fas fa-crosshairs"></i>
         <span id="cartCount">0</span>
       </div>
 
-      <!-- PROFILE DROPDOWN ANCHOR -->
       <div class="profile-container">
-        <!-- Using Witcher 3 image for your avatar as requested -->
         <img src="images/witcher3.jpg" class="avatar-trigger" onclick="toggleProfileMenu()">
 
         <div id="profileDropdown" class="profile-menu">
@@ -50,14 +44,18 @@
           </div>
           <div class="menu-divider"></div>
           <a href="profile.html"><i class="fas fa-user-shield"></i> MY STATS</a>
-          <a href="#" class="logout-link"><i class="fas fa-power-off"></i> DISCONNECT</a>
+          
+          <!-- FIXED LOGOUT TRIGGER HERE -->
+          <a href="javascript:void(0)" class="logout-link" onclick="logout()">
+            <i class="fas fa-power-off"></i> DISCONNECT
+          </a>
         </div>
       </div>
     </div>
   </nav>
 </header>
 
-<!-- 2. MASSIVE HERO SECTION (Using your Matrix image) -->
+<!-- HERO SECTION -->
 <section class="hero-main">
   <div class="matrix-bg-overlay"></div>
   <div class="hero-content" data-aos="zoom-out" data-aos-duration="1500">
@@ -65,9 +63,7 @@
     <p>SATELLITE FEED [ONLINE] | ACCESSING DEPLOYMENT DATA...</p>
 
     <div class="hero-actions">
-      <!-- Redirects to Armory (Store) -->
       <button class="btn-primary" onclick="window.location.href='armory.html'">ENTER ARMORY</button>
-      <!-- Triggers Daily Bonus Alert and XP increase -->
       <button class="btn-bonus" onclick="claimDailyBonus()">
         <i class="fas fa-gift"></i> DAILY BONUS
       </button>
@@ -75,11 +71,10 @@
   </div>
 </section>
 
-<!-- 3. CINEMATIC NEWS HIGHLIGHTS (Intel Section) -->
+<!-- INTEL SECTION -->
 <section class="news-highlights" id="intel">
   <h2 class="section-label" data-aos="fade-right">TOP INTEL</h2>
 
-  <!-- News Strip 1 (GTA 6) -->
   <div class="news-strip" data-aos="fade-up">
     <div class="news-img-box">
       <img src="images/gta6.jpg" alt="GTA 6">
@@ -91,7 +86,6 @@
     </div>
   </div>
 
-  <!-- News Strip 2 (Warzone) -->
   <div class="news-strip" data-aos="fade-up" data-aos-delay="200">
     <div class="news-img-box">
       <img src="images/warzone.jpg" alt="Warzone">
@@ -104,12 +98,10 @@
   </div>
 </section>
 
-<!-- 4. UPCOMING DEPLOYMENTS (Games) -->
+<!-- UPCOMING SECTION -->
 <section class="upcoming-section">
   <h2 class="section-label" data-aos="fade-right">UPCOMING DEPLOYMENTS</h2>
   <div class="upcoming-grid">
-
-    <!-- Game 1 (God of War) -->
     <div class="upcoming-card" data-aos="flip-left">
       <div class="release-tag">2026</div>
       <img src="images/godofwar.jpg" alt="GOW">
@@ -119,7 +111,6 @@
       </div>
     </div>
 
-    <!-- Game 2 (Last of Us 2) -->
     <div class="upcoming-card" data-aos="flip-left" data-aos-delay="200">
       <div class="release-tag">2026</div>
       <img src="images/lou2.jpg" alt="LOU2">
@@ -128,11 +119,10 @@
         <p>Status: ARCHIVING...</p>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- 5. SLIDE-OUT TRACKER (Cart) -->
+<!-- CART PANEL -->
 <div class="cart-panel" id="cartPanel">
   <div class="cart-header">
     <h3>TRACKED INTEL</h3>
@@ -144,7 +134,7 @@
   </div>
 </div>
 
-<!-- 6. FOOTER -->
+<!-- FOOTER -->
 <footer>
   <div class="footer-grid">
     <div class="footer-col">
@@ -174,11 +164,10 @@
   </div>
 </footer>
 
-<!-- 7. SCRIPTS (AOS AND MAIN JS) -->
+<!-- 2. FIXED SCRIPTS (FULL LINKS) -->
 <script src="https://unpkg.com"></script>
 <script src="script.js"></script>
 <script>
-  // Initialize AOS Animations
   AOS.init({
     duration: 1000,
     once: false,
