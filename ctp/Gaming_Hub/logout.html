@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYSTEM OFFLINE | Vengeance Hub</title>
+    
+    <!-- STYLES & FONTS -->
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <!-- AOS for the "Pop" effect -->
+    <link href="https://unpkg.com" rel="stylesheet">
+
+    <style>
+        /* UNIQUE STYLES FOR THE LOGOUT PAGE */
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
+                        url('images/titan_armory.jpg') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .logout-container {
+            text-align: center;
+            animation: pulse-glow 4s infinite alternate;
+        }
+
+        .logged-out-text {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: clamp(60px, 15vw, 160px); /* MASSIVE SIZE */
+            color: #ffffff;
+            letter-spacing: 20px;
+            text-transform: uppercase;
+            text-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
+            margin: 0;
+            line-height: 1;
+        }
+
+        .status-label {
+            color: #444;
+            font-family: 'Orbitron';
+            letter-spacing: 8px;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+
+        /* RE-ESTABLISH LINK BUTTON */
+        .btn-reconnect {
+            margin-top: 50px;
+            border: 1px solid #333;
+            background: transparent;
+            color: #555;
+            padding: 15px 40px;
+            font-family: 'Orbitron';
+            cursor: pointer;
+            transition: 0.4s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .btn-reconnect:hover {
+            border-color: var(--neon-purple);
+            color: var(--neon-purple);
+            box-shadow: 0 0 20px var(--neon-purple);
+        }
+
+        @keyframes pulse-glow {
+            from { opacity: 0.8; transform: scale(1); }
+            to { opacity: 1; transform: scale(1.02); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="logout-container">
+        <!-- THE BIG EYE-CATCHING TEXT -->
+        <h1 class="logged-out-text" data-aos="zoom-in" data-aos-duration="1500">
+            LOGGED<br>OUT
+        </h1>
+        
+        <p class="status-label" data-aos="fade-up" data-aos-delay="500">
+            SATELLITE LINK TERMINATED
+        </p>
+
+        <!-- BACK TO HOME BUTTON -->
+        <button class="btn-reconnect" onclick="window.location.href='index.html'">
+            RE-ESTABLISH LINK
+        </button>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+</html>

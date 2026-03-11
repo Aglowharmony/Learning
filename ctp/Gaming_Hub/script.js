@@ -141,3 +141,20 @@ window.addEventListener('click', function(e) {
     menu.style.display = "none";
   }
 });
+
+
+function logout() {
+  // 1. Show an alert or terminal message
+  const confirmExit = confirm("CRITICAL: Terminating satellite link. Wipe local intel?");
+  
+  if (confirmExit) {
+      // 2. Clear the data (Reset XP and Cart)
+      localStorage.removeItem("userXP");
+      localStorage.removeItem("userRank");
+      localStorage.removeItem("trackedIntel");
+      localStorage.removeItem("lastBonusDate");
+
+      // 3. Redirect to the dark logout page
+      window.location.href = "logout.html";
+  }
+}
