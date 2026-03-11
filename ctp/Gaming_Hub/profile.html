@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OPERATIVE PROFILE | Vengeance Stats</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <link href="https://unpkg.com" rel="stylesheet">
+</head>
+<body>
+
+<header>
+    <nav>
+        <div class="nav-left">
+            <img src="images/logo.png" class="logo" alt="V">
+            <a href="index.html">INTEL</a>
+            <a href="armory.html">ARMORY</a>
+            <a href="deployments.html">DEPLOYMENTS</a>
+            <a href="library.html">THE VAULT</a>
+        </div>
+        <div class="nav-right">
+            <div class="icon-btn" onclick="toggleCart()"><i class="fas fa-crosshairs"></i><span id="cartCount">0</span></div>
+            <div class="profile-container">
+                <img src="images/witcher3.jpg" class="avatar-trigger" onclick="toggleProfileMenu()">
+                <div id="profileDropdown" class="profile-menu">
+                    <div class="menu-header"><h4>OPERATIVE_77</h4><p id="profile-rank">Shadow Initiate</p></div>
+                    <div class="xp-mini-bar"><div id="xpProgress" class="xp-fill"></div></div>
+                    <a href="profile.html" class="active">MY STATS</a>
+                    <a href="index.html" class="logout-link">DISCONNECT</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- MAIN PROFILE DASHBOARD -->
+<section class="profile-dashboard">
+    <div class="profile-grid">
+
+
+
+            <img src="images/witcher3.jpg" class="large-avatar">
+            <h2 class="orbitron">Aglowharmony10</h2>
+            <p class="rank-text" id="main-rank">SHADOW INITIATE</p>
+            <div class="badge-row">
+                <span class="p-badge">VERIFIED</span>
+                <span class="p-badge purple">PREMIUM</span>
+            </div>
+        </div>
+
+        <!-- Center: XP Progress Circle -->
+        <div class="stat-card xp-center" data-aos="zoom-in">
+            <h3 class="orbitron">SYNC PROGRESS</h3>
+            <div class="xp-circle-container">
+                <svg viewBox="0 0 100 100">
+                    <circle class="bg" cx="50" cy="50" r="45"></circle>
+                    <circle id="xpCircle" class="prog" cx="50" cy="50" r="45"></circle>
+                </svg>
+                <div class="xp-number"><span id="xpPercent">65</span>%</div>
+            </div>
+            <p>Level up to unlock <span style="color:var(--neon-cyan)">Elite Tier</span> intel.</p>
+        </div>
+
+        <!-- Right: Combat Achievements -->
+        <div class="stat-card medals" data-aos="fade-left">
+            <h3 class="orbitron">ACHIEVEMENTS</h3>
+            <div class="hexagon-grid">
+                <div class="hex active" title="Deal Hunter"><i class="fas fa-tags"></i></div>
+                <div class="hex active" title="Intel Master"><i class="fas fa-brain"></i></div>
+                <div class="hex" title="Vault Breaker"><i class="fas fa-lock-open"></i></div>
+                <div class="hex" title="Daily Synced"><i class="fas fa-calendar-check"></i></div>
+            </div>
+            <p style="font-size: 11px; color: var(--text-dim); margin-top: 20px;">2 / 4 MEDALS UNLOCKED</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- BOTTOM SECTION: INTEL LOG -->
+<section class="intel-log-section" data-aos="fade-up">
+    <h2 class="orbitron" style="margin-bottom: 30px; color: var(--neon-cyan);">INTEL ACQUISITION LOG</h2>
+    <div class="log-table" id="intelLog">
+        <!-- Filled by JS with your Cart items -->
+        <p style="color: var(--text-dim)">Accessing database...</p>
+    </div>
+</section>
+
+<script src="https://unpkg.com"></script>
+<script src="script.js"></script>
+<script>
+    AOS.init({ duration: 1000 });
+
+    // Syncing the Profile Page with LocalStorage Data
+    window.addEventListener('load', () => {
+        const xp = localStorage.getItem('userXP') || 65;
+        const rank = localStorage.getItem('userRank') || "SHADOW INITIATE";
+        const intel = JSON.parse(localStorage.getItem('trackedIntel')) || [];
+
+        // Update Rank
+        document.getElementById('main-rank').innerText = rank;
+
+        // Update XP Circle
+        const circle = document.getElementById('xpCircle');
+        const percentText = document.getElementById('xpPercent');
+        const radius = 45;
+        const circumference = 2 * Math.PI * radius;
+
+        circle.style.strokeDasharray = circumference;
+        const offset = circumference - (xp / 100) * circumference;
+        circle.style.strokeDashoffset = offset;
+        percentText.innerText = xp;
+
+        // Update Intel Log
+        const log = document.getElementById('intelLog');
+        if(intel.length > 0) {
+            log.innerHTML = intel.map(item => `
+                <div class="log-entry">
+                    <span><i class="fas fa-file-invoice" style="color:var(--neon-purple)"></i> ${item}</span>
+                    <span style="color: var(--neon-cyan)">STATUS: TRACKED</span>
+                </div>
+            `).join('');
+        } else {
+            log.innerHTML = `<p style="color: var(--text-dim)">NO DATA ACQUIRED. VISIT THE ARMORY TO SYNC INTEL.</p>`;
+        }
+    });
+</script>
+</body>
+</html>

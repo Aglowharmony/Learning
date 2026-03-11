@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE VAULT | System Database</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- FIXED LINKS FOR ICONS & FONTS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
+  <link href="https://fonts.googleapis.com" rel="stylesheet">
+  <link href="https://unpkg.com" rel="stylesheet">
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="nav-left">
+      <img src="images/logo.png" class="logo" alt="V">
+      <a href="index.html">INTEL</a>
+      <a href="armory.html">ARMORY</a>
+      <a href="deployments.html">DEPLOYMENTS</a>
+      <a href="library.html" class="active">THE VAULT</a>
+    </div>
+    <div class="nav-right">
+      <div class="icon-btn" onclick="toggleCart()"><i class="fas fa-crosshairs"></i><span id="cartCount">0</span></div>
+      <div class="profile-container">
+        <img src="images/witcher3.jpg" class="avatar-trigger" onclick="toggleProfileMenu()">
+        <div id="profileDropdown" class="profile-menu">
+          <div class="menu-header"><h4>OPERATIVE_77</h4><p id="profile-rank">Shadow Initiate</p></div>
+          <div class="xp-mini-bar"><div id="xpProgress" class="xp-fill"></div></div>
+          <a href="profile.html">MY STATS</a>
+          <a href="index.html" class="logout-link">DISCONNECT</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- VAULT HERO -->
+<section class="vault-hero">
+  <div class="hero-content" data-aos="zoom-in">
+    <h1 class="glitch-text">THE VAULT</h1>
+    <p>SYSTEM REQUIREMENTS & ENCRYPTED DATABASE [VISIBLE]</p>
+  </div>
+</section>
+
+<!-- DATABASE GRID -->
+<section class="vault-container">
+  <div class="vault-grid">
+
+    <!-- Game 1: Resident Evil 9 -->
+    <div class="vault-card" data-aos="fade-up">
+      <div class="vault-img-container">
+        <img src="images/re9.jpg" alt="RE9">
+        <div class="type-tag">HORROR / SURVIVAL</div>
+      </div>
+      <div class="vault-info">
+        <h3>RESIDENT EVIL 9</h3>
+        <div class="data-list">
+          <p><i class="fas fa-microchip"></i> <strong>MIN GPU:</strong> RTX 2060</p>
+          <p><i class="fas fa-calendar-alt"></i> <strong>RELEASE:</strong> TBA 2025</p>
+          <p><i class="fas fa-fire"></i> <strong>HYPE:</strong> 95%</p>
+          <p><i class="fas fa-users"></i> <strong>PLAYERS:</strong> ANALYZING...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game 2: Witcher 3 -->
+    <div class="vault-card" data-aos="fade-up" data-aos-delay="100">
+      <div class="vault-img-container">
+        <img src="images/witcher3.jpg" alt="Witcher">
+        <div class="type-tag">RPG / STORY</div>
+      </div>
+      <div class="vault-info">
+        <h3>THE WITCHER 3</h3>
+        <div class="data-list">
+          <p><i class="fas fa-microchip"></i> <strong>MIN GPU:</strong> GTX 660</p>
+          <p><i class="fas fa-calendar-alt"></i> <strong>RELEASE:</strong> MAY 2015</p>
+          <p><i class="fas fa-fire"></i> <strong>HYPE:</strong> 100%</p>
+          <p><i class="fas fa-users"></i> <strong>PLAYERS:</strong> 35,000+</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game 3: God of War -->
+    <div class="vault-card" data-aos="fade-up" data-aos-delay="200">
+      <div class="vault-img-container">
+        <img src="images/godofwar.jpg" alt="GOW">
+        <div class="type-tag">ACTION / STORY</div>
+      </div>
+      <div class="vault-info">
+        <h3>GOD OF WAR</h3>
+        <div class="data-list">
+          <p><i class="fas fa-microchip"></i> <strong>MIN GPU:</strong> GTX 1060</p>
+          <p><i class="fas fa-calendar-alt"></i> <strong>RELEASE:</strong> JAN 2022</p>
+          <p><i class="fas fa-fire"></i> <strong>HYPE:</strong> 92%</p>
+          <p><i class="fas fa-users"></i> <strong>PLAYERS:</strong> 15,000+</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- UPDATED VAULT CSS (Add to style.css) -->
+<style>
+  .vault-img-container { position: relative; }
+  .type-tag {
+    position: absolute; bottom: 10px; right: 10px;
+    background: var(--neon-purple); color: white;
+    padding: 4px 10px; font-size: 10px; font-family: 'Orbitron';
+    border-radius: 4px; box-shadow: 0 0 10px var(--neon-purple);
+  }
+  .data-list { text-align: left; margin-top: 15px; }
+  .data-list p {
+    font-size: 13px; color: var(--text-dim); margin-bottom: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 4px;
+  }
+  .data-list i { color: var(--neon-cyan); margin-right: 8px; width: 15px; }
+  .data-list strong { color: white; font-size: 11px; text-transform: uppercase; }
+</style>
+
+<script src="https://unpkg.com"></script>
+<script src="script.js"></script>
+<script>
+  AOS.init({ duration: 1000, mirror: true });
+</script>
+
+</body>
+</html>
