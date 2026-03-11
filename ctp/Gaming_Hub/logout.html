@@ -4,32 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SYSTEM OFFLINE | Vengeance Hub</title>
-
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
 </head>
 <body class="logout-body">
-
 <div class="scanlines"></div>
-
 <div class="logout-container">
-  <h1 class="logged-out-text glitch" data-text="LOGGED OUT">
-    LOGGED<br>OUT
-  </h1>
-
+  <h1 class="logged-out-text glitch" data-text="LOGGED OUT">LOGGED<br>OUT</h1>
   <p class="status-label">
     [ SATELLITE LINK TERMINATED ]
   </p>
-
-  <button class="btn-reconnect" onclick="window.location.href='index.html'">
-    RE-ESTABLISH LINK
-  </button>
+  <button class="btn-reconnect" onclick="window.location.href='index.html'">RE-ESTABLISH LINK</button>
 </div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // Screen Shake/Glitch on load
     anime({
       targets: '.logout-container',
       translateX: [10, -10, 5, -5, 0],
@@ -37,8 +26,6 @@
       duration: 500,
       easing: 'easeInOutQuad'
     });
-
-    // Text Decryption
     anime({
       targets: '.status-label',
       opacity: [0, 1],
