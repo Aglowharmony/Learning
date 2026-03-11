@@ -1,10 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vengeance Hub | Gaming Intel</title>
+    
+    <!-- 1. STYLE LINKS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
+    <!-- Orbitron for that 'Batman Tech' Font -->
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <!-- AOS: The 'Crazy Scroll' Library -->
+    <link href="https://unpkg.com" rel="stylesheet">
 </head>
+
 <body>
+
+<header>
+    <nav>
+        <img src="images/nn.png" class="logo" alt="HUB">
+        <a href="index.html">Intel (News)</a>
+        <a href="#store">Store</a>
+        <a href="#profile">Profile</a>
+    </nav>
+
+    <!-- Clicking this opens your sidebar -->
+    <div class="cart" onclick="toggleCart()">
+        <i class="fas fa-crosshairs"></i> TRACKED DEALS (<span id="cartCount">0</span>)
+    </div>
+</header>
+
+<!-- HERO SECTION: The Big Entrance -->
+<section class="hero" data-aos="zoom-in">
+    <h1 class="glitch">VENGEANCE HUB</h1>
+    <p>Your central command for news, sales, and system requirements.</p>
+    <div class="hero-btns">
+        <button onclick="window.location.href='#store'">Enter Store</button>
+        <button class="btn-alt" onclick="gainXP(20)">Sync Data (+20 XP)</button>
+    </div>
+</section>
+
+<!-- GAMING NEWS SECTION -->
+<section class="page">
+    <h1 data-aos="fade-right">LATEST INTEL</h1>
+    <p>Fresh updates from the global gaming network.</p>
+
+    <div class="card-container">
+        <!-- News Card 1 -->
+        <div class="card" data-aos="fade-up" data-aos-delay="100">
+            <img src="https://images.unsplash.com" alt="News">
+            <h3>GTA VI Map Update</h3>
+            <p>Leaked coordinates show a massive Vice City expansion. Ready your rigs.</p>
+            <button onclick="toggleDetails('news1')">Read More</button>
+            <div id="news1" class="details">
+                <h4>Full Report:</h4>
+                <p>The map is expected to be 2.5x larger than Los Santos with fully interactive interiors.</p>
+            </div>
+        </div>
+
+        <!-- News Card 2 (Store Item) -->
+        <div class="card" data-aos="fade-up" data-aos-delay="300" id="store">
+            <img src="https://images.unsplash.com" alt="Sale">
+            <h3>Elden Ring: Shadow</h3>
+            <p>Current Lowest: <span style="color: #00f3ff;">$39.99</span> (Steam)</p>
+            <button onclick="addToCart('Elden Ring: $39.99')">Track Deal</button>
+        </div>
+
+        <!-- News Card 3 (Requirements) -->
+        <div class="card" data-aos="fade-up" data-aos-delay="500">
+            <img src="https://images.unsplash.com" alt="Hardware">
+            <h3>Cyberpunk 2077 Specs</h3>
+            <p>Check if your Bat-computer can handle Night City at Overdrive settings.</p>
+            <button onclick="toggleDetails('req1')">Requirements</button>
+            <div id="req1" class="details">
+                <h4>Minimum Specs:</h4>
+                <ul>
+                    <li>GPU: RTX 2060</li>
+                    <li>RAM: 16GB</li>
+                    <li>Storage: 70GB SSD</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- USER PROFILE SECTION (For Stats Presentation) -->
+<section class="page" id="profile" style="background: #050505;">
+    <h1 data-aos="fade-up">OPERATIVE PROFILE</h1>
+    <div class="profile-card" data-aos="flip-up">
+        <h3>Rank: <span id="profile-rank" style="color: #bc13fe;">Shadow Initiate</span></h3>
+        <div class="xp-bar-bg">
+            <div id="xpProgress" class="xp-bar-fill"></div>
+        </div>
+        <p>Current Status: <span style="color: #00f3ff;">Online</span></p>
+    </div>
+</section>
+
+<!-- THE SLIDE-OUT TRACKER (Cart) -->
+<div class="cart-panel" id="cartPanel">
+    <div class="cart-header">
+        <h3>Tracked Intel</h3>
+        <button class="close-cart" onclick="toggleCart()">✖</button>
+    </div>
+    <ul id="cartItems"></ul>
+    <div class="cart-footer">
+        <button onclick="clearCart()" class="clear-cart">Purge Intel</button>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-bottom">
+        <p>© 2026 Vengeance Hub | Built for the Night</p>
+    </div>
+</footer>
+
+<!-- 2. SCRIPTS -->
+<!-- AOS Scroll Library -->
+<script src="https://unpkg.com"></script>
+<script>
+    // Simple init for the crazy scroll animations
+    AOS.init({
+        duration: 1000,
+        once: false,
+        mirror: true
+    });
+</script>
+<script src="script.js"></script>
 
 </body>
 </html>
