@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE VAULT | System Database</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+
+<header>
+  <nav>
+    <div class="nav-left">
+      <a href="index.html">
+        <img src="images/logo.png" class="logo" alt="Armory">
+      </a>
+      <a href="index.html">INTEL</a>
+      <a href="armory.html">ARMORY</a>
+      <a href="deployments.html" >DEPLOYMENTS</a>
+      <a href="vault.html" class="active">THE VAULT</a>
+    </div>
+    <div class="nav-right">
+      <div class="icon-btn" onclick="toggleCart()"><i class="fas fa-crosshairs"></i><span id="cartCount">0</span></div>
+      <div class="profile-container">
+        <img src="images/witcher3.jpg" class="avatar-trigger" onclick="toggleProfileMenu()">
+        <div id="profileDropdown" class="profile-menu">
+          <div class="menu-header"><h4>Aglowharmony10</h4><p id="profile-rank">Shadow Initiate</p></div>
+          <div class="xp-mini-bar"><div id="xpProgress" class="xp-fill"></div></div>
+          <a href="profile.html">MY STATS</a>
+          <a href="logout.html" class="logout-link">DISCONNECT</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+
+<section class="vault-container">
+  <div class="vault-grid">
+    <div class="vault-card">
+      <div class="vault-img-container">
+        <img src="images/gta6.jpg" alt="GTA 6">
+        <div class="type-tag">OPEN WORLD</div>
+        <div class="intel-overlay"><span>RAM: 16GB</span><span>GPU: RTX 3060</span><span>SIZE: 150GB</span></div>
+      </div>
+      <div class="vault-info"><h3>GTA VI</h3></div>
+    </div>
+
+    <div class="vault-card">
+      <div class="vault-img-container">
+        <img src="images/eldenring.jpg" alt="Elden Ring">
+        <div class="type-tag">SOULSLIKE</div>
+        <div class="intel-overlay"><span>RAM: 12GB</span><span>GPU: GTX 1060</span><span>SIZE: 60GB</span></div>
+      </div>
+      <div class="vault-info"><h3>ELDEN RING</h3></div>
+    </div>
+
+    <div class="vault-card">
+      <div class="vault-img-container">
+        <img src="images/ghost.jpg" alt="Ghost of Tsushima">
+        <div class="type-tag">SAMURAI</div>
+        <div class="intel-overlay"><span>RAM: 16GB</span><span>GPU: RTX 2060</span><span>SIZE: 75GB</span></div>
+      </div>
+      <div class="vault-info"><h3>GHOST OF TSUSHIMA</h3></div>
+    </div>
+
+    <div class="vault-card">
+      <div class="vault-img-container">
+        <img src="images/wukong.jpg" alt="Wukong">
+        <div class="type-tag">ACTION</div>
+        <div class="intel-overlay"><span>RAM: 16GB</span><span>GPU: RTX 2060</span><span>SIZE: 130GB</span></div>
+      </div>
+      <div class="vault-info"><h3>BLACK MYTH: WUKONG</h3></div>
+    </div>
+
+    <div class="vault-card">
+      <div class="vault-img-container">
+        <img src="images/valorant.jpg" alt="Valorant">
+        <div class="type-tag">FPS</div>
+        <div class="intel-overlay"><span>RAM: 8GB</span><span>GPU: GT 730</span><span>SIZE: 30GB</span></div>
+      </div>
+      <div class="vault-info"><h3>VALORANT</h3></div>
+    </div>
+
+    <div class="vault-card">
+      <div class="vault-img-container">
+        <img src="images/cs2.jpg" alt="CS2">
+        <div class="type-tag">TACTICAL</div>
+        <div class="intel-overlay"><span>RAM: 8GB</span><span>GPU: GTX 1050</span><span>SIZE: 85GB</span></div>
+      </div>
+      <div class="vault-info"><h3>COUNTER-STRIKE 2</h3></div>
+    </div>
+
+    <div class="vault-card">
+      <div class="vault-img-container">
+        <img src="images/gta5.jpg" alt="GOW">
+        <div class="type-tag">OPEN WORLD</div>
+        <div class="intel-overlay"><span>RAM: 16GB</span><span>GPU: RTX 2060</span><span>SIZE: 190GB</span></div>
+      </div>
+      <div class="vault-info"><h3>GTA V</h3></div>
+    </div>
+
+    <div class="vault-card">
+      <div class="vault-img-container">
+        <img src="images/warzone.jpg" alt="Warzone">
+        <div class="type-tag">BATTLE ROYALE</div>
+        <div class="intel-overlay"><span>RAM: 12GB</span><span>GPU: GTX 1650</span><span>SIZE: 125GB</span></div>
+      </div>
+      <div class="vault-info"><h3>COD: WARZONE</h3></div>
+    </div>
+
+    <div class="vault-card">
+      <div class="vault-img-container">
+        <img src="images/helldivers.jpg" alt="Helldivers 2">
+        <div class="type-tag">CO-OP</div>
+        <div class="intel-overlay"><span>RAM: 16GB</span><span>GPU: RTX 2060</span><span>SIZE: 100GB</span></div>
+      </div>
+      <div class="vault-info"><h3>HELLDIVERS 2</h3></div>
+    </div>
+
+    <div class="vault-card">
+      <div class="vault-img-container">
+        <img src="images/bg3.jpg" alt="Baldur's Gate 3">
+        <div class="type-tag">RPG</div>
+        <div class="intel-overlay"><span>RAM: 16GB</span><span>GPU: RTX 2060</span><span>SIZE: 150GB</span></div>
+      </div>
+      <div class="vault-info"><h3>BALDUR'S GATE 3</h3></div>
+    </div>
+
+    <div class="vault-card">
+      <div class="vault-img-container">
+        <img src="images/cyberpunk.jpg" alt="Cyberpunk 2077">
+        <div class="type-tag">RPG</div>
+        <div class="intel-overlay"><span>RAM: 16GB</span><span>GPU: RTX 2060</span><span>SIZE: 70GB</span></div>
+      </div>
+      <div class="vault-info"><h3>CYBERPUNK 2077</h3></div>
+    </div>
+
+    <div class="vault-card">
+      <div class="vault-img-container">
+        <img src="images/spiderman.jpg" alt="Spiderman 2">
+        <div class="type-tag">ACTION</div>
+        <div class="intel-overlay"><span>RAM: 16GB</span><span>GPU: RTX 3060</span><span>SIZE: 90GB</span></div>
+      </div>
+      <div class="vault-info"><h3>SPIDER-MAN 2</h3></div>
+    </div>
+
+    <div class="vault-card">
+      <div class="vault-img-container">
+        <img src="images/rdr2.jpg" alt="RDR2">
+        <div class="type-tag">OPEN WORLD</div>
+        <div class="intel-overlay"><span>RAM: 12GB</span><span>GPU: GTX 1060</span><span>SIZE: 150GB</span></div>
+      </div>
+      <div class="vault-info"><h3>RED DEAD 2</h3></div>
+    </div>
+
+    <div class="vault-card">
+      <div class="vault-img-container">
+        <img src="images/re4.jpg" alt="RE4">
+        <div class="type-tag">HORROR</div>
+        <div class="intel-overlay"><span>RAM: 8GB</span><span>GPU: RX 580</span><span>SIZE: 60GB</span></div>
+      </div>
+      <div class="vault-info"><h3>RESIDENT EVIL 4</h3></div>
+    </div>
+
+    <div class="vault-card">
+      <div class="vault-img-container">
+        <img src="images/apex.jpg" alt="Apex">
+        <div class="type-tag">FPS</div>
+        <div class="intel-overlay"><span>RAM: 8GB</span><span>GPU: GTX 970</span><span>SIZE: 60GB</span></div>
+      </div>
+      <div class="vault-info"><h3>APEX LEGENDS</h3></div>
+    </div>
+
+    <div class="vault-card">
+      <div class="vault-img-container">
+        <img src="images/witcher3.jpg" alt="Witcher">
+        <div class="type-tag">RPG</div>
+        <div class="intel-overlay"><span>RAM: 8GB</span><span>GPU: GTX 770</span><span>SIZE: 50GB</span></div>
+      </div>
+      <div class="vault-info"><h3>THE WITCHER 3</h3></div>
+    </div>
+
+    <div class="vault-card">
+      <div class="vault-img-container">
+        <img src="images/fornite.jpg" alt="Fortnite">
+        <div class="type-tag">BATTLE ROYALE</div>
+        <div class="intel-overlay"><span>RAM: 8GB</span><span>GPU: GTX 960</span><span>SIZE: 40GB</span></div>
+      </div>
+      <div class="vault-info"><h3>FORTNITE</h3></div>
+    </div>
+
+    <div class="vault-card">
+      <div class="vault-img-container">
+        <img src="images/alanwake.jpg" alt="Alan Wake 2">
+        <div class="type-tag">THRILLER</div>
+        <div class="intel-overlay"><span>RAM: 16GB</span><span>GPU: RTX 3070</span><span>SIZE: 90GB</span></div>
+      </div>
+      <div class="vault-info"><h3>ALAN WAKE 2</h3></div>
+    </div>
+
+    <div class="vault-card">
+      <div class="vault-img-container">
+        <img src="images/doom.jpg" alt="Doom">
+        <div class="type-tag">FPS</div>
+        <div class="intel-overlay"><span>RAM: 8GB</span><span>GPU: GTX 1060</span><span>SIZE: 50GB</span></div>
+      </div>
+      <div class="vault-info"><h3>DOOM ETERNAL</h3></div>
+    </div>
+
+    <div class="vault-card">
+      <div class="vault-img-container">
+        <img src="images/tlou.jpg" alt="TLOU">
+        <div class="type-tag">STORY</div>
+        <div class="intel-overlay"><span>RAM: 16GB</span><span>GPU: RTX 2070</span><span>SIZE: 100GB</span></div>
+      </div>
+      <div class="vault-info"><h3>THE LAST OF US</h3></div>
+    </div>
+  </div>
+</section>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

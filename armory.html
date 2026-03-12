@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE ARMORY | Vengeance Store</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com">
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <link href="https://unpkg.com" rel="stylesheet">
+</head>
+<body>
+
+<header>
+    <nav>
+        <div class="nav-left">
+          <a href="index.html">
+            <img src="images/logo.png" class="logo" alt="Armory">
+          </a>
+            <a href="index.html">INTEL</a>
+            <a href="armory.html" class="active">ARMORY</a>
+            <a href="deployments.html">DEPLOYMENTS</a>
+            <a href="vault.html">THE VAULT</a>
+        </div>
+        <div class="nav-right">
+            <div class="icon-btn" onclick="toggleCart()"><i class="fas fa-crosshairs"></i><span id="cartCount">0</span></div>
+            <div class="profile-container">
+                <img src="images/witcher3.jpg" class="avatar-trigger" onclick="toggleProfileMenu()">
+                <div id="profileDropdown" class="profile-menu">
+                    <div class="menu-header"><h4>Aglowharmony10</h4><p id="profile-rank">Shadow Initiate</p></div>
+                    <div class="xp-mini-bar"><div id="xpProgress" class="xp-fill"></div></div>
+                    <a href="profile.html">MY STATS</a>
+                    <a href="logout.html" class="logout-link">DISCONNECT</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!--armory hero-->
+<section class="store-hero" style="background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('images/armory.jpg') center/cover;">
+    <div class="hero-content" data-aos="zoom-in">
+        <h1 class="glitch-text">THE ARMORY</h1>
+        <p>SCANNING SECTORS FOR PRICE DROPS...</p>
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="gameSearch" placeholder="Search for Intel/Games..." onkeyup="filterGames()">
+        </div>
+    </div>
+</section>
+
+<!-- STORE GRID -->
+<section class="store-container">
+  <div class="store-grid" id="gameGrid">
+    <div class="store-card" data-name="God of War">
+      <div class="store-badge">LOWEST PRICE</div>
+      <img src="images/godofwar.png" alt="GOW">
+      <div class="store-info">
+        <h3>GOD OF WAR</h3>
+        <div class="price-compare">
+          <span>Steam: <strong class="cyan">$29.99</strong></span>
+          <span>Epic: <strong>$34.99</strong></span>
+        </div>
+        <button class="btn-primary" onclick="addToCart('God of War: $29.99')">SYNC DEAL</button>
+      </div>
+    </div>
+
+    <div class="store-card" data-name="Warzone">
+      <div class="store-badge">FREE</div>
+      <img src="images/warzone.jpg" alt="Warzone">
+      <div class="store-info">
+        <h3>CALL OF DUTY: WARZONE</h3>
+        <div class="price-compare">
+          <span>Battlenet: <strong class="cyan">$0.00</strong></span>
+          <span>Steam: <strong>$0.00</strong></span>
+        </div>
+        <button class="btn-primary" onclick="addToCart('Warzone: Free')">SYNC DEAL</button>
+      </div>
+    </div>
+    
+    <div class="store-card" data-name="GTA VI">
+      <div class="store-badge">PRE-ORDER</div>
+      <img src="images/gta6.jpg" alt="GTA 6">
+      <div class="store-info">
+        <h3>GTA VI</h3>
+        <div class="price-compare"><span>Rockstar: <strong class="cyan">$69.99</strong></span><span>Epic: <strong>$79.99</strong></span></div>
+        <button class="btn-primary" onclick="addToCart('GTA VI: $69.99')">SYNC DEAL</button>
+      </div>
+    </div>
+
+    <div class="store-card" data-name="Elden Ring">
+      <div class="store-badge">-40% OFF</div>
+      <img src="images/eldenring.jpg" alt="Elden Ring">
+      <div class="store-info">
+        <h3>ELDEN RING</h3>
+        <div class="price-compare"><span>Steam: <strong class="cyan">$35.99</strong></span><span>Epic: <strong>$59.99</strong></span></div>
+        <button class="btn-primary" onclick="addToCart('Elden Ring: $35.99')">SYNC DEAL</button>
+      </div>
+    </div>
+
+    <div class="store-card" data-name="Cyberpunk 2077">
+      <div class="store-badge">-50% OFF</div>
+      <img src="images/cyberpunk.jpg" alt="CP2077">
+      <div class="store-info">
+        <h3>CYBERPUNK 2077</h3>
+        <div class="price-compare"><span>GOG: <strong class="cyan">$29.99</strong></span><span>Steam: <strong>$59.99</strong></span></div>
+        <button class="btn-primary" onclick="addToCart('Cyberpunk: $29.99')">SYNC DEAL</button>
+      </div>
+    </div>
+
+    <div class="store-card" data-name="Black Myth Wukong">
+      <div class="store-badge">NEW REVELATION</div>
+      <img src="images/wukong.jpg" alt="Wukong">
+      <div class="store-info">
+        <h3>BLACK MYTH: WUKONG</h3>
+        <div class="price-compare"><span>Steam: <strong class="cyan">$59.99</strong></span><span>PS5: <strong>$69.99</strong></span></div>
+        <button class="btn-primary" onclick="addToCart('Wukong: $59.99')">SYNC DEAL</button>
+      </div>
+    </div>
+
+    <div class="store-card" data-name="Valorant">
+      <div class="store-badge">FREE</div>
+      <img src="images/valorant.jpg" alt="Valorant">
+      <div class="store-info">
+        <h3>VALORANT</h3>
+        <div class="price-compare"><span>Riot: <strong class="cyan">$0.00</strong></span><span>Epic: <strong>$0.00</strong></span></div>
+        <button class="btn-primary" onclick="addToCart('Valorant: Free')">SYNC DEAL</button>
+      </div>
+    </div>
+
+    <div class="store-card" data-name="Counter-Strike 2">
+      <div class="store-badge">FREE</div>
+      <img src="images/cs2.jpg" alt="CS2">
+      <div class="store-info">
+        <h3>COUNTER-STRIKE 2</h3>
+        <div class="price-compare"><span>Steam: <strong class="cyan">$0.00</strong></span><span>Faceit: <strong>$0.00</strong></span></div>
+        <button class="btn-primary" onclick="addToCart('CS2: Free')">SYNC DEAL</button>
+      </div>
+    </div>
+
+    <div class="store-card" data-name="Grand Theft Auto 5">
+      <div class="store-badge">-20% OFF</div>
+      <img src="images/gta5.jpg" alt="GOW">
+      <div class="store-info">
+        <h3>GTA 5</h3>
+        <div class="price-compare"><span>Steam: <strong class="cyan">$49.99</strong></span><span>Sony: <strong>$59.99</strong></span></div>
+        <button class="btn-primary" onclick="addToCart('GOW: $49.99')">SYNC DEAL</button>
+      </div>
+    </div>
+
+    <div class="store-card" data-name="Call of Duty Warzone">
+      <div class="store-badge">FREE</div>
+      <img src="images/warzone.jpg" alt="Warzone">
+      <div class="store-info">
+        <h3>COD: WARZONE</h3>
+        <div class="price-compare"><span>Battlenet: <strong class="cyan">$0.00</strong></span><span>Steam: <strong>$0.00</strong></span></div>
+        <button class="btn-primary" onclick="addToCart('Warzone: Free')">SYNC DEAL</button>
+      </div>
+    </div>
+
+    <div class="store-card" data-name="Helldivers 2">
+      <div class="store-badge">TOP SELLER</div>
+      <img src="images/helldivers.jpg" alt="Helldivers">
+      <div class="store-info">
+        <h3>HELLDIVERS 2</h3>
+        <div class="price-compare"><span>Steam: <strong class="cyan">$39.99</strong></span><span>PSN: <strong>$39.99</strong></span></div>
+        <button class="btn-primary" onclick="addToCart('Helldivers 2: $39.99')">SYNC DEAL</button>
+      </div>
+    </div>
+
+    <div class="store-card" data-name="Baldurs Gate 3">
+      <div class="store-badge">-15% OFF</div>
+      <img src="images/bg3.jpg" alt="BG3">
+      <div class="store-info">
+        <h3>BALDUR'S GATE 3</h3>
+        <div class="price-compare"><span>GOG: <strong class="cyan">$50.99</strong></span><span>Steam: <strong>$59.99</strong></span></div>
+        <button class="btn-primary" onclick="addToCart('BG3: $50.99')">SYNC DEAL</button>
+      </div>
+    </div>
+
+    <div class="store-card" data-name="Spider-Man 2">
+      <div class="store-badge">EXCLUSIVE</div>
+      <img src="images/spiderman.jpg" alt="Spiderman">
+      <div class="store-info">
+        <h3>SPIDER-MAN 2</h3>
+        <div class="price-compare"><span>PS5: <strong class="cyan">$69.99</strong></span><span>Retail: <strong>$74.99</strong></span></div>
+        <button class="btn-primary" onclick="addToCart('Spiderman 2: $69.99')">SYNC DEAL</button>
+      </div>
+    </div>
+
+    <div class="store-card" data-name="Ghost of Tsushima">
+      <div class="store-badge">-30% OFF</div>
+      <img src="images/ghost.jpg" alt="Ghost">
+      <div class="store-info">
+        <h3>GHOST OF TSUSHIMA</h3>
+        <div class="price-compare"><span>Steam: <strong class="cyan">$41.99</strong></span><span>Epic: <strong>$59.99</strong></span></div>
+        <button class="btn-primary" onclick="addToCart('Ghost: $41.99')">SYNC DEAL</button>
+      </div>
+    </div>
+
+    <div class="store-card" data-name="Red Dead Redemption 2">
+      <div class="store-badge">-67% OFF</div>
+      <img src="images/rdr2.jpg" alt="RDR2">
+      <div class="store-info">
+        <h3>RED DEAD 2</h3>
+        <div class="price-compare"><span>Epic: <strong class="cyan">$19.79</strong></span><span>Steam: <strong>$59.99</strong></span></div>
+        <button class="btn-primary" onclick="addToCart('RDR2: $19.79')">SYNC DEAL</button>
+      </div>
+    </div>
+
+    <div class="store-card" data-name="Resident Evil 4">
+      <div class="store-badge">-25% OFF</div>
+      <img src="images/re4.jpg" alt="RE4">
+      <div class="store-info">
+        <h3>RESIDENT EVIL 4</h3>
+        <div class="price-compare"><span>Steam: <strong class="cyan">$29.99</strong></span><span>Capcom: <strong>$39.99</strong></span></div>
+        <button class="btn-primary" onclick="addToCart('RE4: $29.99')">SYNC DEAL</button>
+      </div>
+    </div>
+
+    <div class="store-card" data-name="Apex Legends">
+      <div class="store-badge">FREE</div>
+      <img src="images/apex.jpg" alt="Apex">
+      <div class="store-info">
+        <h3>APEX LEGENDS</h3>
+        <div class="price-compare"><span>EA: <strong class="cyan">$0.00</strong></span><span>Steam: <strong>$0.00</strong></span></div>
+        <button class="btn-primary" onclick="addToCart('Apex: Free')">SYNC DEAL</button>
+      </div>
+    </div>
+
+    <div class="store-card" data-name="The Witcher 3">
+      <div class="store-badge">-80% OFF</div>
+      <img src="images/witcher3.jpg" alt="Witcher">
+      <div class="store-info">
+        <h3>THE WITCHER 3</h3>
+        <div class="price-compare"><span>GOG: <strong class="cyan">$7.99</strong></span><span>Steam: <strong>$39.99</strong></span></div>
+        <button class="btn-primary" onclick="addToCart('Witcher 3: $7.99')">SYNC DEAL</button>
+      </div>
+    </div>
+
+    <div class="store-card" data-name="Fortnite">
+      <div class="store-badge">FREE</div>
+      <img src="images/fornite.jpg" alt="Fortnite">
+      <div class="store-info">
+        <h3>FORTNITE</h3>
+        <div class="price-compare"><span>Epic: <strong class="cyan">$0.00</strong></span><span>Lego: <strong>$0.00</strong></span></div>
+        <button class="btn-primary" onclick="addToCart('Fortnite: Free')">SYNC DEAL</button>
+      </div>
+    </div>
+
+    <div class="store-card" data-name="Alan Wake 2">
+      <div class="store-badge">-33% OFF</div>
+      <img src="images/alanwake.jpg" alt="Alan Wake">
+      <div class="store-info">
+        <h3>ALAN WAKE 2</h3>
+        <div class="price-compare"><span>Epic: <strong class="cyan">$33.49</strong></span><span>Retail: <strong>$49.99</strong></span></div>
+        <button class="btn-primary" onclick="addToCart('Alan Wake 2: $33.49')">SYNC DEAL</button>
+      </div>
+    </div>
+
+    <div class="store-card" data-name="Doom Eternal">
+      <div class="store-badge">-75% OFF</div>
+      <img src="images/doom.jpg" alt="Doom">
+      <div class="store-info">
+        <h3>DOOM ETERNAL</h3>
+        <div class="price-compare"><span>Bethesda: <strong class="cyan">$9.99</strong></span><span>Steam: <strong>$39.99</strong></span></div>
+        <button class="btn-primary" onclick="addToCart('Doom: $9.99')">SYNC DEAL</button>
+      </div>
+    </div>
+
+    <div class="store-card" data-name="The Last of Us Part I">
+      <div class="store-badge">-20% OFF</div>
+      <img src="images/tlou.jpg" alt="TLOU">
+      <div class="store-info">
+        <h3>THE LAST OF US</h3>
+        <div class="price-compare"><span>Steam: <strong class="cyan">$47.99</strong></span><span>Epic: <strong>$59.99</strong></span></div>
+        <button class="btn-primary" onclick="addToCart('TLOU: $47.99')">SYNC DEAL</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRACKER PANEL -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script src="script.js"></script>
+
+<script>
+  /*search*/
+  function filterGames() {
+    let input = document.getElementById('gameSearch').value.toLowerCase();
+    let cards = document.querySelectorAll('.store-card');
+
+    cards.forEach(card => {
+      let name = card.getAttribute('data-name').toLowerCase();
+
+      if (name.includes(input)) {
+        card.style.display = "block";
+        anime({
+          targets: card,
+          opacity: [0, 1],
+          scale: [0.9, 1],
+          duration: 500,
+          easing: 'easeOutExpo'
+        });
+      } else {
+        // Smoothly fade out the card
+        anime({
+          targets: card,
+          opacity: 0,
+          scale: 0.9,
+          duration: 400,
+          easing: 'easeOutExpo',
+          complete: () => {
+            card.style.display = "none";
+          }
+        });
+      }
+    });
+  }
+</script>
+</body>
+</html>

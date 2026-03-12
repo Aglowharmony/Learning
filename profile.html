@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OPERATIVE PROFILE | Vengeance Stats</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="target-bg" class="profile-bg-effects"></div>
+
+<header class="minimal-header">
+  <nav>
+    <div class="nav-left animate-header">
+      <a href="index.html" class="back-link">
+        <a href="index.html">
+          <img src="images/logo.png" class="logo" alt="Armory">
+        </a>
+        <span>Home</span>
+      </a>
+    </div>
+    <div class="nav-right animate-header">
+      <div class="system-status">
+        <span class="status-dot pulse"></span>
+        SYSTEM ACTIVE
+      </div>
+    </div>
+  </nav>
+</header>
+<header>
+</header>
+
+<section class="profile-dashboard">
+  <div class="profile-grid">
+    <div class="stat-card profile-info animate-profile">
+      <img src="images/witcher3.jpg" class="large-avatar">
+      <h2 class="orbitron">Aglowharmony10</h2>
+      <p class="rank-text" id="main-rank">SHADOW INITIATE</p>
+      <div class="badge-row">
+        <span class="p-badge">VERIFIED</span>
+        <span class="p-badge purple">PREMIUM</span>
+      </div>
+    </div>
+
+    <div class="stat-card xp-center animate-profile">
+      <h3 class="orbitron">SYNC PROGRESS</h3>
+      <div class="xp-circle-container">
+        <svg viewBox="0 0 100 100">
+          <circle class="bg" cx="50" cy="50" r="45"></circle>
+          <circle id="xpCircle" class="prog" cx="50" cy="50" r="45"></circle>
+        </svg>
+        <div class="xp-number"><span id="xpPercent">0</span>%</div>
+      </div>
+      <p>Level up to unlock <span style="color:var(--neon-cyan)">Elite Tier</span> intel.</p>
+    </div>
+
+    <div class="stat-card medals animate-profile">
+      <h3 class="orbitron">ACHIEVEMENTS</h3>
+      <div class="hexagon-grid">
+        <div class="hex active" title="Deal Hunter"><i class="fas fa-tags"></i></div>
+        <div class="hex active" title="Intel Master"><i class="fas fa-brain"></i></div>
+        <div class="hex animate-hex" title="Vault Breaker"><i class="fas fa-lock-open"></i></div>
+        <div class="hex animate-hex" title="Daily Synced"><i class="fas fa-calendar-check"></i></div>
+      </div>
+      <p style="font-size: 11px; color: var(--text-dim); margin-top: 20px;">2 / 4 MEDALS UNLOCKED</p>
+    </div>
+  </div>
+</section>
+
+<section class="intel-log-section animate-profile">
+  <h2 class="orbitron" style="margin-bottom: 30px; color: var(--neon-cyan);">INTEL ACQUISITION LOG</h2>
+  <div class="log-table" id="intelLog">
+    <p style="color: var(--text-dim)">Accessing database...</p>
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script src="script.js"></script>
