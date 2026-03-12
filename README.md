@@ -32,7 +32,6 @@ CRT Scanlines: A fixed overlay mimicking vintage monitor refresh lines.
 Glitch Text: Keyframe animations simulating signal interference and data corruption.
 
 📁 File Structure
-Plaintext
 /vengeance-hub
 │
 ├── images/               # Tactical assets (logos, game posters)
@@ -44,8 +43,6 @@ Plaintext
 ├── logout.html           # Terminal Shutdown Page
 ├── style.css             # Modular Master Stylesheet
 └── script.js             # Interaction & Animation Logic
-
-
 🚀 Installation & Deployment
 To deploy the hub locally:
 Clone the repository.
