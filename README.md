@@ -32,17 +32,29 @@ CRT Scanlines: A fixed overlay mimicking vintage monitor refresh lines.
 Glitch Text: Keyframe animations simulating signal interference and data corruption.
 
 📁 File Structure
-/vengeance-hub
+VENGEANCE-HUB/
+├── assets/                 # All static media
+│   ├── fonts/              # Local font files
+│   ├── icons/              # SVG or custom icons
+│   └── images/             # All game posters and logos
 │
-├── images/               # Tactical assets (logos, game posters)
-├── index.html            # Main Intel Feed
-├── armory.html           # Gear & Game Store
-├── deployments.html      # Future Release Roadmap
-├── vault.html            # Secure Intel Database
-├── profile.html          # Operative Stats Dashboard
-├── logout.html           # Terminal Shutdown Page
-├── style.css             # Modular Master Stylesheet
-└── script.js             # Interaction & Animation Logic
+├── css/                    # Stylesheets
+│   └── style.css           # Reorganized master stylesheet
+│
+├── js/                     # Logic and Libraries
+│   ├── animations.js       # Specific Anime.js sequences
+│   └── script.js           # Core site functionality
+│
+├── modules/                # Shared HTML components (Optional)
+│   └── header.html         
+│
+├── armory.html             # Market sector
+├── deployments.html        # Roadmap sector
+├── index.html              # Main feed
+├── logout.html             # System shutdown
+├── profile.html            # User stats
+└── vault.html              # Intel database
+
 🚀 Installation & Deployment
 To deploy the hub locally:
 Clone the repository.
@@ -51,6 +63,6 @@ Open index.html in a modern browser (Chrome/Edge recommended for backdrop-filter
 
 
 👤 Credits
-Developer: Smit Shah
+Developer: Smit Shah / Anand shukla 
 Design Principle: Neon Noir / Tactical Command
 Year: 2026
