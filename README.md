@@ -31,30 +31,27 @@ A specialized logout page designed to look like a hardware terminal shutting dow
 CRT Scanlines: A fixed overlay mimicking vintage monitor refresh lines.
 Glitch Text: Keyframe animations simulating signal interference and data corruption.
 
-📁 File Structure
+## 📁 System Architecture
+```text
 VENGEANCE-HUB/
 ├── assets/                 # All static media
 │   ├── fonts/              # Local font files
 │   ├── icons/              # SVG or custom icons
 │   └── images/             # All game posters and logos
-│
 ├── css/                    # Stylesheets
 │   └── style.css           # Reorganized master stylesheet
-│
 ├── js/                     # Logic and Libraries
 │   ├── animations.js       # Specific Anime.js sequences
 │   └── script.js           # Core site functionality
-│
-├── modules/                # Shared HTML components (Optional)
+├── modules/                # Shared HTML components
 │   └── header.html         
-│
 ├── armory.html             # Market sector
 ├── deployments.html        # Roadmap sector
 ├── index.html              # Main feed
 ├── logout.html             # System shutdown
 ├── profile.html            # User stats
 └── vault.html              # Intel database
-
+```
 🚀 Installation & Deployment
 To deploy the hub locally:
 Clone the repository.
